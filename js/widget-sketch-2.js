@@ -24,7 +24,8 @@
 			[	
 				{ shape: "rectangle",	xyPos: [ 0, 5], width: 2, height: 2 },
 				{ shape: "circle",	xyPos: [5, 5], radius:  2 }, 
-				{ shape: "hexagon",	xyPos: [3,3], radius:  1 },
+				{ shape: "hexagon",	xyPos: [3,3], side:  1 },
+				{ shape: "triangle", xyPos: [4, 4], side: 2 },
 				{ shape: "line",	xyPos: [1,1], xyEnd:  [5,5] },
 			],
 		};
@@ -222,9 +223,6 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 	var xScale = this.lastdrawn.xScale;
 	var yScale = this.lastdrawn.yScale;
 	
-	var xPos = xScale(xOffset);
-	var yPos = yScale(yOffset);
-	
 	var sketchContainer = this.lastdrawn.widgetGroup;
 	
 	// bind the sketch group collection to the data
@@ -235,25 +233,68 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 	// includes both the update and the enter selections, so you can drag them around
 	// on a suitable event or redraw.
 
-				  
+	// get collection of rectangles			  
 	var rectangles = drawCollection.selectAll("rect")
 		.data(function (d,i) {return d.shape == "rectangle"? d.data : []; });
-	rectangles.transition().attr("x", xPos).attr("y", yPos)
+	// add offset to x and y positions
+	rectangles.transition()
+		.attr("x", function(d) { d.xyPos[0] = d.xyPos[0] + xOffset;
+								return xScale(d.xyPos[0]); })
+		.attr("y", function(d) { d.xyPos[1] = d.xyPos[1] + yOffset;
+								return yScale(d.xyPos[1]); })
 		.duration(duration).delay(delay);
 	
+	// get collection of circles
 	var circles = drawCollection.selectAll("circle")
 		.data(function (d,i) {return d.shape == "circle"? d.data : []; });
-	circles.transition().attr("cx", xPos).attr("cy", yPos)
+	// add offset to x and y positions
+	circles.transition()
+		.attr("cx", function(d) { d.xyPos[0] = d.xyPos[0] + xOffset;
+								return xScale(d.xyPos[0]); })
+		.attr("cy", function(d) { d.xyPos[1] = d.xyPos[1] + yOffset;
+								return yScale(d.xyPos[1]); })
 		.duration(duration).delay(delay);
 	
-	var polygons = drawCollection.selectAll("polygon")
-		.data(function (d) { return d.shape == "polygon"? d.data : []; });
-	//polygons.transition().attr();
+	
+	// get collection of polygons
+	var hexagons = drawCollection.selectAll("polygon.hex")
+		.data(function (d) { return d.shape == "hexagon"? d.data : []; });
+	hexagons.transition()
+		.attr("points","5,23 19,32 33,23 33,9 19,0 5,9").attr("transform", 
+			function (d)
+			{ 
+				d.xyPos[0] = d.xyPos[0] + xOffset;
+				d.xyPos[1] = d.xyPos[1] + yOffset;
+				return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]));
+			})
+		.duration(duration).delay(delay);
 		
-	var lines = drawCollection.selectAll("lines")
+	var triangles = drawCollection.selectAll("polygon.tri")
+		.data(function (d) { return d.shape == "triangle"? d.data : []; });
+	triangles.transition()
+		.attr("points","5,23 33,23 19,0").attr("transform", 
+			function (d)
+			{ 
+				d.xyPos[0] = d.xyPos[0] + xOffset;
+				d.xyPos[1] = d.xyPos[1] + yOffset;
+				return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]));
+			})
+		.duration(duration).delay(delay);
+	
+	
+	// get collection of lines
+	var lines = drawCollection.selectAll("line")
 		.data(function (d) { return d.shape == "line"? d.data : []; });
-	lines.transition().attr("x1", xPos).attr("y1", yPos)
-		.attr("x2", xPos).attr("y2", yPos)
+	// add offset to x and y positions of both ends
+	lines.transition()
+		.attr("x1", function(d) { d.xyPos[0] = d.xyPos[0] + xOffset; 
+								return xScale(d.xyPos[0]); })
+		.attr("y1", function(d) { d.xyPos[1] = d.xyPos[1] + yOffset;
+								return yScale(d.xyPos[1]); })
+		.attr("x2", function(d) { d.xyEnd[0] = d.xyEnd[0] + xOffset;
+								return xScale(d.xyEnd[0]); })
+		.attr("y2", function(d) { d.xyEnd[1] = d.xyEnd[1] + yOffset;
+								return yScale(d.xyEnd[1]); })
 		.duration(duration).delay(delay);
 
 	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
@@ -305,12 +346,10 @@ Sketch.prototype.redraw = function ()
 	rectangles.enter().append("rect");
 	rectangles.exit().remove();
 	// update the properties on all new or changing rectangles
-	rectangles.attr("width", function(d) { return xScale(d.width)})
-			  	.attr("height", function(d) { console.log("height", d.height, yScale(d.height));
-			  								
-											return yScale(0) - yScale(d.height)})
-				.attr("x", function(d) {return xScale(d.xyPos[0]);})
-				.attr("y", function(d) {return yScale(d.xyPos[1]);});
+	rectangles.attr("width", function(d) { return xScale(d.width); })
+			  	.attr("height", function(d) { return yScale(0) - yScale(d.height); })
+				.attr("x", function(d) { return xScale(d.xyPos[0]); })
+				.attr("y", function(d) { return yScale(d.xyPos[1]); });
 	
 	// move the rectangles into starting graph coordinate position (bottom left)
 	/*rectangles.attr("transform", function (d, i)  {
@@ -327,9 +366,9 @@ Sketch.prototype.redraw = function ()
 	circles.exit().remove();
 	// update the properties on all new or changing rectangles
 	// unclear how to scale the radius, with x or y scale ? -lb
-	circles.attr("r", function(d) { return xScale(d.radius)})
-			.attr("cx", function(d) { return xScale(d.xyPos[0]);} )
-			.attr("cy", function(d) { return yScale(d.xyPos[1]);} );
+	circles.attr("r", function(d) { return xScale(d.radius); })
+			.attr("cx", function(d) { return xScale(d.xyPos[0]); } )
+			.attr("cy", function(d) { return yScale(d.xyPos[1]); } );
 	
 	/*circles.attr("transform", function (d, i)  {
 					return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]));
@@ -361,20 +400,14 @@ Sketch.prototype.redraw = function ()
 			; } );
 
 
-	var lines = drawCollection.selectAll("lines")
-	.data(function (d) { return d.shape == "line"? d.data : []; });
+	var lines = drawCollection.selectAll("line")
+		.data(function (d) { return d.shape == "line"? d.data : []; });
 	lines.enter().append("line");
 	lines.exit().remove();
-	lines
-		.attr("x1",function(d) { return xScale(d.xyPos[0]);})
-		.attr("y1",function(d) { return yScale(d.xyPos[1]);})		
-		// calculate the endpoint, find the new endpoints given the length and angle
-		// there's some oddity about rotation defined in Javascripts trig functions, where
-		// second quadrant angles get negative vals
-		
-		.attr("x2",function(d) { 
-					return xScale(d.length * Math.cos(d.angle) + d.xyPos[0]);})
-		.attr("y2",function(d) { return yScale(d.length * Math.sin(d.angle) + d.xyPos[1]);});
+	lines.attr("x1", function(d) { return xScale(d.xyPos[0]); })
+		.attr("y1", function(d) { return yScale(d.xyPos[1]); })
+		.attr("x2", function(d) { return xScale(d.xyEnd[0]); })
+		.attr("y2", function(d) { return yScale(d.xyEnd[1]); });
 
 
 	drawCollection.on('click',

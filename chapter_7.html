@@ -99,8 +99,11 @@ var mole = new Sketch({
 			id: "molecule",
 			drawShape: 	
 			[	
-				{ shape: "circle",	data: [{xyPos: [4, 4], radius: .1 }]},
-				{ shape: "rectangle", data: [{xyPos: [4.2, 4.05], width: .2, height: .1 }]},
+				{ shape: "circle",	data: [{ xyPos: [1, 2], radius: .1 }]},
+				{ shape: "rectangle", data: [{ xyPos: [1.2, 2.05], width: .2, height: .1 }]},
+				{ shape: "line", data: [{ xyPos: [1.5, 2.05], xyEnd: [2, 2.05] }]},
+				{ shape: "hexagon", data: [{ xyPos: [2.1, 2.05], side: .05 }]},
+				{ shape: "triangle", data: [{ xyPos: [3, 2.05], side: .05 }]}
 			],
 		});
 		
@@ -119,8 +122,12 @@ eventManager.subscribe(button.pressedEventId, handleClick);
 
 function handleClick()
 {
-	mole.move(1, 1, 1000, 0);
-	mole.move (4, 1, 1000, 1000);
+	var dur = 1000;
+	
+	mole.move(.5, 1, dur, 0);
+	mole.move (-.5, -1, dur, dur);
+	mole.move(1, 0, dur, 2*dur);
+	mole.move(-1, 0, dur, 3*dur);
 }
 
 
