@@ -76,9 +76,7 @@
     <script src="js/widget-callouts.js"></script>
 	<script src="js/widget-labelgroup.js"></script>
 	<script src="js/widget-button.js"></script>
-	
-	<!-- Currently a second version of the sketch widget -->
-	<script src="js/widget-sketch-2.js"></script>
+	<script src="js/widget-sketch.js"></script>
 	
     <script src="js/eventmanager.js"></script>
 
@@ -90,8 +88,8 @@ var eventManager = new EventManager ();
 // make svg container to go in right column
 var svgBox = new SVGContainer({
 		node: d3.select("#animation"),
-		maxWid: 200,
-		maxHt: 200
+		maxWid: 300,
+		maxHt: 300
 	});
 
 // make molecule sketch
@@ -99,16 +97,46 @@ var mole = new Sketch({
 			id: "molecule",
 			drawShape: 	
 			[	
-				{ shape: "circle",	data: [{ xyPos: [1, 2], radius: .2 }]},
+				/*{ shape: "circle",	data: [{ xyPos: [1, 2], radius: .2 }]},
 				{ shape: "rectangle", data: [{ xyPos: [1.3, 2.1], width: .4, height: .2 }]},
 				{ shape: "line", data: [{ xyPos: [1.8, 2], xyEnd: [2.2, 2] }]},
 				{ shape: "hexagon", data: [{ xyPos: [2.5, 2], side: .2 }]},
-				{ shape: "triangle", data: [{ xyPos: [3, 2], side: .4 }]}
+				{ shape: "triangle", data: [{ xyPos: [3, 2], side: .4 }]}*/
+				{ shape: "line", data: [{ xyPos: [0, 2], xyEnd: [.4, 1.8] }]},
+				{ shape: "line", data: [{ xyPos: [.4, 1.8], xyEnd: [.8, 2] }]},
+				{ shape: "line", data: [{ xyPos: [.8, 2], xyEnd: [1.1, 1.8] }]},
+			],
+		});
+		
+var mole2 = new Sketch({
+			id: "molecule2",
+			drawShape:
+			[
+				{ shape: "line", data: [{ xyPos: [3.7, 1.8], xyEnd: [4, 2] }]},
+				{ shape: "line", data: [{ xyPos: [4, 2], xyEnd: [4.4, 1.8] }]},
+				{ shape: "line", data: [{ xyPos: [4.4, 1.8], xyEnd: [4.8, 2] }]},
+			],
+		});
+		
+var mirror = new Sketch({
+			id: "mirror",
+			drawShape:
+			[
+				{ shape: "line", data: [{ xyPos: [2.1, 2.2], xyEnd: [2.1, 1.2] }]},
+				{ shape: "line", data: [{ xyPos: [2.1, 1.2], xyEnd: [2.7, 1.6] }]},
+				{ shape: "line", data: [{ xyPos: [2.7, 1.6], xyEnd: [2.7, 2.6] }]},
+				{ shape: "line", data: [{ xyPos: [2.7, 2.6], xyEnd: [2.1, 2.2] }]}
 			],
 		});
 		
 // draw the molecule inside the svg container
-svgBox.append(mole, {topPercentOffset: .5, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+svgBox.append(mole, {topPercentOffset: .6, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+
+svgBox.append(mole2, {topPercentOffset: .6, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+
+svgBox.append(mirror, {topPercentOffset: .6, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+
+
 
 		
 var button = new Button ({
@@ -124,10 +152,10 @@ function handleClick()
 {
 	var dur = 1000;
 	
-	mole.move(.5, 1, dur, 0);
-	mole.move (-.5, -1, dur, dur);
-	mole.move(1, 0, dur, 2*dur);
-	mole.move(-1, 0, dur, 3*dur);
+	mole.move(1.25, 0, dur, 0);
+	mole2.move(-1.25, 0, dur, 0);
+	mole.move(-1.25, 0, dur, dur);
+	mole2.move(1.25, 0, dur, dur);
 }
 
 
