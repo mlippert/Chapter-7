@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title class="setTitle"></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="Book Author, Book Title" name="description">
+	
+    <!-- Bootstrap -->
+    <link href="css/bootstrap_plus.css" rel="stylesheet" media="screen">
+	<link href="css/graphics_and_svg.css" rel="stylesheet">
+	<link href="css/learning-objective.css" rel="stylesheet">
+	<link href="css/module-opener.css" rel="stylesheet">
+	<link href="css/toc.css" rel="stylesheet">
+	<link href="css/grey-thing.css" rel="stylesheet">
+	<link href="css/widgets.css" rel="stylesheet">
+	<link href="css/eCourse-master.css" rel="stylesheet" media="screen">
+	
+	<style>
+	
+		div.test
+		{
+			min-height: 200px;
+		}
+	
+	</style>
+
+    </head>
+<body>
+
+	<!-- Body Content -->
+	<div class="container-fluid">
+		<div class="row-fluid">
+            
+			<div class="span6 leftCol">
+				
+				<div class="test">
+					<p>Test 0: </p>
+					<div id="test0"></div>
+				</div>
+				
+				
+			</div>
+			<div class="span6 rightCol">
+				
+				
+				
+			</div>
+		</div>
+    </div>
+
+    <script src="js/jquery-latest.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<!--script src="js/jquery.touchSwipe.min.js"></script-->
+	<script src="js/jquery-ui-1.10.2.custom.js"></script>
+    <script src="js/toc-structure.js"></script>    
+    <script src="js/eCourse-master.js"></script>    
+    <script src="js/d3.v3.min.js"></script>
+
+	<script src="js/widget-base.js"></script>
+	<script src="js/widget-slider.js"></script>
+	<script src="js/widget-sketch.js"></script>
+	<script src="js/widget-button.js"></script>
+	<script src="js/widget-linegraph.js"></script>
+	<script src="js/widget-labelgroup.js"></script>
+    <script src="js/widgets.js"></script>
+    <script src="js/widget-callouts.js"></script>
+
+    <script src="js/eventmanager.js"></script>
+
+<script>
+
+	// create event manager
+	var eventManager = new EventManager();
+	
+	////////////////////////////////////////
+	
+	// Test 0: 
+	// make svg container to hold sketch
+	var test0Box = new SVGContainer({
+			node: d3.select("#test0"),
+			maxWid: 300,
+			maxHt: 300
+		});
+		
+	// make molecule sketch
+	var sketch0 = new Sketch({
+			id: "sketch0",
+			drawShape: 	
+			[	
+				{ shape: "circle",	data: [{ xyPos: [0, 1], radius: .2 }]},
+				{ shape: "rectangle", data: [{ xyPos: [.3, 1.1], width: .4, height: .2 }]},
+				{ shape: "line", data: [{ xyPos: [.8, 1], xyEnd: [1.2, 1] }]},
+				{ shape: "hexagon", data: [{ xyPos: [1.5, 1], side: .2 }]},
+				{ shape: "triangle", data: [{ xyPos: [2, 1], side: .4 }]},
+			],
+		});
+		
+	// draw the molecule inside the svg container
+	test0Box.append(sketch0, {topPercentOffset: .2, leftPercentOffset: .1, heightPercent: .2, widthPercent: .2});
+
+</script>
+</body>
+</html>
