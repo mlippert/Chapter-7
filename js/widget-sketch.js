@@ -264,13 +264,18 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 		.attr("points",
 			function(d)
 			{
+				// update the x and y positions
 				d.xyPos[0] = d.xyPos[0] + xOffset;
 				d.xyPos[1] = d.xyPos[1] + yOffset;
 				
+				// scale the side length
 				var side = xScale(d.side);
 				
+				// scale the x and y positions
 				var midx = xScale(d.xyPos[0]);
 				var midy = yScale(d.xyPos[1]);
+				
+				// use trigonometry to calculate all the points
 				
 				var angle = (30*Math.PI/180);
 				
@@ -282,6 +287,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 				var mid = midx.toString();
 				var right = (midx + side*Math.cos(angle)).toString();
 				
+				// return the point string
 				return (left+","+bot)+" "+(mid+","+farbot)+" "+(right+","+bot)
 					+" "+(right+","+top)+" "+(mid+","+fartop)+" "+(left+","+top);
 			})
@@ -295,13 +301,18 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 		.attr("points",
 			function(d)
 			{
+				// update the x and y positions
 				d.xyPos[0] = d.xyPos[0] + xOffset;
 				d.xyPos[1] = d.xyPos[1] + yOffset;
 				
+				// scale the side length
 				var side = xScale(d.side);
 				
+				// scale the x and y positions
 				var midx = xScale(d.xyPos[0]);
 				var midy = yScale(d.xyPos[1]);
+				
+				// use trigonometry to calculate all the points
 				
 				var angle = (60*Math.PI/180);
 				
@@ -311,6 +322,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 				var bot = (midy + (side*Math.sin(angle))/2).toString();
 				var top = (midy - (side*Math.sin(angle))/2).toString();
 				
+				// return the point string
 				return (left+","+bot)+" "+(right+","+bot)+" "+(mid+","+top);
 			})
 		.duration(duration).delay(delay);
@@ -386,10 +398,6 @@ Sketch.prototype.redraw = function ()
 		.attr("x", function(d) { return xScale(d.xyPos[0]); })
 		.attr("y", function(d) { return yScale(d.xyPos[1]); });
 	
-	// move the rectangles into starting graph coordinate position (bottom left)
-	/*rectangles.attr("transform", function (d, i)  {
-					return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]));
-				  });*/
 	// TODO: we're likely going to want to label the drawBits, but 
 	// I don't need it now, and it's not clear if we should just layer a labelGroup
 	// on it or make them part of the groups that hold each thing.
@@ -405,10 +413,6 @@ Sketch.prototype.redraw = function ()
 	circles.attr("r", function(d) { return xScale(d.radius); })
 		.attr("cx", function(d) { return xScale(d.xyPos[0]); })
 		.attr("cy", function(d) { return yScale(d.xyPos[1]); });
-	
-	/*circles.attr("transform", function (d, i)  {
-					return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]));
-				  });*/
 
 
 	var hexagons = drawCollection.selectAll("polygon.hex")
@@ -420,10 +424,14 @@ Sketch.prototype.redraw = function ()
 	hexagons.attr("points", 
 				function(d)
 				{
+					// scale the side length
 					var side = xScale(d.side);
 					
+					// scale the x and y positions
 					var midx = xScale(d.xyPos[0]);
 					var midy = yScale(d.xyPos[1]);
+					
+					// use trigonometry to calculate all the points
 					
 					var angle = (30*Math.PI/180);
 					
@@ -435,14 +443,10 @@ Sketch.prototype.redraw = function ()
 					var mid = midx.toString();
 					var right = (midx + side*Math.cos(angle)).toString();
 					
+					// return the point string
 					return (left+","+bot)+" "+(mid+","+farbot)+" "+(right+","+bot)
 						+" "+(right+","+top)+" "+(mid+","+fartop)+" "+(left+","+top);
 				});
-			/*.attr("transform", function (d, i) {
-					return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1])) 
-					//need to scale these, but it makes the lines too thick
-					//+ "," + attrFnVal("scale", xScale(d.side), xScale(d.side));
-					; });*/
 					
 	var triangles = drawCollection.selectAll("polygon.tri")
 		.data(function (d) { return d.shape == "triangle"? d.data : []; });
@@ -451,10 +455,14 @@ Sketch.prototype.redraw = function ()
 	triangles.attr("points", 
 			function(d)
 			{
+				// scale the side length
 				var side = xScale(d.side);
 				
+				// scale the x and y positions
 				var midx = xScale(d.xyPos[0]);
 				var midy = yScale(d.xyPos[1]);
+				
+				// use trigonometry to calculate all the points
 				
 				var angle = (60*Math.PI/180);
 				
@@ -464,6 +472,7 @@ Sketch.prototype.redraw = function ()
 				var bot = (midy + (side*Math.sin(angle))/2).toString();
 				var top = (midy - (side*Math.sin(angle))/2).toString();
 				
+				// return the point string
 				return (left+","+bot)+" "+(right+","+bot)+" "+(mid+","+top);
 			});
 
