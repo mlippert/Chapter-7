@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+    <head>
+ 	<title class="setTitle"></title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="eCourses Author, Title" name="description">
+    <!-- Bootstrap -->
+   
+    <link href="../css/bootstrap_plus.css" rel="stylesheet" media="screen">
+	<link href="../css/graphics_and_svg.css" rel="stylesheet">
+	<link href="../css/learning-objective.css" rel="stylesheet">
+	<link href="../css/module-opener.css" rel="stylesheet">
+	<link href="../css/toc.css" rel="stylesheet">
+	<link href="../css/grey-thing.css" rel="stylesheet">
+	<link href="../css/widgets.css" rel="stylesheet">
+	<link href="../css/eCourse-master.css" rel="stylesheet" media="screen">
+
+    </head>
+<body>
+	
+	<!-- Body Content -->
+	<div class="container">
+		
+		<h2 class="setTitle">7.1.4 Stereoisomerism in Biphenyl and Related Derivatives</h2>
+		
+		<div class="row-fluid">
+			<div class="span12">
+            	
+				<p>Stereoisomerism can also result from conformational restrictions. Examples of this are seen in ortho-substituted biphenyl compounds. These compounds might appear to participate in conjugation across both rings, but nonbonded interactions between the ortho substituents can create torsional strain forcing the rings out of coplanarity. Biphenyl itself (hydrogens at the ortho positions) adopts a conformation that places the panels of the aromatic rings at a 40˚ dihedral angle lessening the ability of the π systems to interact. With increasingly larger substituents, relief of steric interactions more than compensates for the loss of resonance between the rings.</p>
+				
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6 leftCol">
+				
+				<p style="color:blue;">[TOGGLE: Let student toggle on/off the blue Hs (and their bonds).]</p>
+				
+				<div id="picture0"></div>
+				
+			</div>
+			<div class="span6 rightCol">
+				
+				<p>If the two ortho substituents that confront each other are small such as -H, -F, -Cl, -CH3, and -OCH3 they can rotate past one another with relative ease. With larger, sterically more demanding substituents such as -SO3H, -Br, -I, and -t-Bu the barrier to rotation becomes unattainable. It is in these latter cases that stereoisomers can result provided that the two ortho substituents on each aromatic ring are different.</p>
+				
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				
+				<div id="picture1"></div>
+				
+				<p>Stereoisomers whose existence arises from restricted rotation about a single bond are atropisomers. This new term is introduced since these stereoisomers can result from rotation about a single bond, rather than switching two substituents. Several examples of compounds that display atropisomerism are shown. Notice in the sulfonic acid compound that it is possible to have hydrogen as one of the substituents provided that the other substituent is sufficiently large. The last example is a binaphthyl derivative that is likewise capable of stereoisomerism.</p>
+				
+				<div id="picture2"></div>
+				
+				<p style="color:blue;">TIP: Although the first two structures show the aromatic rings in a coplanar orientation, it is understood that the large substituents prevent this conformation. Sometimes the most conveniently drawn structure is not the conformationally preferred one. You are already familiar with such acceptable shortcuts. For example, the flat representation of cyclohexane contradicts its preferred chair form.</p>
+				
+				<p>A Newman projection sighted along the bond joining the two aromatic rings is useful in comparing biphenyls. A line is used to represent the planar aromatic rings with the ortho substituents located at each end. The two structures shown are stereoisomers of each other as they are non-superposable.</p>
+
+				<p style="color:blue;">[INTERACTIVE: Allow student to rotate the projections shown on the right to confirm the non-superposability (paralleling what was done for the allenes in the previous subsection).]</p>
+				
+				<div id="picture3"></div>
+				
+				<p>These projections parallel those of similarly substituted allenes. The origin of stereoisomerism is comparable. That the biphenyl has some degree of conformational flexibility compared with the rigid allene does not affect the possibility of stereoisomeric forms.</p>
+
+				<p style="color:blue;">[ANIMATE: Include a simple animation that shows the conformational motion of the bottom structure, rotating only the front “barbell” piece. The green arrows are a guide. When the blue (and red) balls get near each other they should bounce back in the other direction. Perhaps include a small impact ‘flash’ (as shown by the pink curves).]</p>
+				
+				<div id="picture4"></div>
+				
+				<p>Despite the interconversion between atropisomers occurring via a forcible conformational change it is still instructive to approach the analysis of the structure in terms of stereocenters. Stereogenic biphenyl compounds contain two stereocenters, specifically, the two carbons connecting each aromatic ring. Switching the two groups attached to a biphenyl stereocenter requires you to imagine overturning the entire aromatic ring. Analogous to stereogenic alkenes and allenes, it is acceptable to consider the biphenyl group as a whole a stereogenic unit.</p>
+				
+				<p><b>Discovery Exercise 7.1.5 Testing for Stereoisomerism in Biphenyls</b></p>
+				
+				<p style="color:blue;">[INTERACTIVE: Touch-activated switching and superposition comparison as before. Compare with previous Discovery Exercise 7.1.4]</p>
+				
+				<div id="picture5"></div>
+				
+				<p><b>Worked example 7.1.4 Stereoisomerism in Biphenyls</b></p>
+				
+				<p>Which of the following could exist as a pair of atropisomers?</p>
+				
+				<div id="picture6"></div>
+				
+				<p><b>Exercise 7.1.5</b></p>
+				
+				<p>Identify which of the following compounds are stereogenic. That is, which can exhibit atropisomerism?</p>
+					
+				<p style="color:blue;">[Each requires a simple YES or NO response.]</p>
+				
+				<div id="picture7"></div>
+				
+			</div>
+		</div>
+	</div>
+   	<script src="../js/jquery-latest.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<!-- script src="../js/jquery.touchSwipe.min.js"></script-->
+	<script src="../js/jquery-ui-1.10.2.custom.js"></script>
+	<script src="../js/toc-structure.js"></script>    
+	<script src="../js/eCourse-master.js"></script>    
+	<script src="../js/d3.v3.min.js"></script>
+
+	<script src="../js/widget-base.js"></script>
+	<script src="../js/widgets.js"></script>
+	
+	<script src="../js/eventmanager.js"></script>
+	
+<script>
+
+//////////////////////////////////////////////
+
+var svg0 = new MakeSVGContainer(
+	{node: d3.select("#picture0"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg0.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg0.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_31.png', caption: ""}]
+	});
+	
+///////////////////////////////////////////
+
+var svg1 = new MakeSVGContainer(
+	{node: d3.select("#picture1"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg1.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg1.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_32.png', caption: "Figure 7.1.16 Conditions for Stereoisomerism in Biphenyl Derivatives"}]
+	});
+	
+///////////////////////////////////////////
+
+var svg2 = new MakeSVGContainer(
+	{node: d3.select("#picture2"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg2.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg2.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_33.png', caption: ""}]
+	});
+	
+////////////////////////////////////////
+
+var svg3 = new MakeSVGContainer(
+	{node: d3.select("#picture3"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg3.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg3.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_34.png', caption: "Figure 7.1.17 Newman Projections of Stereoisomeric Biphenyls"}]
+	});
+	
+/////////////////////////////////////////
+
+var svg4 = new MakeSVGContainer(
+	{node: d3.select("#picture4"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg4.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg4.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_35.png', caption: "Figure 7.1.18 Limited Rotation in ortho-Substituted Biphenyl"}]
+	});
+	
+/////////////////////////////////////////
+
+var svg5 = new MakeSVGContainer(
+	{node: d3.select("#picture5"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg5.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg5.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_36.png', caption: "Placeholder for interactive."}]
+	});
+	
+////////////////////////////////////////
+
+var svg6 = new MakeSVGContainer(
+	{node: d3.select("#picture6"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg6.Axes({
+	xPosPerc: .25, yPosPerc: .25,
+	xPerc: .5, yPerc: .5,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg6.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_37.png', caption: ""}]
+	});
+	
+///////////////////////////////////////
+
+var svg7 = new MakeSVGContainer(
+	{node: d3.select("#picture7"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg7.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg7.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_38.png', caption: ""}]
+	});
+	
+
+</script>
+</body>
+</html>
