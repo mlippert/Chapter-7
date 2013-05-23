@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+ 	<title class="setTitle"></title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="eCourses Author, Title" name="description">
+    <!-- Bootstrap -->
+   
+    <link href="../css/bootstrap_plus.css" rel="stylesheet" media="screen">
+	<link href="../css/graphics_and_svg.css" rel="stylesheet">
+	<link href="../css/learning-objective.css" rel="stylesheet">
+	<link href="../css/module-opener.css" rel="stylesheet">
+	<link href="../css/toc.css" rel="stylesheet">
+	<link href="../css/grey-thing.css" rel="stylesheet">
+	<link href="../css/widgets.css" rel="stylesheet">
+	<link href="../css/eCourse-master.css" rel="stylesheet" media="screen">
+
+    </head>
+<body>
+	
+	<!-- Body Content -->
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span12">
+            	
+
+				<h2 class="setTitle">7.1 Stereoisomerism</h2>
+				
+				<p><i>Purpose: This section will introduce you to identifying stereoisomers and will set the stage for three-dimensional assessment of molecules with increasingly complex structures.</i></p>
+				
+				<p><b>Stereochemistry</b> is the study of chemistry in three-dimensions. The prefix stereo- denotes a three-dimensional arrangement or effect (Greek, stereo-, solid). <b>Stereoisomerism</b> refers to variations in the three-dimensional organization of atoms for molecules with the same formula and connectivity (constitution). These variances will be the focus of this chapter.</p>
+				
+				<p style="color:blue;">NOTE: You&apos;re probably more familiar with the term stereo as it relates to music and audio quality. In everyday use, the word stereo is a truncated form of stereophonic, which refers to the three-dimensional arrangement or production of sound.</p>
+				
+				<div id="picture0"></div>
+				
+				<p>Compounds with the same molecular formula and bonding sequence, but with different spatial arrangement of their atoms are <b>stereoisomers</b>. They maintain their own identity and cannot interconvert through σ bond rotation. An important characteristic is that they are non-superposable compounds. That is, despite their identical connectivity one stereoisomer cannot be mapped directly onto another.</p>
+				
+				<p style="color:blue;">NOTE: The terms superposable and superimposable are both commonly used in discussions of stereoisomerism, but have different definitions. To superpose an object refers to placing it on top of another object, such that their structural features coincide. To superimpose an object refers to placing it above another such that both can still be observed.</p>
+				
+				<div id="picture1"></div>
+				
+				<div id="picture2"></div>
+				
+				<p>At the heart of stereoisomerism is the <b>stereocenter</b>, which is defined as an atom in a molecule bearing three or more groups that, upon exchange of two of the groups, produces a stereoisomer. Other terms such as <b>stereogenic center</b> or <b>stereogen</b> are also used for this purpose.</p>
+
+				<p>Later, when you begin to explore chemical reactions, stereochemical considerations will play an important role. In a collision between molecules, the spatial arrangement of atoms in each reactant will affect how they interact with one another. This has direct consequence on whether or not a particular collision will result in a successful reaction.</p>
+
+				<p>The following subsections will focus on the four most commonly encountered groups that can be stereogenic: alkenes, tetrahedral carbon, allenes, and biphenyls. Some additional discussion of stereogens that incorporate heteroatoms (atoms other than carbon) will also be included.</p>
+				
+				
+
+			</div>
+		</div>
+	</div>
+   	<script src="../js/jquery-latest.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+	<!-- script src="../js/jquery.touchSwipe.min.js"></script-->
+	<script src="../js/jquery-ui-1.10.2.custom.js"></script>
+	<script src="../js/toc-structure.js"></script>    
+	<script src="../js/eCourse-master.js"></script>    
+	<script src="../js/d3.v3.min.js"></script>
+
+	<script src="../js/widget-base.js"></script>
+	<script src="../js/widgets.js"></script>
+	<script src="../js/widget-image.js"></script>
+	
+	<script src="../js/eventmanager.js"></script>
+	
+<script>
+
+//////////////////////////////////////////////
+
+var svg0 = new MakeSVGContainer(
+	{node: d3.select("#picture0"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg0.Axes({
+	xPosPerc: .25, yPosPerc: .25,
+	xPerc: .5, yPerc: .5,//full height and half width
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg0.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_1.png', caption: ""}]
+	});
+	
+///////////////////////////////////////////////
+
+var svg1 = new MakeSVGContainer(
+	{node: d3.select("#picture1"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg1.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,//full height and half width
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg1.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_2.png', caption: "For the three pairs of stereoisomers shown, none are superposable despite each pair having identical constitutions."}]
+	});
+	
+////////////////////////////////////////////////
+
+var svg2 = new MakeSVGContainer(
+	{node: d3.select("#picture1"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg2.Axes({
+	xPosPerc: .125, yPosPerc: .125,
+	xPerc: .75, yPerc: .75,//full height and half width
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg2.ScalableImage(
+	{images: [
+			{URI:'img/ch7_1_3.png', caption: "Figure 7.1.1 Examples of stereoisomers"}]
+	});
+
+
+</script>
+</body>
+</html>

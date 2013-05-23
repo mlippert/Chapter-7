@@ -63,7 +63,9 @@
  * @implements {IWidget}
  *
  * @param {Object}		config			-The settings to configure this LabelGroup
- * @param {string}		config.id		-String to uniquely identify this LabelGroup.
+ * @param {string|undefined}
+ * 						config.id		-String to uniquely identify this LabelGroup.
+ * 										 if undefined a unique id will be assigned.
  * @param {Array.<LabelConfig>}
  *						config.labels	-An array describing each label in the group.
  *										 each trace is an array of points defining that trace.
@@ -81,7 +83,7 @@ function LabelGroup(config, eventManager)
 	 * A unique id for this instance of the labelgroup widget
 	 * @type {string}
 	 */
-	this.id = config.id;
+	this.id = getIdFromConfigOrAuto(config, LabelGroup);
 
 	/**
 	 * Array of traces to be graphed, where each trace is an array of points and each point is an
@@ -154,6 +156,13 @@ function LabelGroup(config, eventManager)
 		};
 } // end of Label constructor
 
+/**
+ * Prefix to use when generating ids for instances of LabelGroup.
+ * @const
+ * @type {string}
+ */
+LabelGroup.autoIdPrefix = "lblg_auto_";
+
 /* **************************************************************************
  * LabelGroup.draw                                                      *//**
  *
@@ -171,26 +180,7 @@ LabelGroup.prototype.draw = function(container, size)
 	this.lastdrawn.container = container;
 	this.lastdrawn.size = size;
 	
-	if (this.explicitScales_.xScale !== null)
-	{
-		this.lastdrawn.xScale = this.explicitScales_.xScale;
-	}
-	else
-	{
-		// map the default x data domain [0,1] to the whole width of the container
-		this.lastdrawn.xScale = d3.scale.linear().rangeRound([0, size.width]);
-	}
-	
-	if (this.explicitScales_.yScale !== null)
-	{
-		this.lastdrawn.yScale = this.explicitScales_.yScale;
-	}
-	else
-	{
-		// map the default y data domain [0,1] to the whole height of the container
-		// but from bottom to top
-		this.lastdrawn.yScale = d3.scale.linear().rangeRound([size.height, 0]);
-	}
+	this.setLastdrawnScaleFns2ExplicitOrDefault_(size);
 	
 	var that = this;
 	var numLabels = this.labels.length;
@@ -311,7 +301,7 @@ LabelGroup.prototype.setScale = function (xScale, yScale)
  * Highlight the label(s) associated w/ the given liteKey (key) and
  * remove any highlighting on all other labels.
  *
- * @param {string|number}	liteKey	-The key associated with the label(s) to be highlighted.
+ * @param {string}	liteKey	-The key associated with the label(s) to be highlighted.
  *
  ****************************************************************************/
 LabelGroup.prototype.lite = function (liteKey)
@@ -319,7 +309,7 @@ LabelGroup.prototype.lite = function (liteKey)
 	console.log("TODO: log fired Label highlite " + liteKey);
 	
 	// Turn off all current highlights
-	var allLabels = this.lastdrawn.widgetGroup.selectAll("g.widgetLabel");
+	var allLabels = this.lastdrawn.labelCollection;
 	allLabels
 		.classed("lit", false);
 	
@@ -338,4 +328,38 @@ LabelGroup.prototype.lite = function (liteKey)
 		console.log("No key '" + liteKey + "' in Labels group " + this.id );
 	}
 }; // end of LabelGroup.lite()
+
+/* **************************************************************************
+ * LabelGroup.setLastdrawnScaleFns2ExplicitOrDefault_                   *//**
+ *
+ * Set this.lastdrawn.xScale and yScale to those stored in explicitScales
+ * or to the default scale functions w/ a data domain of [0,1].
+ *
+ * @param {Size}	cntrSize	-The pixel size of the container given to draw().
+ * @private
+ *
+ ****************************************************************************/
+LabelGroup.prototype.setLastdrawnScaleFns2ExplicitOrDefault_ = function (cntrSize)
+{
+	if (this.explicitScales_.xScale !== null)
+	{
+		this.lastdrawn.xScale = this.explicitScales_.xScale;
+	}
+	else
+	{
+		// map the default x data domain [0,1] to the whole width of the container
+		this.lastdrawn.xScale = d3.scale.linear().rangeRound([0, cntrSize.width]);
+	}
+	
+	if (this.explicitScales_.yScale !== null)
+	{
+		this.lastdrawn.yScale = this.explicitScales_.yScale;
+	}
+	else
+	{
+		// map the default y data domain [0,1] to the whole height of the container
+		// but from bottom to top
+		this.lastdrawn.yScale = d3.scale.linear().rangeRound([cntrSize.height, 0]);
+	}
+}; // end of LabelGroup.setLastdrawnScaleFns2ExplicitOrDefault_()
 

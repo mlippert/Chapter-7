@@ -43,13 +43,12 @@
  * @implements {IWidget}
  *
  * @param {Object}		config			-The settings to configure this LineGraph
- * @param {string}		config.id		-String to uniquely identify this LineGraph.
+ * @param {string|undefined}
+ * 						config.id		-String to uniquely identify this LineGraph.
+ * 										 if undefined a unique id will be assigned.
  * @param {Array.<Array.<{x: number, y: number}>}
  *						config.Data		-An array of traces (lines on the graph);
  *										 each trace is an array of points defining that trace.
- * @param {Array.<number>}
- *						config.liteKey  -Array of integers to provide correspondance between traces
- *										 on this LineGraph with elements in other widgets.
  * @param {string		config.type		-String specifying "lines", "points", or
  *										 "lines+points" for traces.
  * @param {AxisFormat}	config.xAxisFormat -Format of the x axis of the graph.
@@ -64,7 +63,7 @@ function LineGraph(config)
 	 * A unique id for this instance of the line graph widget
 	 * @type {string}
 	 */
-	this.id = config.id;
+	this.id = getIdFromConfigOrAuto(config, LineGraph);
 
 	/**
 	 * Array of traces to be graphed, where each trace is an array of points and each point is an
@@ -98,12 +97,6 @@ function LineGraph(config)
 	this.childWidgets = [];
 	
 	/**
-	 * highlight key is an array of integers relating the traces to other selectable things on the page, optional
-	 * @type Array.<number>|undefined
-	 */
-	this.liteKey = config.liteKey;
-	
-	/**
 	 * Information about the last drawn instance of this line graph (from the draw method)
 	 * @type {Object}
 	 */
@@ -112,7 +105,7 @@ function LineGraph(config)
 			container: null,
 			size: {height: 0, width: 0},
 			dataRect: new Rect(0, 0, 0, 0),
-			linesId: 'lines',
+			linesId: this.id + '_lines',
 			axes: null,
 			xScale: null,
 			yScale: null,
@@ -121,6 +114,13 @@ function LineGraph(config)
 			series: null,
 		};
 } // end of LineGraph constructor
+
+/**
+ * Prefix to use when generating ids for instances of LineGraph.
+ * @const
+ * @type {string}
+ */
+LineGraph.autoIdPrefix = "lgrf_auto_";
 
 
 /* **************************************************************************
@@ -178,7 +178,6 @@ LineGraph.prototype.draw = function(container, size)
 	this.lastdrawn.xScale = axesDrawn.xScale;
 	this.lastdrawn.yScale = axesDrawn.yScale;
 
-	this.lastdrawn.linesId = this.id + '_lines';
 	var linesId = this.lastdrawn.linesId;
 
 	var clipId = linesId + "_clip";
@@ -208,6 +207,7 @@ LineGraph.prototype.draw = function(container, size)
 
 	// Draw any child widgets that got appended before draw was called
 	this.childWidgets.forEach(this.drawWidget_, this);
+				
 	
 }; // end of LineGraph.draw()
 
@@ -305,34 +305,35 @@ LineGraph.prototype.drawData_ = function ()
 			
 		// get rid of any trace groups without data
 		traces.exit().remove();
-
-		// autokey entries which have no key with the data index
-		traces.each(function (d, i) { 
-					// if there is no key assigned, make one from the index
-					d.key = 'key' in d ? d.key : i.toString();
-					});
 					
 		// create trace groups for trace data that didn't exist when we last bound the data
 		traces.enter().append("g")
-			.attr("class", "traces")
+			.attr("class", function(d, i) {return "traces stroke" + i;})
 			.append("path")
 			//pick the colors sequentially off the list
-				.attr("class", function(d, i) {return "trace stroke" + i;})
+				
 				.attr("clip-path", "url(#" + clipId + ")");
 			
 		// update the data on all traces, new and old
 		traces.select("path")
 			//use the line function defined above to set the path data
 				.attr("d", function(d) {return line(d);});
-			
+		
+		// autokey entries which have no key with the data index
+		traces.each(function (d, i) { 
+					// if there is no key assigned, make one from the index
+					d.key = 'key' in d ? d.key : i.toString();
+					});
+					
 		this.lastdrawn.traces = graph.selectAll("g.traces");
-	
-		if (this.liteKey)
-		{
-			traces.attr("class", "traces liteable")
-				  .attr("id", function (d, i) {return linesId + "_" + this.liteKey[i];});
-		}
-	}
+		
+		traces.on('click',
+				function (d, i)
+				{
+					that.eventManager.publish(that.selectedEventId, {selectKey: d.key});
+				});
+				
+	} // end if statement to draw lines
 
 	// draw the points
 	if (this.type == "points" || this.type == "lines+points")
@@ -355,6 +356,10 @@ LineGraph.prototype.drawData_ = function ()
 					d.key = 'key' in d ? d.key : i.toString();
 					});
 
+		// make a clean selection of all series (sets of points)
+		// for subsequent use in highlighting
+		this.lastdrawn.series = graph.selectAll("g.series");
+
 		// rebind the point data of each series to the point groups
 		// (the data of the series is an array of point data)
 		var points = series.selectAll("g.points") 
@@ -369,10 +374,9 @@ LineGraph.prototype.drawData_ = function ()
 		
 		// update the data on all points (new and old)
 		points
-			.attr("transform", function (d)
-							   {
-								   // move each symbol to the x,y coordinates in scale
-								   return "translate(" + xScale(d.x) + "," + yScale(d.y) + ")";
+			.attr("transform", function (d){
+						// move each symbol to the x,y coordinates in scale
+						return "translate(" + xScale(d.x) + "," + yScale(d.y) + ")";
 							   })
 			.append("path")
 				.attr("d", 
@@ -384,7 +388,7 @@ LineGraph.prototype.drawData_ = function ()
 						return (d3.svg.symbol().type(d3.svg.symbolTypes[j])());
 					});
 	}
-}; // end of LineGraph.drawData_()
+} // end of LineGraph.drawData_()
 
 /* **************************************************************************
  * LineGraph.append                                                     *//**
@@ -433,25 +437,41 @@ LineGraph.prototype.append_one_ = function(widget)
 }; // end of LineGraph.append_one_()
 
 /* **************************************************************************
- * LineGraph.lineLite                                                   *//**
+ * LineGraph.lite                                                      *//**
  *
- * lineLite ...
+ * Highlight the label(s) associated w/ the given liteKey (key) and
+ * remove any highlighting on all other labels.
  *
- * @param {?}	liteKey	-...
+ * @param {string}	liteKey	-The key associated with the label(s) to be highlighted.
  *
  ****************************************************************************/
-LineGraph.prototype.lineLite = function(liteKey)
+LineGraph.prototype.lite = function(liteKey)
 {
-	if (this.traces[liteKey])
+	
+	console.log("TODO: log fired LineGraph highlite " + liteKey);
+	
+	// Turn off all current highlights
+	var allTraces = this.lastdrawn.traces;
+	allTraces
+		.classed("lit", false);
+		
+	//var allSeries = this.lastdrawn.series;
+	//allSeries
+		//.classed("lit", false);
+
+	// create a filter function that will match all instances of the liteKey
+	// then find the set that matches
+	var matchesLabelIndex = function (d, i) { return d.key === liteKey; };
+	
+	var linesToLite = allTraces.filter(matchesLabelIndex);
+
+	// Highlight the labels w/ the matching key
+	linesToLite
+		.classed("lit", true);
+
+	if (linesToLite.empty())
 	{
-		//put all lines back to normal width (clear old state)
-		d3.selectAll("#" + this.lastdrawn.linesId).transition().duration(100).style("stroke-width", 2);
-		//emphasize the line selected
-		d3.select("#" + this.lastdrawn.linesId + liteKey).style("stroke-width", 4);
-		return liteKey;
+		console.log("No key '" + liteKey + "' in line graph " + this.id );
 	}
-	else
-	{
-		console.log("Invalid key. No trace " + liteKey);
-	}
+
 };

@@ -1,10 +1,11 @@
 /* **************************************************************************
- * $Workfile:: widget-button.js                                          $
+ * $Workfile:: widget-button.js                                             $
  * **********************************************************************//**
  *
  * @fileoverview Implementation of the button widget.
  *
- * The button widget creates an HTML5 button for setting numerical values.
+ * The button widget creates an HTML5 button which publishes (fires) an
+ * event when clicked using the event manager.
  *
  * Created on		May 8, 2013
  * @author			Jordan Vishniac
@@ -24,22 +25,21 @@
 });
 	
 /* **************************************************************************
- * button                                                             *//**
+ * Button                                                               *//**
  *
  * @constructor
  *
  * The button widget creates a clickable button that publishes events.
  *
  * @param {Object}		config		-The settings to configure this button
- * @param {String}		config.id	-String to uniquely identify this button
- * @param {String}		config.text	-The text to be displayed on the button
+ * @param {string}		config.id	-String to uniquely identify this button
+ * @param {string}		config.text	-The text to be displayed on the button
  *
  * @param {Object}		eventManager
  *
  * NOTES: firefox doesn't support HTML5 buttons, they degrade to numeric input
  * fields.
  **************************************************************************/
-
 function Button(config, eventManager)
 {
 	/**
@@ -48,19 +48,33 @@ function Button(config, eventManager)
 	 */
 	this.id = config.id;
 	
-	if (config.text == null) this.text = "Default text";
-	else this.text = config.text;
-	
+	/**
+	 * The event manager to use to publish (and subscribe to) events for this widget
+	 * @type {EventManager}
+	 */
 	this.eventManager = eventManager;
 	
-	this.pressedEventId = this.id + 'Pressed';
+	/**
+	 * The event id published when this button is clicked.
+	 * @const
+	 * @type {string}
+	 */
+	this.pressedEventId = this.id + '_Pressed';
 	
-	// draw button
-	this.rootEl = $('<div><button type="button">' + this.text + '</button></div>');
+	var text = config.text !== undefined ? config.text : "Default text";
+	
+	/**
+	 * The root element of the element tree for this button. It should
+	 * be appended into the document where it is expected to be displayed.
+	 * @type {Element}
+	 * @private
+	 *
+	 */
+	this.rootEl_ = $('<div><button type="button">' + text + '</button></div>');
 	
 	// publish events when clicked
 	var that = this;
-	$("button", this.rootEl).click(
+	$("button", this.rootEl_).click(
 		function()
 		{
 			that.eventManager.publish(that.pressedEventId);
@@ -68,21 +82,41 @@ function Button(config, eventManager)
 	
 } // end of button constructor
 
+/* **************************************************************************
+ * Button.setText                                                       *//**
+ *
+ * This method sets the text displayed on the button to the given string
+ *
+ * @param {string}		text	- the text to be displayed on the button
+ *
+ **************************************************************************/
 Button.prototype.setText = function(text)
-{
+{	
 	// Update the DOM in getRootEl
-	var b = $("button", this.rootEl);
+	var b = $("button", this.rootEl_);
 	var t = b.text();
-	$("button", this.rootEl).text(text);
+	$("button", this.rootEl_).text(text);
 }
 
+/* **************************************************************************
+ * Button.getText                                                       *//**
+ *
+ * This method retrieves the text currently displayed on the button,
+ *
+ **************************************************************************/
 Button.prototype.getText = function()
 {
-	return $("button", this.rootEl).text();
+	return $("button", this.rootEl_).text();
 }
 
+/* **************************************************************************
+ * Button.getRootEl                                                     *//**
+ *
+ * Get the root element of this button widget.
+ *
+ **************************************************************************/
 Button.prototype.getRootEl = function()
 {
-	return this.rootEl;
+	return this.rootEl_;
 }
 

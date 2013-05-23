@@ -178,6 +178,20 @@ Sketch.prototype.draw = function(container, size)
 		.attr("id", this.lastdrawn.sketchId)
 		.attr("class","widgetSketch");
 	
+	
+	// definition of arrowheads if you need 'em
+	sketchContainer.append("defs").append("marker")
+		.attr("id","triangle")
+		.attr("viewBox","0 0 10 10")
+		.attr("refX","0")
+		.attr("refY","5")
+		.attr("markerUnits","strokeWidth")
+		.attr("markerWidth","4")
+		.attr("markerHeight","3")
+		.attr("orient","auto")
+			.append("path")
+			.attr("d","M 0 0 L 10 5 L 0 10 z");
+			
 	this.lastdrawn.widgetGroup = sketchContainer;
 
 	this.redraw();
@@ -225,17 +239,11 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 	
 	var sketchContainer = this.lastdrawn.widgetGroup;
 	
-	// bind the sketch group collection to the data
-	// the collection is used to highlight and unhighlight
-	var drawCollection = sketchContainer.selectAll("g.shape").data(this.drawShape);
-					
-	// move the sketch objects into position, but do it on the data collection, which 
-	// includes both the update and the enter selections, so you can drag them around
-	// on a suitable event or redraw.
+	// get the collection of shapes
+	var drawCollection = sketchContainer.selectAll("g.shape");
 
 	// get collection of rectangles			  
-	var rectangles = drawCollection.selectAll("rect")
-		.data(function (d,i) {return d.shape == "rectangle"? d.data : []; });
+	var rectangles = drawCollection.selectAll("rect");
 	// add the given offset to the x and y positions
 	rectangles.transition()
 		.attr("x", function(d) { d.xyPos[0] = d.xyPos[0] + xOffset;
@@ -245,8 +253,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 		.duration(duration).delay(delay);
 	
 	// get collection of circles
-	var circles = drawCollection.selectAll("circle")
-		.data(function (d,i) {return d.shape == "circle"? d.data : []; });
+	var circles = drawCollection.selectAll("circle");
 	// add the given offset to the x and y positions
 	circles.transition()
 		.attr("cx", function(d) { d.xyPos[0] = d.xyPos[0] + xOffset;
@@ -257,8 +264,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 	
 	
 	// get collection of hexagons
-	var hexagons = drawCollection.selectAll("polygon.hex")
-		.data(function (d) { return d.shape == "hexagon"? d.data : []; });
+	var hexagons = drawCollection.selectAll("polygon.hex");
 	// translate the points based on the given offset
 	hexagons.transition()
 		.attr("points",
@@ -294,8 +300,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 		.duration(duration).delay(delay);
 	
 	// get collection of triangles
-	var triangles = drawCollection.selectAll("polygon.tri")
-		.data(function (d) { return d.shape == "triangle"? d.data : []; });
+	var triangles = drawCollection.selectAll("polygon.tri");
 	// translate the points based on the given offset
 	triangles.transition()
 		.attr("points",
@@ -329,18 +334,27 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 	
 	
 	// get collection of lines
-	var lines = drawCollection.selectAll("line")
-		.data(function (d) { return d.shape == "line"? d.data : []; });
+	var lines = drawCollection.selectAll("line");
 	// add the given offset to the x and y positions of both endpoints
 	lines.transition()
-		.attr("x1", function(d) { d.xyPos[0] = d.xyPos[0] + xOffset; 
-								return xScale(d.xyPos[0]); })
-		.attr("y1", function(d) { d.xyPos[1] = d.xyPos[1] + yOffset;
-								return yScale(d.xyPos[1]); })
-		.attr("x2", function(d) { d.xyEnd[0] = d.xyEnd[0] + xOffset;
-								return xScale(d.xyEnd[0]); })
-		.attr("y2", function(d) { d.xyEnd[1] = d.xyEnd[1] + yOffset;
-								return yScale(d.xyEnd[1]); })
+		.attr("x1", function(d) 
+			{
+				d.xyPos[0] = d.xyPos[0] + xOffset; 
+				return xScale(d.xyPos[0]);
+			})
+		.attr("y1", function(d)
+			{
+				d.xyPos[1] = d.xyPos[1] + yOffset;
+				return yScale(d.xyPos[1]);
+			})
+		.attr("x2", function(d)
+			{ 
+				return xScale(d.length * Math.cos(d.angle) + d.xyPos[0]);
+			})
+		.attr("y2", function(d)
+			{ 
+				return yScale(d.length * Math.sin(d.angle) + d.xyPos[1]);
+			})
 		.duration(duration).delay(delay);
 
 	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
@@ -476,7 +490,7 @@ Sketch.prototype.redraw = function ()
 				return (left+","+bot)+" "+(right+","+bot)+" "+(mid+","+top);
 			});
 
-
+/*
 	var lines = drawCollection.selectAll("line")
 		.data(function (d) { return d.shape == "line"? d.data : []; });
 	lines.enter().append("line");
@@ -485,6 +499,39 @@ Sketch.prototype.redraw = function ()
 		.attr("y1", function(d) { return yScale(d.xyPos[1]); })
 		.attr("x2", function(d) { return xScale(d.xyEnd[0]); })
 		.attr("y2", function(d) { return yScale(d.xyEnd[1]); });
+
+*/
+
+	var lines = drawCollection.selectAll("line")
+	.data(function (d) { return d.shape == "line"? d.data : []; });
+	lines.enter().append("line");
+	lines.exit().remove();
+	lines
+		.attr("x1",function(d) { return xScale(d.xyPos[0]);})
+		.attr("y1",function(d) { return yScale(d.xyPos[1]);})		
+		// calculate the endpoint given the length and angle
+		.attr("x2",function(d) { 
+					return xScale(d.length * Math.cos(d.angle) + d.xyPos[0]);
+					})
+		.attr("y2",function(d) { 
+					return yScale(d.length * Math.sin(d.angle) + d.xyPos[1]);
+					});
+	
+	lines.each(function (d, i) { 
+					// if type is a vector, put a triangle on the end
+					if(d.type == "vector"){
+						lines.attr("marker-end","url(#triangle)");
+							}
+						});
+
+
+	var textBits = drawCollection.selectAll("textBits")
+		.data(function (d) { return d.shape == "textBit"? d.data : []; });
+	textBits.enter().append("text");
+	textBits.exit().remove();
+	textBits.attr("x", function(d) { return xScale(d.xyPos[0]); })
+		.attr("y", function(d) { return yScale(d.xyPos[1]); })
+		.text(function(d) { return d.text;});
 
 
 	drawCollection.on('click',

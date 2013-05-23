@@ -8,11 +8,6 @@
 /* highlights                                      
 ===================================================*/
 
-.lit {
-  fill: none;
-  stroke-width: 4px;
-  stroke: #f49524;
-}
 
 /* Images
 ================================================== */
@@ -32,6 +27,37 @@ svg g.widgetImage.lit>rect.highlight
 	fill-opacity:	0.0;
 	stroke:			blue;
 	stroke-opacity:	0.8;	
+}
+
+svg g.widgetCaptionedImage div.widgetImageCaption
+{
+	text-align:		center;
+}
+
+svg g.widgetCarousel>rect.background
+{
+	fill:			#4f00ef;
+	fill-opacity:	0.0;
+}
+
+svg g.widgetCarousel>g.widgetItem>rect.selection
+{
+	fill:			#4f00ef;
+	fill-opacity:	0.0;
+	stroke:			blue;
+	stroke-opacity:	0.0;	
+}
+
+svg g.widgetCarousel>g.widgetItem.selected>rect.selection
+{
+	fill-opacity:	0.1;
+	stroke-opacity:	0.8;	
+}
+
+svg g.widgetImageViewer>rect.background
+{
+	fill-opacity:	0.0;
+	stroke-width:	0;
 }
 
 /* Labels
@@ -63,6 +89,7 @@ svg g.widgetLabel.lit .descLabel
 	font-weight: 600;
 	background-color: #e3effe;
 }
+
 
 /* tables of callouts
 ================================================== */
@@ -102,7 +129,6 @@ svg g.widgetSketch .shape {
 
 svg g.widgetSketch .shape > .hex {
 	fill: none;
-	color: #fff;
 	stroke: #666;
 	stroke-width: 2;
 }
@@ -114,6 +140,12 @@ svg g.widgetSketch .shape.lit {
 	opacity: 0.5;
 }
 
+svg g.widgetSketch .shape>text {
+	fill: #333;
+	stroke: none;
+	font: bold italic 1.1em Times, serif;
+  
+}
 
 /* Math and questions
 ================================================== */
@@ -353,60 +385,75 @@ table.questionTable td {
   stroke: #3A87AD;
   stroke-width: 1px; }
 
+
+/* LineGraph and legends highlights and styles
+================================================== */
+
+svg g.widgetLineGraph .traces 
+{
+  opacity:		0.8;
+  fill: none;
+  stroke-width: 3; 
+}
+
+svg g.widgetLineGraph .traces.lit  
+{
+	opacity:		1;
+	stroke-width:	5;
+}
+
+svg g .stroke0 {
+  stroke: #2C6CB8; }
+
+svg g .stroke1 {
+  stroke: #66A62E; }
+
+svg g .stroke2 {
+  stroke: #E8B12E; }
+
+svg g .stroke3 {
+  stroke: #6B4FB8; }
+
+svg g .stroke4 {
+  stroke: #D44C17; }
+
+svg g .stroke5 {
+  stroke: #E39014; }
+
+svg g .stroke6 {
+  stroke: #666666; }
+
 /* bars, lines and points
 ================================================== */
 .bar {
   opacity: 0.8; }
 
-.trace {
-  fill: none;
-  stroke-width: 4px; }
 
-.fill0 {
+svg g .fill0 {
   fill: #2C6CB8; }
 
-.fill1 {
+svg g .fill1 {
   fill: #66A62E; }
 
-.fill2 {
+svg g .fill2 {
   fill: #E8B12E; }
 
-.fill3 {
+svg g .fill3 {
   fill: #6B4FB8; }
 
-.fill4 {
+svg g .fill4 {
   fill: #D44C17; }
 
-.fill5 {
+svg g .fill5 {
   fill: #E39014; }
 
-.fill6 {
+svg g .fill6 {
   fill: #666666; }
 
-.fillWhite {
+svg g .fillWhite {
   fill: #fff;
 }
 
-.stroke0 {
-  stroke: #2C6CB8; }
-
-.stroke1 {
-  stroke: #66A62E; }
-
-.stroke2 {
-  stroke: #E8B12E; }
-
-.stroke3 {
-  stroke: #6B4FB8; }
-
-.stroke4 {
-  stroke: #D44C17; }
-
-.stroke5 {
-  stroke: #E39014; }
-
-.stroke6 {
-  stroke: #666666; }
 
 /* zoom and pan widget 
 ================================================== */

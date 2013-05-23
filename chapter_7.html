@@ -20,7 +20,7 @@
     <style>
 	body
 	{
-	    background-image:url('img/ch7_0_1.png');
+	    background-image:url('img/ch7_0_0.png');
 	    background-repeat:no-repeat;
 	    background-position:center;
 	    background-size:cover;
@@ -31,24 +31,30 @@
 
 	<!-- Body Content -->
 	<div class="container">
+		
+		<h2 class="setTitle">Chapter 7: Stereoisomerism</h2>
+		
 		<div class="row-fluid">
+			
 			<div class="span6 leftCol">
 				
-				<h2 class="setTitle">Stereoisomerism</h2>
                 <p><b>Looking back:</b></p>
 				<p>To begin this chapter you should be familiar with: <b>bonding</b>, <b>molecular geometry</b>, <b>structure</b>, and <b>conformations</b> of molecules.</p>
+				
 				<p><b>To be discovered:</b></p>
 				<p>In this chapter, you will explore the symmetry and asymmetry of molecules. The arrangement of atoms in space for a molecule has consequences for its identity, physical properties, and reactivity. Two compounds displaying identical atomic connectivity, but with a different three-dimensional atomic arrangement, may exhibit significantly dissimilar behavior.</p>
-				<p><b>Chapter Skills</b></p>
+				
+				<p><b>Chapter Skills:</b></p>
 				<p><b>1. Identifying symmetry elements</b><br>
 				<b>2. Identifying stereogenic centers</b><br>
 				<b>3. Assigning stereochemical configuration</b><br>
 				<b>4. Drawing stereoisomers</b><br>
 				<b>5. Identifying a meso compound</b><br>
 				<b>6. Calculating specific rotation</b><br></p>
+				
 				<p><b>Looking forward:</b></p>
 				<p>Stereoisomerism permeates nearly all aspects of organic chemistry. It is an inseparable part of many chemical reactions. Recognition of when and how it is applied is a required skill. Every chapter that follows will have some degree of dependency on stereoisomerism.</p>
-				
+			
 			</div>
 			<div class="span6 rightCol">
 				
@@ -57,6 +63,39 @@
 				
 				<div id="animation"></div>
 				
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6 leftCol">
+				
+				<div id="picture1"></div>
+				
+			</div>
+			<div class="span6 rightCol">
+				
+					<p><b>Connections to Nature:</b></p>
+					<p>The prevalence of right-handedness has had important consequences in our society. Approximately ninety percent of humans are right-handed. This preference was an important consideration in early architecture and construction design.</p> 
+
+					<p>Of particular note are the spiral staircases in many medieval castles. They share a fascinating structural feature in that they generally ascend in a clockwise pattern. This improved the defensibility of the castle. An invading combatant (most commonly right-handed) would find that the central pillar of the staircase restricts their attack.</p>
+
+					<p>Conversely, the defender would have greater space to maneuver their weapon. A subset of some armies was trained to fight exclusively with their left hands to counter this defensive feature and improve their tactical chances.</p>
+					
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span6 leftCol">
+				
+				<p><b>Connections to the Health Professions:</b></p>
+				<p>Place your hand over your heart. The odds are excellent that you took your right hand and placed it on the left side of your chest. A person with the congenital condition of situs inversus with dextrocardia, however, would need to do the opposite to accomplish this.</p>
+
+				<p>Situs inversus (Latin, inverted position) affects less than 0.01% of the population. This condition takes two forms. In situs inversus with levocardia (Latin., levo-, left) the heart remains in its normal position , but the other organs are switched. In situs inversus with dextrocardia (Latin, dextro-, right) all of the internal organs are switched including the heart.</p>
+
+				<p>Computed tomography (CT) scanning and magnetic resonance imaging (MRI) are commonly used to identify the condition. Diagnosing this condition before surgery would be necessary. Individuals who need an organ transplant require special consideration. The heart has a “handedness” to it. With dextrocardia the heart not only resides on the left, but it is the mirror image of a normal heart. Receiving a donor heart from a person not affected by the condition requires careful reorientation of the blood vessels.</p>		
+				
+			</div>
+			<div class="span6 rightCol">
+				
+				<div id="picture2"></div>
 				
 			</div>
 		</div>
@@ -72,11 +111,9 @@
 
 	<script src="js/widget-base.js"></script>
     <script src="js/widgets.js"></script>
-	<script src="js/widget-linegraph.js"></script>
-    <script src="js/widget-callouts.js"></script>
-	<script src="js/widget-labelgroup.js"></script>
 	<script src="js/widget-button.js"></script>
 	<script src="js/widget-sketch.js"></script>
+	<script src="js/widget-image.js"></script>
 	
     <script src="js/eventmanager.js"></script>
 
@@ -85,8 +122,10 @@
 // make event manager
 var eventManager = new EventManager ();
 
+/////////////////////////////////////////////
+
 // make svg container to go in right column
-var svgBox = new SVGContainer({
+var svg0 = new SVGContainer({
 		node: d3.select("#animation"),
 		maxWid: 300,
 		maxHt: 300
@@ -97,9 +136,9 @@ var mole = new Sketch({
 			id: "molecule",
 			drawShape: 	
 			[	
-				{ shape: "line", data: [{ xyPos: [0, 2], xyEnd: [.4, 1.8] }]},
-				{ shape: "line", data: [{ xyPos: [.4, 1.8], xyEnd: [.8, 2] }]},
-				{ shape: "line", data: [{ xyPos: [.8, 2], xyEnd: [1.1, 1.8] }]},
+				{ shape: "line", data: [{ xyPos: [0, .65], length: .1, angle: -Math.PI/6 }]},
+				{ shape: "line", data: [{ xyPos: [.085, .6], length: .1, angle: Math.PI/6 }]},
+				{ shape: "line", data: [{ xyPos: [.17, .65], length: .08, angle: -Math.PI/5 }]},
 			],
 		});
 		
@@ -107,9 +146,9 @@ var mole2 = new Sketch({
 			id: "molecule2",
 			drawShape:
 			[
-				{ shape: "line", data: [{ xyPos: [3.7, 1.8], xyEnd: [4, 2] }]},
-				{ shape: "line", data: [{ xyPos: [4, 2], xyEnd: [4.4, 1.8] }]},
-				{ shape: "line", data: [{ xyPos: [4.4, 1.8], xyEnd: [4.8, 2] }]},
+				{ shape: "line", data: [{ xyPos: [1, .65], length: .1, angle: 7/6*Math.PI }]},
+				{ shape: "line", data: [{ xyPos: [.915, .6], length: .1, angle: 5/6*Math.PI }]},
+				{ shape: "line", data: [{ xyPos: [.83, .65], length: .08, angle: 6/5*Math.PI }]},
 			],
 		});
 		
@@ -117,19 +156,19 @@ var mirror = new Sketch({
 			id: "mirror",
 			drawShape:
 			[
-				{ shape: "line", data: [{ xyPos: [2.1, 2.2], xyEnd: [2.1, 1.2] }]},
-				{ shape: "line", data: [{ xyPos: [2.1, 1.2], xyEnd: [2.7, 1.6] }]},
-				{ shape: "line", data: [{ xyPos: [2.7, 1.6], xyEnd: [2.7, 2.6] }]},
-				{ shape: "line", data: [{ xyPos: [2.7, 2.6], xyEnd: [2.1, 2.2] }]}
+				{ shape: "line", data: [{ xyPos: [.45, .4], length: .4, angle: Math.PI/2 }]},
+				{ shape: "line", data: [{ xyPos: [.45, .8], length: .14, angle: Math.PI/4 }]},
+				{ shape: "line", data: [{ xyPos: [.55, .9], length: .4, angle: -Math.PI/2 }]},
+				{ shape: "line", data: [{ xyPos: [.55, .5], length: .14, angle: 5/4*Math.PI }]},
 			],
 		});
 		
 // draw the molecule inside the svg container
-svgBox.append(mole, {topPercentOffset: .6, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+svg0.append(mole, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
-svgBox.append(mole2, {topPercentOffset: .6, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+svg0.append(mole2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
-svgBox.append(mirror, {topPercentOffset: .6, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+svg0.append(mirror, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
 		
 var button = new Button ({
@@ -143,15 +182,87 @@ eventManager.subscribe(button.pressedEventId, handleClick);
 
 function handleClick()
 {
-	var dur = 1000;
-	
-	mole.move(1.25, 0, dur, 0);
-	mole2.move(-1.25, 0, dur, 0);
-	mole.move(-1.25, 0, dur, dur);
-	mole2.move(1.25, 0, dur, dur);
+	mole.move(.25, 0, 800, 0);
+	mole2.move(-.25, 0, 800, 0);
+	mole.move(0, 0, 200, 800);
+	mole2.move(0, 0, 200, 800);
+	mole.move(-.25, 0, 800, 1000);
+	mole2.move(.25, 0, 800, 1000);
 }
 
+//////////////////////////////////////////
 
+var svg1 = new MakeSVGContainer(
+	{node: d3.select("#picture1"),
+	maxWid: 800,
+	maxHt: 600
+	}
+);
+
+svg1.Axes({
+	xPosPerc: 0, yPosPerc:0,
+	xPerc: .5, yPerc: 1,//full height and half width
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg1.ScalableImage(
+	{images: [
+			{URI:'img/ch7_0_1.png', caption: "Ascending a clockwise staircase for a right-handed swordsman is truly fighting an uphill battle."}]
+	});
+	
+svg1.Axes({
+	xPosPerc: .5, yPosPerc: 0,
+	xPerc: .5, yPerc: 1,//full height 
+	xaxisType: "linear", yaxisType: "linear",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg1.ScalableImage( 
+	{images: [
+			{URI:'img/ch7_0_2.png', caption: "The defender, if right-handed, has more room to maneuver the weapon. Further, the defender maintains an advantage by holding the higher ground.]"}]
+	});
+	
+/////////////////////////////////////////////
+
+var svg2 = new MakeSVGContainer(
+	{node: d3.select("#picture2"),
+	maxWid: 800,
+	maxHt: 400
+	}
+);
+
+svg2.Axes({
+	xPosPerc: 0, yPosPerc:0,
+	xPerc: .5, yPerc: 1,//full height and half width
+	xaxisType: "linear", yaxisType: "ordinal",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg2.ScalableImage(
+	{images: [
+			{URI:'img/ch7_0_3.png', caption: "Chest computed tomography scan obtained at the level of the aortic outflow tract in a 40-year-old man with situs inversus and dextrocardia. This image shows reversal of the normal cardiac anatomy. The left atrium (LA), right atrium (RA), left ventricle (LV), and right ventricle (RV) are shown. The descending aorta (DA) is on the right."}]
+	});
+	
+svg2.Axes({
+	xPosPerc: .5, yPosPerc: 0,
+	xPerc: .5, yPerc: 1,//full height 
+	xaxisType: "linear", yaxisType: "linear",
+	xOrient: "bottom",
+	yOrient: "left",
+	xLabel: "population"
+});
+
+svg2.ScalableImage( 
+	{images: [
+			{URI:'img/ch7_0_4.png', caption: "An image of the reversal of the heart and other organs in situs inversus with dextrocardia."}]
+	});
 
 
 </script>

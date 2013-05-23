@@ -11,241 +11,240 @@ var bookConfig = {
         ordinal: "7",
         title: "Stereoisomerism",
         children: [
-
-        {   type: "module",
-            url: "module_7.1.html",
+        {
+            type: "module",
+            url: "7.1/module_7.1.html",
             id: "7.1",
-            title: "Stereoisomerism [Inactive link]",
+            title: "Stereoisomerism",
             children: [
             {
                 type: "objective",
-                url: "objective_7.1.1.html",
+                url: "7.1/section_7.1.1.html",
                 id: "7.1.1",
-                title: "Stereoisomerism in Alkenes [Inactive link]"
+                title: "Stereoisomerism in Alkenes"
             },
             {
                 type: "objective",
-                url: "objective_7.1.2.html",
+                url: "7.1/section_7.1.2.html",
                 id: "7.1.2",
-                title: "Stereoisomerism at Tetrahedral Carbon [Inactive link]"
+                title: "Stereoisomerism at Tetrahedral Carbon"
             },
             {
                 type: "objective",
-                url: "objective_7.1.3.html",
+                url: "7.1/section_7.1.3.html",
                 id: "7.1.3",
-                title: "Stereoisomerism in Allenes [Inactive link]"
+                title: "Stereoisomerism in Allenes"
             },
             {
                 type: "objective",
-                url: "objective_7.1.4.html",
+                url: "7.1/section_7.1.4.html",
                 id: "7.1.4",
-                title: "Stereoisomerism in Biphenyl and Related Derivatives [Inactive link]"
+                title: "Stereoisomerism in Biphenyl and Related Derivatives"
             },
-	    {
-		type: "objective",
-		url: "objective_7.1.5.html",
-		id: "7.1.5",
-		title: "Stereocenters involving Heteroatoms [Inactive link]"
-	    },
+			{
+                type: "objective",
+                url: "7.1/section_7.1.5.html",
+                id: "7.1.5",
+                title: "Stereocenters Involving Heteroatoms"
+            },
             ]
         },
         {
             type: "module",
-            url: "module_7.2.html",
+            url: "7.2/module_7.2.html",
             id: "7.2",
-            title: "Sequence Rules and Assignment of Configuration [Inactive link]",
+            title: "Sequence Rules and Assignment of Configuration",
             children: [
             {
                 type: "objective",
-                url: "objective_7.2.1.html",
+                url: "7.2/section_7.2.1.html",
                 id: "7.2.1",
-                title: "The Cahn-Ingold-Prelof {CIP} Sequence Rules [Inactive link]"
+                title: "The Cahn-Ingold-Prelog (CIP) Sequence Rules"
             },
             {
                 type: "objective",
-                url: "objective_7.2.2.html",
+                url: "7.2/section_7.2.2.html",
                 id: "7.2.2",
-                title: "E and Z Descriptors [Inactive link]"
+                title: "E and Z Descriptors"
             },
             {
                 type: "objective",
-                url: "objective_7.2.3.html",
+                url: "7.2/section_7.2.3.html",
                 id: "7.2.3",
-                title: "R and S Descriptors [Inactive link]"
+                title: "R and S Descriptors"
             },
             {
                 type: "objective",
-                url: "objective_7.2.4.html",
+                url: "7.2/section_7.2.4.html",
                 id: "7.2.4",
-                title: "Ra and Sa Descriptors [Inactive link]"
-            } ,
+                title: "Ra and Sa Descriptors"
+            },
             {
                 type: "objective",
-                url: "objective_7.2.5.html",
+                url: "7.2/section_7.2.5.html",
                 id: "7.2.5",
-                title: "Fischer Projections [Inactive link]"
+                title: "Fischer Projections"
             },
             ]
         },
-	{
+        {
             type: "module",
-            url: "module_7.3.html",
+            url: "7.3/module_7.3.html",
             id: "7.3",
-            title: "Chirality [Inactive link]",
+            title: "Chirality",
             children: [
             {
                 type: "objective",
-                url: "objective_7.3.1.html",
+                url: "7.3/section_7.3.1.html",
                 id: "7.3.1",
-                title: "Enantiomers  [Inactive link]"
+                title: "Enantiomers"
             },
             {
                 type: "objective",
-                url: "objective_7.3.2.html",
+                url: "7.3/section_7.3.2.html",
                 id: "7.3.2",
-                title: "Symmetry Elements [Inactive link]"
+                title: "Symmetry Elements"
             },
-	    {
+            {
                 type: "objective",
-                url: "objective_7.3.3.html",
+                url: "7.3/section_7.3.3.html",
                 id: "7.3.3",
-                title: "Chirality and Symmetry [Inactive link]"
+                title: "Chirality and Symmetry"
             }, 
-			{
+            {
                 type: "objective",
-                url: "objective_7.3.4.html",
+                url: "7.3/section_7.3.4.html",
                 id: "7.3.4",
-                title: "Diastereomers [Inactive link]"
+                title: "Diastereomers"
+            },
+            {
+                type: "objective",
+                url: "7.3/section_7.3.5.html",
+                id: "7.3.5",
+                title: "Meso Compounds"
             },
 			{
                 type: "objective",
-                url: "objective_7.3.5.html",
-                id: "7.3.5",
-                title: "Meso Compounds [Inactive link]"
+                url: "7.3/section_7.3.6.html",
+                id: "7.3.6",
+                title: "Alkenes and Allenes"
             },
-	    {
-		type: "objective",
-		url: "objective_7.3.6.html",
-		id: "7.3.6",
-		title: "Alkenes and Allenes [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.3.7.html",
-		id: "7.3.7",
-		title: "Counting Stereoisomers [Inactive link]"
-	    },
-	    ]
-	},
-	{
-	    type: "module",
-            url: "module_7.4.html",
+			{
+                type: "objective",
+                url: "7.3/section_7.3.7.html",
+                id: "7.3.7",
+                title: "Counting Stereoisomers"
+            },
+            ]
+		},
+		{
+            type: "module",
+            url: "7.4/module_7.4.html",
             id: "7.4",
-            title: "Physical Properties [Inactive link]",
+            title: "Physical Properties",
             children: [
-	    {
-		type: "objective",
-		url: "objective_7.4.1.html",
-		id: "7.4.1",
-		title: "Optical Activity [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.4.2.html",
-		id: "7.4.2",
-		title: "Racemic, Scalemic, and Enantiopure Samples [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.4.3.html",
-		id: "7.4.3",
-		title: "Stereochemical Topicity [Inactive link]"
-	    },
-	    ]
-	},
-	{
-	    type: "module",
-            url: "module_7.5.html",
+            {
+                type: "objective",
+                url: "7.4/section_7.4.1.html",
+                id: "7.4.1",
+                title: "Optical Activity"
+            },
+            {
+                type: "objective",
+                url: "7.4/section_7.4.2.html",
+                id: "7.4.2",
+                title: "Racemic, Scalemic, and Enantiopure Samples"
+            },
+			{
+                type: "objective",
+                url: "7.4/section_7.4.3.html",
+                id: "7.4.3",
+                title: "Stereochemical Topicity"
+            },
+            ]
+        },
+		{
+            type: "module",
+            url: "7.5/module_7.5.html",
             id: "7.5",
-            title: "Stereoisomerism, Energy, and Time Scales [Inactive link]",
+            title: "Stereoisomerism, Energy, and Time Scales",
             children: [
-	    {
-		type: "objective",
-		url: "objective_7.5.1.html",
-		id: "7.5.1",
-		title: "Conformational and Configurational Stereoisomerism [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.5.2.html",
-		id: "7.5.2",
-		title: "Stereocenters with Lone Pairs [Inactive link]",
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.5.3.html",
-		id: "7.5.3",
-		title: "Stereochemical Stability of Allenes [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.5.4.html",
-		id: "7.5.4",
-		title: "Rotamers [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.5.5.html",
-		id: "7.5.5",
-		title: "Rotamers [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.5.6.html",
-		id: "7.5.6",
-		title: "Disubstituted Cyclohexanes - A Case of Conformational Stereoisomerism [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.5.7",
-		id: "7.5.7",
-		title: "Low Temperature Isolation of Stereoisomers [Inactive link]"
-	    },
-	    ]
-	},
-	{
-	    type: "module",
-	    url: "module_7.6.html",
-	    id: "7.6",
-	    title: "Resolution of Enantiomers [Inactive link]",
-	    children: [
-	    {
-		type: "objective",
-		url: "objecive_7.6.1.html",
-		id: "7.6.1",
-		title: "Resolution by Way of Diastereomer Formation [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.6.2.html",
-		id: "7.6.2",
-		title: "Enzymatic Resolution [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.6.3.html",
-		id: "7.6.3",
-		title: "Chromatographic Resolution [Inactive link]"
-	    },
-	    {
-		type: "objective",
-		url: "objective_7.6.4.html",
-		id: "7.6.4",
-		title: "Spontaneous Resolution [Inactive link]"
-	    },
-	    ]
-	}
-		
+            {
+                type: "objective",
+                url: "7.5/section_7.5.1.html",
+                id: "7.5.1",
+                title: "Conformational and Configurational Stereoisomerism"
+            },
+            {
+                type: "objective",
+                url: "7.5/section_7.5.2.html",
+                id: "7.5.2",
+                title: "Stereocenters with Lone Pairs"
+            },
+			{
+                type: "objective",
+                url: "7.5/section_7.5.3.html",
+                id: "7.5.3",
+                title: "Stereochemical Stability of Alkenes"
+            },
+			{
+                type: "objective",
+                url: "7.5/section_7.5.4.html",
+                id: "7.5.4",
+                title: "Rotamers"
+            },
+			{
+                type: "objective",
+                url: "7.5/section_7.5.5.html",
+                id: "7.5.5",
+                title: "Rotamers"
+            },
+			{
+                type: "objective",
+                url: "7.5/section_7.5.6.html",
+                id: "7.5.6",
+                title: "Disubstituted Cyclohexanes - A Case of Conformational Stereoisomerism"
+            },
+			{
+                type: "objective",
+                url: "7.5/section_7.5.7.html",
+                id: "7.5.7",
+                title: "Low Temperature Isolation of Stereoisomerism"
+            },
+            ]
+		},
+		{
+            type: "module",
+            url: "7.6/module_7.6.html",
+            id: "7.6",
+            title: "Resolution of Enantiomers",
+            children: [
+            {
+                type: "objective",
+                url: "7.6/section_7.6.1.html",
+                id: "7.6.1",
+                title: "Resolution by Way of Diastereomer Formation"
+            },
+            {
+                type: "objective",
+                url: "7.6/section_7.6.2.html",
+                id: "7.6.2",
+                title: "Enzymatic Resolution"
+            },
+			{
+                type: "objective",
+                url: "7.6/section_7.6.3.html",
+                id: "7.6.3",
+                title: "Chromatographic Resolution"
+            },
+			{
+                type: "objective",
+                url: "7.6/section_7.6.4.html",
+                id: "7.6.4",
+                title: "Spontaneous Resolution"
+            },
+            ]
+		},
         ]
     }
     ]
@@ -331,5 +330,3 @@ function determineCurrentTier(config) {
 massageBookConfig(bookConfig);
 var thisTier = determineCurrentTier(bookConfig); // global scope for use in subsequent js
 //alert(thisTier.title);
-
-

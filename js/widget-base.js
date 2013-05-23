@@ -61,6 +61,48 @@ function attrFnVal(fnName)
 	return fnCallStr;
 }
 
+/* **************************************************************************
+ * getIdFromConfigOrAuto                                                *//**
+ *
+ * Utility method that returns the id property of the config object or
+ * uses the autoIdCount and autoIdPrefix properties of the class to return
+ * the next auto assigned id for that class.
+ *
+ * @param {Object}		config		-object containing optional string id property.
+ * @param {Object}		autoIdClass	-class object to supply the auto id
+ *
+ * @return {string} id from config or generated.
+ *
+ * @todo seems like this would be better as a static base class method once
+ *       we have a base class for widgets.
+ ****************************************************************************/
+function getIdFromConfigOrAuto(config, autoIdClass)
+{
+	if (config.id !== undefined)
+	{
+		return config.id;
+	}
+
+	// Get the next auto id from the class
+	// handle missing auto id properties
+	if (!('autoIdCount' in autoIdClass))
+	{
+		autoIdClass.autoIdCount = 0;
+	}
+
+	if (!('autoIdPrefix' in autoIdClass))
+	{
+		autoIdClass.autoIdPrefix = "auto" + (++getIdFromConfigOrAuto.autoPrefixCount) + "_";
+	}
+
+	return autoIdClass.autoIdPrefix + (++autoIdClass.autoIdCount);
+}
+
+/**
+ * Count of class autoIdPrefix properties that have been set by getIdFromConfigOrAuto.
+ */
+getIdFromConfigOrAuto.autoPrefixCount = 0;
+
 //Tests for logFormat function
 console.log("logFormat 10^-2 produces negative decade tick label -2", logFormat(Math.pow(10, -2)) == -2);
 console.log("logFormat 2*10^-3 produces no tick label", logFormat(2 * Math.pow(10, -3)) == "");

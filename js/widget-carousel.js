@@ -4,11 +4,10 @@
  *
  * @fileoverview Implementation of the Carousel widget.
  *
- * The Image widget draws a scaled image in an SVGContainer.
- * The CaptionedImage widget draws a caption next to an Image.
+ * The Carousel widget draws a collection of images in an SVGContainer and
+ * allows one of them to be selected.
  *
  * Created on		May 04, 2013
- * @author			Leslie Bondaryk
  * @author			Michael Jay Lippert
  *
  * Copyright (c) 2013 Pearson, All rights reserved.
@@ -33,16 +32,16 @@
 /* **************************************************************************
  * Carousel                                                             *//**
  *
- * The Carousel widget draws an image in an SVGContainer.
- *
- * The Image is frequently used by other widgets, or drawn under other
- * widgets such as LabelGroups.
+ * The Carousel widget draws a collection of images in an SVGContainer and
+ * allows one of them to be selected.
  *
  * @constructor
  * @implements {IWidget}
  *
  * @param {Object}		config			-The settings to configure this Carousel
- * @param {string}		config.id		-String to uniquely identify this Carousel.
+ * @param {string|undefined}
+ * 						config.id		-String to uniquely identify this Carousel.
+ * 										 if undefined a unique id will be assigned.
  * @param {Array.<IWidget>}
  *						config.items	-The list of widgets to be presented by the Carousel.
  * @param {string}		config.layout	-How the carousel will layout the items (vertical or horizontal).
@@ -67,10 +66,10 @@ function Carousel(config, eventManager)
 	var that = this;
 	
 	/**
-	 * A unique id for this instance of the image widget
+	 * A unique id for this instance of the carousel widget
 	 * @type {string}
 	 */
-	this.id = config.id;
+	this.id = getIdFromConfigOrAuto(config, Carousel);
 
 	/**
 	 * The list of widgets presented by the Carousel.
@@ -125,10 +124,6 @@ function Carousel(config, eventManager)
 	 * @property {string} selectKey	-The key associated with the selected item.
 	 */
 
-	// TODO: Using the selection event may not be the way we want to set highlighting internally
-	// because I'm not sure if 2 items have the same key we still want to highlight both?
-	eventManager.subscribe(this.selectedEventId, function (eventDetails) {that.lite(eventDetails.selectKey);});
-	 
 	/**
 	 * Information about the last drawn instance of this image (from the draw method)
 	 * @type {Object}
@@ -139,7 +134,14 @@ function Carousel(config, eventManager)
 			size: {height: 0, width: 0},
 			widgetGroup: null,
 		};
-} // end of Image constructor
+} // end of Carousel constructor
+
+/**
+ * Prefix to use when generating ids for instances of LabelGroup.
+ * @const
+ * @type {string}
+ */
+Carousel.autoIdPrefix = "crsl_auto_";
 
 /* **************************************************************************
  * Carousel.draw                                                        *//**
@@ -168,8 +170,8 @@ Carousel.prototype.draw = function(container, size)
 	// Carve the width up for the n items
 	var itemCnt = this.items.length;
 	var itemSize = {height: size.height - (itemMargin.top + itemMargin.bottom),
-					width: d3.round(size.width / (itemCnt ? itemCnt : 1)
-									- (itemMargin.left + itemMargin.right))};
+					width: size.width / (itemCnt ? itemCnt : 1)
+									- (itemMargin.left + itemMargin.right)};
 
 	// function used to place each item into its correct position
 	var translateItem =
@@ -192,9 +194,9 @@ Carousel.prototype.draw = function(container, size)
 	// Rect for the background of the carousel
 	widgetGroup
 		.append("rect")
+			.attr("class", "background")
 			.attr("width", size.width)
-			.attr("height", size.height)
-			.attr("fill", "#efefef");	// TODO: move this to css selector: 'g.widgetCarousel>rect' -mjl
+			.attr("height", size.height);
 
 	// Create a group for each item then draw the item in that group
 	itemGroups = widgetGroup.selectAll("g.widgetItem").data(this.items);
@@ -205,19 +207,26 @@ Carousel.prototype.draw = function(container, size)
 			.each(function (d)
 				  {
 					  d.draw(d3.select(this), itemSize);
-				  });
+				  })
+			.append("rect")
+				.attr("class", "selection")
+				.attr("width", itemSize.width + 2)
+				.attr("height", itemSize.height + 2)
+				.attr("stroke-width", 2)
+				.attr("x", -1)
+				.attr("y", -1);
 	
 	// position each item
 	itemGroups
 		.attr("transform", translateItem);
 
 	itemGroups.on('click',
-				  function (d)
+				  function (d, i)
 				  {
-					  that.eventManager.publish(that.selectedEventId, {selectKey: d.key});
+					  that.selectItemAtIndex(i);
 				  });
 				
-	this.widgetGroup = widgetGroup;
+	this.lastdrawn.widgetGroup = widgetGroup;
 
 }; // end of Carousel.draw()
 
@@ -237,6 +246,69 @@ Carousel.prototype.redraw = function ()
 	
 	var desc = image.select("desc");
 	desc.text(this.caption);
+};
+
+/* **************************************************************************
+ * Carousel.selectedItem                                                *//**
+ *
+ * Return the selected item in the carousel.
+ *
+ * @return {Object} the carousel item which is currently selected.
+ *
+ ****************************************************************************/
+Carousel.prototype.selectedItem = function ()
+{
+	return this.lastdrawn.widgetGroup.select("g.widgetItem.selected").datum();
+};
+
+/* **************************************************************************
+ * Carousel.selectItemAtIndex                                           *//**
+ *
+ * Select the item in the carousel at the given index.
+ *
+ * @param {number}	index	-the 0-based index of the item to flag as selected.
+ *
+ ****************************************************************************/
+Carousel.prototype.selectItemAtIndex = function (index)
+{
+	var itemGroups = this.lastdrawn.widgetGroup.selectAll("g.widgetItem");
+	itemGroups.classed("selected", false);
+
+	var selectedItemGroup = d3.select(itemGroups[0][index]);
+	selectedItemGroup.classed("selected", true);
+
+	this.eventManager.publish(this.selectedEventId, {selectKey: selectedItemGroup.datum().key});
+};
+
+/* **************************************************************************
+ * Carousel.calcOptimumHeightForWidth                                   *//**
+ *
+ * Calculate the optimum height for this carousel laid out horizontally
+ * to fit within the given width.
+ *
+ * @param {number}	width	-The width available to lay out the images in the carousel.
+ *
+ * @return {number) The optimum height for the carousel to display its items
+ * 					in the given width.
+ *
+ ****************************************************************************/
+Carousel.prototype.calcOptimumHeightForWidth = function (width)
+{
+	// Carve the width up for the n items
+	var itemCnt = this.items.length;
+	var itemWidth = width / itemCnt - (this.itemMargin.left + this.itemMargin.right);
+
+	var getHeight = function (item)
+	{
+		var hwRatio = item.actualSize.height / item.actualSize.width;
+		return itemWidth * hwRatio;
+	};
+
+	// Try optimum being the average height
+	var itemHeights = this.items.map(getHeight);
+	var heightSum = itemHeights.reduce(function (pv, cv) {return pv + cv;});
+
+	return (heightSum / itemCnt) + this.itemMargin.top + this.itemMargin.bottom;
 };
 
 /* **************************************************************************
