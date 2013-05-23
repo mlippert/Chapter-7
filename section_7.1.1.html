@@ -210,9 +210,9 @@ var sketch0_3 = new Sketch ({
 		id: "sketch0_3",
 		drawShape:
 		[
-			{ shape: "line", data: [{ xyPos: [.78, .8], length: .1, angle: 0 }]},
-			{ shape: "line", data: [{ xyPos: [.78, .82], length: .1, angle: 0 }]},
-			{ shape: "line", data: [{ xyPos: [.78, .8], length: .1, angle:  -4*Math.PI/5 }]},
+			{ shape: "line", data: [{ xyPos: [.76, .8], length: .1, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.76, .82], length: .1, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.76, .8], length: .1, angle:  -4*Math.PI/5 }]},
 		]
 	});
 	
@@ -220,8 +220,25 @@ var sketch0_4 = new Sketch ({
 		id: "sketch0_4",
 		drawShape:
 		[
-			{ shape: "line", data: [{ xyPos: [.78, .8], length: .08, angle:  3*Math.PI/4 }]},
-			{ shape: "textBit", data: [{ xyPos: [.7, .88], text: 'H' }]},
+			{ shape: "line", data: [{ xyPos: [.76, .8], length: .08, angle:  3*Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.68, .88], text: 'H' }]},
+		]
+	});
+	
+var sketch0_5 = new Sketch ({
+		id: "sketch0_5",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.86, .8], length: .1, angle:  Math.PI/5 }]},
+		]
+	});
+	
+var sketch0_6 = new Sketch ({
+		id: "sketch0_6",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.86, .8], length: .08, angle:  -Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.96, .72], text: 'H' }]},
 		]
 	});
 	
@@ -229,6 +246,8 @@ svg0.append(sketch0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg0.append(sketch0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
 var button0_1 = new Button ({
 		id: "b0_1",
@@ -249,19 +268,23 @@ eventManager.subscribe(button0_2.pressedEventId, handleClick0_2);
 function handleClick0_1 ()
 {
 	sketch0_2.reflect(null, .8, 500, 0);
+	sketch0_5.reflect(null, .8, 500, 0);
+	sketch0_6.reflect(null, .8, 500, 0);
 }
-var opaque0 = false;
+var opaque0 = true;
 function handleClick0_2 ()
 {
-	if (!opaque0)
+	if (opaque0)
 	{
 		sketch0_4.setOpacity(0, 500, 0);
+		sketch0_6.setOpacity(0, 500, 0);
 		opaque0 = false;
 	}
 	else
 	{
 		sketch0_4.setOpacity(1, 500, 0);
-		opaque0 = 1;
+		sketch0_6.setOpacity(1, 500, 0);
+		opaque0 = true;
 	}
 	
 }
