@@ -26,7 +26,7 @@
 				{ shape: "circle",	xyPos: [5, 5], radius:  2 }, 
 				{ shape: "hexagon",	xyPos: [3,3], side:  1 },
 				{ shape: "triangle", xyPos: [4, 4], side: 2 },
-				{ shape: "line",	xyPos: [1,1], xyEnd:  [5,5] },
+				{ shape: "line",	xyPos: [1,1], length: .5, angle: Math.PI/3 },
 			],
 		};
 });
@@ -41,8 +41,10 @@
  * @property {number}	width	- width of rectange, local coordinates
  * @property {number}	height	- height of rectange, local coordinates
  * @property {number}	radius	- radius of circle or hex, local coordinates
- * @property {Array.<nummber, number>}
- *						xyEnd	- xy local coordinates of end points of lines
+ * @property {number}
+ *						length	- local scale length of line
+ * @property {number}
+ *						angle	- angle of line from start point in radians
  * @property {string|undefined}
  *						key		-optional string used to reference the sketch object
  *								 in order to manipulate it (such as highlight it).

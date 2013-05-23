@@ -1,3 +1,8 @@
+# Files we don't want in *this* repository #
+############################################
+# Windows shortcut files
+*.lnk
+
 # Compiled source #
 ###################
 *.com

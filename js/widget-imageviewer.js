@@ -185,9 +185,9 @@ ImageViewer.prototype.draw = function(container, size)
 			.attr("height", size.height);
 
 	// calculate the optimum carousel height for the given width, but don't let
-	// it be greater than 35% of the total height of this ImageViewer.
+	// it be greater than 20% of the total height of this ImageViewer.
 	var carouselHeight = Math.min(this.carousel.calcOptimumHeightForWidth(size.width),
-								  0.35 * size.height);
+								  0.2 * size.height);
 
 	// Carousel goes at the top
 	var carouselGroup = widgetGroup.append("g");

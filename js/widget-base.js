@@ -480,7 +480,10 @@ function SVGContainer(config)
  * the 1st widget will be set on the other widgets before calling draw.
  *
  * @param {Object}	svgWidgets		-The widget or array of widgets to draw in the container
- * @param {Object}	location		-The location in the container where the widget should be placed.
+ * @param {Object|undefined}
+ * 					location		-optional. The location in the container where the
+ * 									 widget should be placed. If not specified the entire
+ * 									 container will be used.
  * @param {number}	location.topPercentOffset
  *									-Fraction offset of the top of the widget.
  * @param {number}	location.leftPercentOffset
@@ -493,7 +496,7 @@ function SVGContainer(config)
  ****************************************************************************/
 SVGContainer.prototype.append = function(svgWidgets, location)
 {
-	if (!$.isArray(svgWidgets))
+	if (!Array.isArray(svgWidgets))
 	{
 		this.append_one_(svgWidgets, location);
 	}
@@ -520,7 +523,10 @@ SVGContainer.prototype.append = function(svgWidgets, location)
  * specified location within it.
  *
  * @param {Object}	svgWidget		-The widget to draw in the container
- * @param {Object}	location		-The location in the container where the widget should be placed.
+ * @param {Object|undefined}
+ * 					location		-optional. The location in the container where the
+ * 									 widget should be placed. If not specified the entire
+ * 									 container will be used.
  * @param {number}	location.topPercentOffset
  *									-Fraction offset of the top of the widget.
  * @param {number}	location.leftPercentOffset
@@ -535,6 +541,10 @@ SVGContainer.prototype.append = function(svgWidgets, location)
  ****************************************************************************/
 SVGContainer.prototype.append_one_ = function(svgWidget, location)
 {
+	if (location === undefined)
+	{
+		location = {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1};
+	}
 	// create a group for the widget to draw into that we can then position
 	var g = this.svgObj.append('g').attr("class", "widget");
 	var h = d3.round(location.heightPercent * this.maxHt);
@@ -741,7 +751,7 @@ function Axes(container, config)
 		console.log("x extent is two elements" , this.xFmt.extent.length == 2);
 		//Check if explicit ticks are specified, and if so, use them as the mapped range of the graph width
 		//ignore the actual data range
-		var xExtent = ($.isArray(xTicks)) ? d3.extent(xTicks) : this.xFmt.extent;
+		var xExtent = (Array.isArray(xTicks)) ? d3.extent(xTicks) : this.xFmt.extent;
 
 		if (this.xFmt.type == "linear")
 		{
@@ -836,7 +846,7 @@ function Axes(container, config)
 		}
 		else
 		{
-			$.isArray(xTicks) ? (this.xAxis.tickValues(xTicks)) : (this.xAxis.ticks(xTicks));
+			Array.isArray(xTicks) ? (this.xAxis.tickValues(xTicks)) : (this.xAxis.ticks(xTicks));
 		}
 
 		//now draw the horizontal axis
@@ -894,7 +904,7 @@ function Axes(container, config)
 				this.yFmt.extent[0] = 0;
 			}
 
-			var yExtent = ($.isArray(yTicks)) ? d3.extent(yTicks) : this.yFmt.extent;
+			var yExtent = (Array.isArray(yTicks)) ? d3.extent(yTicks) : this.yFmt.extent;
 
 			if (this.yFmt.type == "linear")
 			{
@@ -912,9 +922,9 @@ function Axes(container, config)
 			.tickPadding(3);
 
 		//if y ticks are specified explicitly, use them
-		$.isArray(yTicks) ? (this.yAxis.tickValues(yTicks)) : (this.yAxis.ticks(yTicks));
+		Array.isArray(yTicks) ? (this.yAxis.tickValues(yTicks)) : (this.yAxis.ticks(yTicks));
 		//test tick type switch
-		console.log("ytick specified explicitly?", yTicks, $.isArray(yTicks), this.yAxis.ticks());
+		console.log("ytick specified explicitly?", yTicks, Array.isArray(yTicks), this.yAxis.ticks());
 
 		this.yaxis = this.group.append("g")
 			.attr("transform", "translate(" + ((yOrient == "right") ? dataAreaWidth : 0) + ",0)")
@@ -940,7 +950,9 @@ function Axes(container, config)
 					.html(this.yFmt.label) //make the label
 				;
 
-			console.log("label size ", $('#label' + this.id).height());
+			/* this requires jquery be loaded, and I've otherwise removed
+			 * jquery as a dependency of this file -mjl
+			console.log("label size ", $('#label' + this.id).height());*/
 			
 			//toDO use this to correctly move to the left of axis
 		}

@@ -90,11 +90,12 @@ function LineGraph(config)
 	this.yAxisFormat = config.yAxisFormat;
 
 	/**
-	 * List of child widgets which are to be drawn in this line graph's data area.
+	 * List of child widgets which are to be drawn before and after this
+	 * line graph's data in its data area.
 	 * Child widgets are added using LineGraph.append.
-	 * @type {Array.<IWidget>}
+	 * @type {beforeData: Array.<IWidget>, afterData: Array.<IWidget>}
 	 */
-	this.childWidgets = [];
+	this.childWidgets = {beforeData: [], afterData: []};
 	
 	/**
 	 * Information about the last drawn instance of this line graph (from the draw method)
@@ -122,6 +123,29 @@ function LineGraph(config)
  */
 LineGraph.autoIdPrefix = "lgrf_auto_";
 
+
+/* **************************************************************************
+ * LineGraph.clearLastdrawn_                                            *//**
+ *
+ * Clear the lastdrawn property by setting all of its properties back to their
+ * initial values.
+ *
+ * @private
+ *
+ ****************************************************************************/
+LineGraph.prototype.clearLastdrawn_ = function ()
+{
+	this.lastdrawn.container = null;
+	this.lastdrawn.size = {height: 0, width: 0};
+	this.lastdrawn.dataRect = new Rect(0, 0, 0, 0);
+	this.lastdrawn.linesId = this.id + '_lines';
+	this.lastdrawn.axes = null;
+	this.lastdrawn.xScale = null;
+	this.lastdrawn.yScale = null;
+	this.lastdrawn.graph = null;
+	this.lastdrawn.traces = null;
+	this.lastdrawn.series = null;
+};
 
 /* **************************************************************************
  * LineGraph.draw                                                       *//**
@@ -182,6 +206,9 @@ LineGraph.prototype.draw = function(container, size)
 
 	var clipId = linesId + "_clip";
 
+	// Draw any 'before' child widgets that got appended before draw was called
+	this.childWidgets.beforeData.forEach(this.drawWidget_, this);
+
 	var graph = axesDrawn.group.append("g") //make a group to hold new lines
 		.attr("class","widgetLineGraph").attr("id", linesId);
 	
@@ -205,9 +232,8 @@ LineGraph.prototype.draw = function(container, size)
 	// Draw the data (traces and/or points as specified by the graph type)
 	this.drawData_();
 
-	// Draw any child widgets that got appended before draw was called
-	this.childWidgets.forEach(this.drawWidget_, this);
-				
+	// Draw any 'after' child widgets that got appended before draw was called
+	this.childWidgets.afterData.forEach(this.drawWidget_, this);
 	
 }; // end of LineGraph.draw()
 
@@ -225,9 +251,9 @@ LineGraph.prototype.redraw = function ()
 
 	// TODO: Do we want to allow calling redraw before draw (ie handle it gracefully
 	//       by doing nothing? -mjl
+	this.childWidgets.beforeData.forEach(this.redrawWidget_, this);
 	this.drawData_();
-	
-	this.childWidgets.forEach(this.redrawWidget_, this);
+	this.childWidgets.afterData.forEach(this.redrawWidget_, this);
 };
 
 /* **************************************************************************
@@ -401,17 +427,35 @@ LineGraph.prototype.drawData_ = function ()
  * @param {!IWidget|Array.<IWidget>}
  * 						svgWidgets	-The widget or array of widgets to be drawn in
  *									 this line graph's data area.
+ * @param {string|undefined}
+ * 						zOrder		-Optional. Specifies whether to append this
+ * 									 widget to the list of widgets that are
+ * 									 drawn before the graph data or the list that
+ * 									 is drawn after. "after" | "before", defaults
+ * 									 to "after".
  *
  ****************************************************************************/
-LineGraph.prototype.append = function(svgWidgets)
+LineGraph.prototype.append = function(svgWidgets, zOrder)
 {
-	if (!$.isArray(svgWidgets))
+	if (!Array.isArray(svgWidgets))
 	{
-		this.append_one_(svgWidgets);
+		this.append_one_(svgWidgets, zOrder);
 	}
 	else
 	{
-		svgWidgets.forEach(this.append_one_, this);
+		svgWidgets.forEach(function (w) {this.append_one_(w, zOrder);}, this);
+	}
+
+	// Deal w/ drawing the appended widgets before already drawn data.
+	if (zOrder === "before" && this.lastdrawn.container != null)
+	{
+		// we need to remove the existing drawn elements and execute draw again
+		var container = this.lastdrawn.container;
+		var size = this.lastdrawn.size;
+		var axes = this.lastdrawn.axes;
+		this.clearLastdrawn_();
+		axes.group.remove();
+		this.draw(container, size);
 	}
 		
 }; // end of LineGraph.append()
@@ -420,19 +464,35 @@ LineGraph.prototype.append = function(svgWidgets)
  * LineGraph.append_one_                                                *//**
  *
  * Helper for append that does the work needed to append a single widget.
+ * This can handle drawing the widget after the data even after the data
+ * has been drawn, but it does not handle drawning the widget before when
+ * the data has already been drawn, so the caller must deal with that situation.
  *
  * @param {!IWidget}	widget	-The widget which is to be drawn in this line
  *								 graph's data area.
+ * @param {string|undefined}
+ * 						zOrder	-Optional. Specifies whether to append this
+ * 								 widget to the list of widgets that are
+ * 								 drawn before the graph data or the list that
+ * 								 is drawn after. "after" | "before", defaults
+ * 								 to "after".
  *
  * @private
  *
  ****************************************************************************/
-LineGraph.prototype.append_one_ = function(widget)
+LineGraph.prototype.append_one_ = function(widget, zOrder)
 {
-	this.childWidgets.push(widget);
+	if (zOrder === "before")
+	{
+		this.childWidgets.beforeData.push(widget);
+	}
+	else
+	{
+		this.childWidgets.afterData.push(widget);
 	
-	if (this.lastdrawn.container !== null)
-		this.drawWidget_(widget);
+		if (this.lastdrawn.container !== null)
+			this.drawWidget_(widget);
+	}
 		
 }; // end of LineGraph.append_one_()
 
