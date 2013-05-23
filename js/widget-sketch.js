@@ -27,6 +27,7 @@
 				{ shape: "hexagon",	xyPos: [3,3], side:  1 },
 				{ shape: "triangle", xyPos: [4, 4], side: 2 },
 				{ shape: "line",	xyPos: [1,1], length: .5, angle: Math.PI/3 },
+				{ shape: "wedge", xyPos: [2, 4], length: .5, width: .2, angle: Math.PI/6 }
 			],
 		};
 });
@@ -265,7 +266,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 		.duration(duration).delay(delay);
 	
 	
-	// get collection of hexagons
+	// get collection of polygons
 	var polygons = drawCollection.selectAll("polygon");
 	// translate the points based on the given offset
 	polygons.transition()
@@ -318,7 +319,9 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 			})
 		.duration(duration).delay(delay);
 		
+	// get collection of textBits
 	var textBits = drawCollection.selectAll("text");
+	// add the given offset to the x and y position
 	textBits.transition()
 		.attr("x", function(d)
 			{
@@ -419,7 +422,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 		.duration(duration).delay(delay);
 
 
-	// get collection of hexagons
+	// get collection of polygons
 	var polygons = drawCollection.selectAll("polygon");
 	// reflect over the given lines
 	polygons.transition()
@@ -523,6 +526,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 			})
 		.duration(duration).delay(delay);
 		
+	// get collection of textBits
 	var textBits = drawCollection.selectAll("text");
 	textBits.transition()
 		.attr("x",
@@ -549,6 +553,149 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				}
 				return yScale(d.xyPos[1]);
 			})
+		.duration(duration).delay(delay);
+
+	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
+
+};
+
+/* **************************************************************************
+ * Sketch.rotate                                                  *//**
+ *
+ * Rotate the sketch around a point by a certain number of radians
+ *
+ * @param {number}		xPivot		- x value of the point to be rotated around
+ * @param {number}		yPivot		- y value of the point to be rotated around
+ * @param {number}		angle		- the angle of rotation in radians
+ * @param {number}		duration	- the duration of the transition in milliseconds
+ * @param {number}		delay		- the delay before the transition starts in milliseconds
+ *
+ ****************************************************************************/
+
+// TODO: Need to find a good way of doing rotation that will work for all object types
+
+/*Sketch.prototype.rotate = function (xPivot, yPivot, angle, duration, delay)
+{
+	var xScale = this.lastdrawn.xScale;
+	var yScale = this.lastdrawn.yScale;
+
+	var sketchContainer = this.lastdrawn.widgetGroup;
+
+	// get the collection of shapes
+	var drawCollection = sketchContainer.selectAll("g.shape");
+
+	// get collection of rectangles			  
+	var rectangles = drawCollection.selectAll("rect");
+	// reflect over the given lines
+	rectangles.transition()
+		.attr("x",
+			function(d)
+			{
+				
+			})
+		.attr("y",
+			function(d)
+			{
+				
+			})
+		.duration(duration).delay(delay);
+
+	// get collection of circles
+	var circles = drawCollection.selectAll("circle");
+	// reflect over the given lines
+	circles.transition()
+		.attr("cx",
+			function(d)
+			{
+				
+			})
+		.attr("cy",
+			function(d)
+			{
+				
+			})
+		.duration(duration).delay(delay);
+
+
+	// get collection of polygons
+	var polygons = drawCollection.selectAll("polygon");
+	// reflect over the given lines
+	polygons.transition()
+		.attr("points",
+			function(d)
+			{
+				
+			})
+		.duration(duration).delay(delay);
+
+	// get collection of lines
+	var lines = drawCollection.selectAll("line");
+	// reflect over the given lines
+	lines.transition()
+		.attr("x1",
+			function(d) 
+			{
+				
+			})
+		.attr("y1",
+			function(d)
+			{
+				
+			})
+		.attr("x2",
+			function(d)
+			{ 
+				
+			})
+		.attr("y2",
+			function(d)
+			{ 
+				
+			})
+		.duration(duration).delay(delay);
+		
+	// get collection of textBits
+	var textBits = drawCollection.selectAll("text");
+	textBits.transition()
+		.attr("x",
+			function(d)
+			{
+				
+			})
+		.attr("y",
+			function(d)
+			{
+				
+			})
+		.duration(duration).delay(delay);
+
+	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
+
+};*/
+
+/* **************************************************************************
+ * Sketch.setOpacity                                                  *//**
+ *
+ * Set the opacity of the sketch
+ *
+ * @param {number}		opacity		- opacity value to be set to (0: transparent, 1: opaque)
+ * @param {number}		duration	- the duration of the transition in milliseconds
+ * @param {number}		delay		- the delay before the transition starts in milliseconds
+ *
+ ****************************************************************************/
+
+Sketch.prototype.setOpacity = function (opacity, duration, delay)
+{
+	var xScale = this.lastdrawn.xScale;
+	var yScale = this.lastdrawn.yScale;
+
+	var sketchContainer = this.lastdrawn.widgetGroup;
+
+	// get the collection of shapes
+	var drawCollection = sketchContainer.selectAll("g.shape");
+
+	drawCollection.transition()
+		.style('opacity', opacity)
 		.duration(duration).delay(delay);
 
 	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
@@ -686,6 +833,33 @@ Sketch.prototype.redraw = function ()
 				d["points"] = (left+","+bot)+" "+(right+","+bot)+" "+(mid+","+top);
 				return d.points;
 			});
+			
+	var wedges = drawCollection.selectAll("polygon.wedge")
+		.data(function (d) { return d.shape == "wedge"? d.data : []; });
+	wedges.enter().append("polygon").attr("class", "wedge");
+	wedges.exit().remove();
+	wedges.attr("points", 
+			function(d)
+			{
+				var flatx = d.length * Math.cos(d.angle) + d.xyPos[0];
+				var flaty = d.length * Math.sin(d.angle) + d.xyPos[1];
+							
+				var angle = d.angle + Math.PI/2;
+				
+				var tip1x = xScale(flatx + d.width/2*Math.cos(angle));
+				var tip1y = yScale(flaty + d.width/2*Math.sin(angle));
+				var tip2x = xScale(flatx - d.width/2*Math.cos(angle));
+				var tip2y = yScale(flaty - d.width/2*Math.sin(angle));
+				
+				var xpos = xScale(d.xyPos[0]);
+				var ypos = yScale(d.xyPos[1]);
+							
+				d["points"] = (tip1x.toString()+","+tip1y.toString())+" "+
+							(xpos.toString()+","+ypos.toString())+" "+
+							(tip2x.toString()+","+tip2y.toString());
+				return d.points;
+			})
+		.style('fill', 'grey');
 
 /*
 	var lines = drawCollection.selectAll("line")
