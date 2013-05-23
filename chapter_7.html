@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title class="setTitle"></title>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<meta content="Book Author, Book Title" name="description">
+	
+    <!-- Bootstrap -->
+    <link href="css/bootstrap_plus.css" rel="stylesheet" media="screen">
+	<link href="css/graphics_and_svg.css" rel="stylesheet">
+	<link href="css/learning-objective.css" rel="stylesheet">
+	<link href="css/module-opener.css" rel="stylesheet">
+	<link href="css/toc.css" rel="stylesheet">
+	<link href="css/grey-thing.css" rel="stylesheet">
+	<link href="css/widgets.css" rel="stylesheet">
+	<link href="css/eCourse-master.css" rel="stylesheet" media="screen">
+
+    <!-- Move to separate CSS file? -->
+    <style>
+	body
+	{
+	    background-image:url('img/ch7_0_1.png');
+	    background-repeat:no-repeat;
+	    background-position:center;
+	    background-size:cover;
+	}
+    </style>
+    </head>
+<body>
+
+	<!-- Body Content -->
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span6 leftCol">
+				
+				<h2 class="setTitle">Stereoisomerism</h2>
+                <p><b>Looking back:</b></p>
+				<p>To begin this chapter you should be familiar with: <b>bonding</b>, <b>molecular geometry</b>, <b>structure</b>, and <b>conformations</b> of molecules.</p>
+				<p><b>To be discovered:</b></p>
+				<p>In this chapter, you will explore the symmetry and asymmetry of molecules. The arrangement of atoms in space for a molecule has consequences for its identity, physical properties, and reactivity. Two compounds displaying identical atomic connectivity, but with a different three-dimensional atomic arrangement, may exhibit significantly dissimilar behavior.</p>
+				<p><b>Chapter Skills</b></p>
+				<p><b>1. Identifying symmetry elements</b><br>
+				<b>2. Identifying stereogenic centers</b><br>
+				<b>3. Assigning stereochemical configuration</b><br>
+				<b>4. Drawing stereoisomers</b><br>
+				<b>5. Identifying a meso compound</b><br>
+				<b>6. Calculating specific rotation</b><br></p>
+				<p><b>Looking forward:</b></p>
+				<p>Stereoisomerism permeates nearly all aspects of organic chemistry. It is an inseparable part of many chemical reactions. Recognition of when and how it is applied is a required skill. Every chapter that follows will have some degree of dependency on stereoisomerism.</p>
+				
+			</div>
+			<div class="span6 rightCol">
+				
+				<p>Press the button to animate the image</p>
+				<span id="button"></span>
+				
+				<div id="animation"></div>
+				
+				
+			</div>
+		</div>
+    </div>
+
+    <script src="js/jquery-latest.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+	<!--script src="js/jquery.touchSwipe.min.js"></script-->
+	<script src="js/jquery-ui-1.10.2.custom.js"></script>
+    <script src="js/toc-structure.js"></script>    
+    <script src="js/eCourse-master.js"></script>    
+    <script src="js/d3.v3.min.js"></script>
+
+	<script src="js/widget-base.js"></script>
+    <script src="js/widgets.js"></script>
+	<script src="js/widget-linegraph.js"></script>
+    <script src="js/widget-callouts.js"></script>
+	<script src="js/widget-labelgroup.js"></script>
+	<script src="js/widget-button.js"></script>
+	
+	<!-- Currently a second version of the sketch widget -->
+	<script src="js/widget-sketch-2.js"></script>
+	
+    <script src="js/eventmanager.js"></script>
+
+<script>
+
+// make event manager
+var eventManager = new EventManager ();
+
+// make svg container to go in right column
+var svgBox = new SVGContainer({
+		node: d3.select("#animation"),
+		maxWid: 200,
+		maxHt: 200
+	});
+
+// make molecule sketch
+var mole = new Sketch({
+			id: "molecule",
+			drawShape: 	
+			[	
+				{ shape: "circle",	data: [{xyPos: [4, 4], radius: .1 }]},
+				{ shape: "rectangle", data: [{xyPos: [4.2, 4.05], width: .2, height: .1 }]},
+			],
+		});
+		
+// draw the molecule inside the svg container
+svgBox.append(mole, {topPercentOffset: .5, leftPercentOffset: 0, heightPercent: .2, widthPercent: .2});
+
+		
+var button = new Button ({
+		id: "b1",
+		text: "Click"
+	}, eventManager);
+	
+$('#button').append(button.getRootEl());
+
+eventManager.subscribe(button.pressedEventId, handleClick);
+
+function handleClick()
+{
+	mole.move(1, 1, 1000, 0);
+	mole.move (4, 1, 1000, 1000);
+}
+
+
+
+
+</script>
+</body>
+</html>

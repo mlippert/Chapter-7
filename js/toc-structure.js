@@ -2,159 +2,250 @@ var bookConfig = {
     type: "book",
     url: "TOC.html",
     id: "TOC",
-    title: "Player Test Book",
+    title: "Organic Chemistry",
     children: [
     {
         type: "chapter",
-        url: "chapter_n.html",
-        id: "n",
-        ordinal: "n",
-        title: "Player Test Book - Chapter Opener",
+        url: "chapter_7.html",
+        id: "7",
+        ordinal: "7",
+        title: "Stereoisomerism",
         children: [
 
         {   type: "module",
-            url: "module_n.1.html",
-            id: "n.1",
-            title: "Module Opener",
+            url: "module_7.1.html",
+            id: "7.1",
+            title: "Stereoisomerism [Inactive link]",
             children: [
             {
                 type: "objective",
-                url: "even-column.html",
-                id: "n.1.1",
-                title: "Objective Even-Column"
+                url: "objective_7.1.1.html",
+                id: "7.1.1",
+                title: "Stereoisomerism in Alkenes [Inactive link]"
             },
             {
                 type: "objective",
-                url: "major-minor.html",
-                id: "n.1.2",
-                title: "Objective Major-Minor"
+                url: "objective_7.1.2.html",
+                id: "7.1.2",
+                title: "Stereoisomerism at Tetrahedral Carbon [Inactive link]"
             },
             {
                 type: "objective",
-                url: "minor-major.html",
-                id: "n.1.3",
-                title: "Objective Minor-Major"
+                url: "objective_7.1.3.html",
+                id: "7.1.3",
+                title: "Stereoisomerism in Allenes [Inactive link]"
             },
             {
                 type: "objective",
-                url: "rows.html",
-                id: "n.1.4",
-                title: "Objective Rows"
-            }
+                url: "objective_7.1.4.html",
+                id: "7.1.4",
+                title: "Stereoisomerism in Biphenyl and Related Derivatives [Inactive link]"
+            },
+	    {
+		type: "objective",
+		url: "objective_7.1.5.html",
+		id: "7.1.5",
+		title: "Stereocenters involving Heteroatoms [Inactive link]"
+	    },
             ]
         },
         {
             type: "module",
-            url: "module_n.2.html",
-            id: "n.2",
-            title: "Widget Tests",
+            url: "module_7.2.html",
+            id: "7.2",
+            title: "Sequence Rules and Assignment of Configuration [Inactive link]",
             children: [
             {
                 type: "objective",
-                url: "axesTests.html",
-                id: "n.2.1",
-                title: "Axes Tests"
+                url: "objective_7.2.1.html",
+                id: "7.2.1",
+                title: "The Cahn-Ingold-Prelof {CIP} Sequence Rules [Inactive link]"
             },
             {
                 type: "objective",
-                url: "lineGraphTests.html",
-                id: "n.2.2",
-                title: "Line Graph Tests"
+                url: "objective_7.2.2.html",
+                id: "7.2.2",
+                title: "E and Z Descriptors [Inactive link]"
             },
             {
                 type: "objective",
-                url: "barGraphTests.html",
-                id: "n.2.3",
-                title: "Bar Graph Tests"
+                url: "objective_7.2.3.html",
+                id: "7.2.3",
+                title: "R and S Descriptors [Inactive link]"
             },
             {
                 type: "objective",
-                url: "imageTests.html",
-                id: "n.2.4",
-                title: "Image, Carousel Tests"
+                url: "objective_7.2.4.html",
+                id: "7.2.4",
+                title: "Ra and Sa Descriptors [Inactive link]"
             } ,
             {
                 type: "objective",
-                url: "labelCalloutTests.html",
-                id: "n.2.5",
-                title: "Label and Callout Tests"
+                url: "objective_7.2.5.html",
+                id: "7.2.5",
+                title: "Fischer Projections [Inactive link]"
             },
-			 {
-                type: "objective",
-                url: "tableCalloutTests.html",
-                id: "n.2.6",
-                title: "Callouts in Tables or singly"
-            },
-            {
-                type: "objective",
-                url: "pieTests.html",
-                id: "n.2.7",
-                title: "Pie Chart Tests"
-            },
-            {
-                type: "objective",
-                url: "eventmanagerTests.html",
-                id: "n.2.8",
-                title: "Button and Slider Tests"
-            },
-			 {
-                type: "objective",
-                url: "sketchTests.html",
-                id: "n.2.x",
-                title: "Sketch Tests"
-            },
-			{
-				type: "objective",
-				url: "sliderTests.html",
-				id: "n.2.9",
-				title: "Slider and Readout Tests"
-			},
-			{
-				type: "objective",
-				url: "buttonTests.html",
-				id: "n.2.10",
-				title: "Button Tests"
-			},
             ]
         },
-		    {
+	{
             type: "module",
-            url: "module_n.3.html",
-            id: "n.3",
-            title: "Demo Files",
+            url: "module_7.3.html",
+            id: "7.3",
+            title: "Chirality [Inactive link]",
             children: [
             {
                 type: "objective",
-                url: "KantorowskiRotation.html",
-                id: "n.3.1",
-                title: "Kantorowski Enantiomers Event Bars and Rotation"
+                url: "objective_7.3.1.html",
+                id: "7.3.1",
+                title: "Enantiomers  [Inactive link]"
             },
             {
                 type: "objective",
-                url: "NeffReactor.html",
-                id: "n.3.2",
-                title: "Neff Reactor Stepped Image"
+                url: "objective_7.3.2.html",
+                id: "7.3.2",
+                title: "Symmetry Elements [Inactive link]"
             },
-			{
+	    {
                 type: "objective",
-                url: "PhysicsResistance.html",
-                id: "n.3.3",
-                title: "Resistance: Randomized Scatter Data and slider events"
+                url: "objective_7.3.3.html",
+                id: "7.3.3",
+                title: "Chirality and Symmetry [Inactive link]"
             }, 
 			{
                 type: "objective",
-                url: "NeffPopPredictions.html",
-                id: "n.3.4",
-                title: "Neff Population Predictions Updating Lines"
+                url: "objective_7.3.4.html",
+                id: "7.3.4",
+                title: "Diastereomers [Inactive link]"
             },
 			{
                 type: "objective",
-                url: "RitterImages.html",
-                id: "n.3.5",
-                title: "Ritter Image Carousel and Callouts"
+                url: "objective_7.3.5.html",
+                id: "7.3.5",
+                title: "Meso Compounds [Inactive link]"
             },
-			]
-		}
+	    {
+		type: "objective",
+		url: "objective_7.3.6.html",
+		id: "7.3.6",
+		title: "Alkenes and Allenes [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.3.7.html",
+		id: "7.3.7",
+		title: "Counting Stereoisomers [Inactive link]"
+	    },
+	    ]
+	},
+	{
+	    type: "module",
+            url: "module_7.4.html",
+            id: "7.4",
+            title: "Physical Properties [Inactive link]",
+            children: [
+	    {
+		type: "objective",
+		url: "objective_7.4.1.html",
+		id: "7.4.1",
+		title: "Optical Activity [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.4.2.html",
+		id: "7.4.2",
+		title: "Racemic, Scalemic, and Enantiopure Samples [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.4.3.html",
+		id: "7.4.3",
+		title: "Stereochemical Topicity [Inactive link]"
+	    },
+	    ]
+	},
+	{
+	    type: "module",
+            url: "module_7.5.html",
+            id: "7.5",
+            title: "Stereoisomerism, Energy, and Time Scales [Inactive link]",
+            children: [
+	    {
+		type: "objective",
+		url: "objective_7.5.1.html",
+		id: "7.5.1",
+		title: "Conformational and Configurational Stereoisomerism [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.5.2.html",
+		id: "7.5.2",
+		title: "Stereocenters with Lone Pairs [Inactive link]",
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.5.3.html",
+		id: "7.5.3",
+		title: "Stereochemical Stability of Allenes [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.5.4.html",
+		id: "7.5.4",
+		title: "Rotamers [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.5.5.html",
+		id: "7.5.5",
+		title: "Rotamers [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.5.6.html",
+		id: "7.5.6",
+		title: "Disubstituted Cyclohexanes - A Case of Conformational Stereoisomerism [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.5.7",
+		id: "7.5.7",
+		title: "Low Temperature Isolation of Stereoisomers [Inactive link]"
+	    },
+	    ]
+	},
+	{
+	    type: "module",
+	    url: "module_7.6.html",
+	    id: "7.6",
+	    title: "Resolution of Enantiomers [Inactive link]",
+	    children: [
+	    {
+		type: "objective",
+		url: "objecive_7.6.1.html",
+		id: "7.6.1",
+		title: "Resolution by Way of Diastereomer Formation [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.6.2.html",
+		id: "7.6.2",
+		title: "Enzymatic Resolution [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.6.3.html",
+		id: "7.6.3",
+		title: "Chromatographic Resolution [Inactive link]"
+	    },
+	    {
+		type: "objective",
+		url: "objective_7.6.4.html",
+		id: "7.6.4",
+		title: "Spontaneous Resolution [Inactive link]"
+	    },
+	    ]
+	}
+		
         ]
     }
     ]
@@ -240,3 +331,5 @@ function determineCurrentTier(config) {
 massageBookConfig(bookConfig);
 var thisTier = determineCurrentTier(bookConfig); // global scope for use in subsequent js
 //alert(thisTier.title);
+
+

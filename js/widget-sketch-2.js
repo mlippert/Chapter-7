@@ -206,6 +206,61 @@ Sketch.prototype.setScale = function (xScale, yScale)
 };
 
 /* **************************************************************************
+ * Sketch.move                                                  *//**
+ *
+ * Move the entire sketch by x and y offset values over a period of time
+ *
+ * @param {number}		xOffset		- value of x to be added to current x position
+ * @param {number}		yOffset		- value of y to be added to current y position
+ * @param {number}		duration	- the duration of the transition in milliseconds
+ * @param {number}		delay		- the delay before the transition starts in milliseconds
+ *
+ ****************************************************************************/
+
+Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
+{
+	var xScale = this.lastdrawn.xScale;
+	var yScale = this.lastdrawn.yScale;
+	
+	var xPos = xScale(xOffset);
+	var yPos = yScale(yOffset);
+	
+	var sketchContainer = this.lastdrawn.widgetGroup;
+	
+	// bind the sketch group collection to the data
+	// the collection is used to highlight and unhighlight
+	var drawCollection = sketchContainer.selectAll("g.shape").data(this.drawShape);
+					
+	// move the sketch objects into position, but do it on the data collection, which 
+	// includes both the update and the enter selections, so you can drag them around
+	// on a suitable event or redraw.
+
+				  
+	var rectangles = drawCollection.selectAll("rect")
+		.data(function (d,i) {return d.shape == "rectangle"? d.data : []; });
+	rectangles.transition().attr("x", xPos).attr("y", yPos)
+		.duration(duration).delay(delay);
+	
+	var circles = drawCollection.selectAll("circle")
+		.data(function (d,i) {return d.shape == "circle"? d.data : []; });
+	circles.transition().attr("cx", xPos).attr("cy", yPos)
+		.duration(duration).delay(delay);
+	
+	var polygons = drawCollection.selectAll("polygon")
+		.data(function (d) { return d.shape == "polygon"? d.data : []; });
+	//polygons.transition().attr();
+		
+	var lines = drawCollection.selectAll("lines")
+		.data(function (d) { return d.shape == "line"? d.data : []; });
+	lines.transition().attr("x1", xPos).attr("y1", yPos)
+		.attr("x2", xPos).attr("y2", yPos)
+		.duration(duration).delay(delay);
+
+	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
+	
+};
+
+/* **************************************************************************
  * Sketch.redraw                        	                             *//**
  *
  * Redraw the sketch as it may have been modified in size or draw bits. It will be
@@ -251,14 +306,16 @@ Sketch.prototype.redraw = function ()
 	rectangles.exit().remove();
 	// update the properties on all new or changing rectangles
 	rectangles.attr("width", function(d) { return xScale(d.width)})
-			  .attr("height", function(d) { console.log("height", d.height, yScale(d.height));
+			  	.attr("height", function(d) { console.log("height", d.height, yScale(d.height));
 			  								
-											return yScale(0) - yScale(d.height)});
+											return yScale(0) - yScale(d.height)})
+				.attr("x", function(d) {return xScale(d.xyPos[0]);})
+				.attr("y", function(d) {return yScale(d.xyPos[1]);});
 	
 	// move the rectangles into starting graph coordinate position (bottom left)
-	rectangles.attr("transform", function (d, i)  {
+	/*rectangles.attr("transform", function (d, i)  {
 					return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]));
-				  });
+				  });*/
 	// TODO: we're likely going to want to label the drawBits, but 
 	// I don't need it now, and it's not clear if we should just layer a labelGroup
 	// on it or make them part of the groups that hold each thing.
@@ -292,6 +349,16 @@ Sketch.prototype.redraw = function ()
 					//need to scale these, but it makes the lines too thick
 					//+ "," + attrFnVal("scale", xScale(d.side),xScale(d.side))
 					; } );
+					
+	var triangles = drawCollection.selectAll("polygon.tri")
+		.data(function (d) { return d.shape == "triangle"? d.data : []; });
+	triangles.enter().append("polygon")
+			.attr("class", "tri");
+	triangles.exit().remove();
+	triangles.attr("points", "5,23 33,23 19,0")
+			.attr("transform", function (d, i) {
+					return attrFnVal("translate", xScale(d.xyPos[0]), yScale(d.xyPos[1]))
+			; } );
 
 
 	var lines = drawCollection.selectAll("lines")
