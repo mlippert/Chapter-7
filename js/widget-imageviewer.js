@@ -277,7 +277,8 @@ ImageViewer.prototype.lite = function (liteKey)
 	console.log("called ImageViewer.lite( " + liteKey + " )");
 
 	this.carousel.lite(liteKey);
-	this.image.lite(liteKey);
+	//this.image.lite(liteKey);
+	this.selectItemAtIndex(liteKey);
 	
 }; // end of ImageViewer.lite()
 

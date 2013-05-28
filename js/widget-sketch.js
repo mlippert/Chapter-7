@@ -913,7 +913,7 @@ Sketch.prototype.redraw = function ()
 					  if (fragments[i-1])
 					  {
 						  node.append("tspan").text(fragments[i-1])
-						  	.attr("font-size", "10px")
+						  	.attr("font-size", "16px")
 							.attr("text-anchor", "middle");
 					  }
 
@@ -921,7 +921,7 @@ Sketch.prototype.redraw = function ()
 					  node.append("tspan")
 						  .attr("baseline-shift", "sub")
 						  .text(fragments[i])
-						  .attr("font-size", "6px")
+						  .attr("font-size", "12px")
 						  .attr("text-anchor", "middle");
 				  }
 				
@@ -930,7 +930,7 @@ Sketch.prototype.redraw = function ()
 				  if (last)
 				  {
 				  	  node.append("tspan").text(last)	
-						  .attr("font-size", "10px")
+						  .attr("font-size", "16px")
 						  .attr("text-anchor", "middle");
 				  }
 			  });
