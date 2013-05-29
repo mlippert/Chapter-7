@@ -19,13 +19,10 @@
 <body>
 	
 	<!-- Body Content -->
-	<div class="container">
-		
-		<h2 class="setTitle">7.1.1 Stereoisomerism in Alkenes</h2>
-		
+	<div class="container-fluid">
 		<div class="row-fluid">
-			<div class="span6">
-            	
+			<div class="span6 left-col">
+            	<h2 class="setTitle">7.1.1 Stereoisomerism in Alkenes</h2>
 				<p>Consider but-2-ene for which the connectivity can be described as a CH3 group bonded to a CH, which in turn is doubly bonded to another CH, and then finally singly bonded to a CH3 group. Yet, due to the trigonal planar geometry about the alkenyl carbons, there are two possible ways to express this structure, both of which are shown. In one case, the two methyl groups are distal to each other, whereas in the second version they are proximal.</p>
 				
 				<p>The &pi; bond restricts rotation about the C2-C3 bond, preventing either of these from converting into the other. Despite their identical connectivity, they are not superposable structures and are, therefore, stereoisomers.</p>
@@ -35,14 +32,15 @@
 				
 				
 			</div>
-			<div class="span6">
+			<div class="span6 right-col">
 		
 				<div id="picture0"></div>
 		
 			</div>
 		</div>
-		<div class="row-fluid">
-			<div class="span12">
+		
+        <div class="row-fluid">
+			<div class="span6">
 			
 				<p>Alkenes are stereogenic if switching two of the groups attached to the same alkenyl carbon results in a stereoisomer. Transposing a hydrogen and a methyl group attached to the same carbon in but-2-ene produces a structure that is not superposable on the original compound. Notice in the original structure that the two methyl groups are on opposite sides of the double bond with respect to the plane that is perpendicular to the page and passes through each carbon of the double bond. After the switch, the two methyl groups are proximal to each other. Simple translation of the modified structure onto the original shows that these two compounds are non-superposable.</p>
 				
@@ -56,7 +54,11 @@
 				<p style="color:blue;">TIP: In evaluating whether or not the alkene is stereogenic, it is satisfactory to perform the substituent change on one of the alkenyl carbons.</p>
 			
 			</div>
+            <div class="span6">
+            	<div id="threedButeneTrans"></div>
+            </div>
 		</div>
+        
 		<div class="row-fluid">
 			<div class="span6 leftCol">
 			
@@ -321,8 +323,8 @@ function handleClick0_2 ()
 
 var svg1 = new SVGContainer({
 		node: d3.select("#picture1"),
-		maxWid: 300,
-		maxHt: 300
+		maxWid: 600,
+		maxHt: 600
 	});
 
 var sketch1_1 = new Sketch ({
@@ -384,10 +386,10 @@ var sketch1_4 = new Sketch ({
 		]
 	});
 	
-svg1.append(sketch1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-svg1.append(sketch1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-svg1.append(sketch1_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-svg1.append(sketch1_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg1.append(sketch1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
+svg1.append(sketch1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
+svg1.append(sketch1_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
+svg1.append(sketch1_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
 
 sketch1_4.setOpacity(0, 0, 0);
 
@@ -431,6 +433,93 @@ function handleClick1 ()
 	}
 	
 }
+
+
+//////////////////////////////////////////////
+/* ball and stick models in a carousel		*/
+//////////////////////////////////////////////
+
+var svg3D = new SVGContainer({
+		node: d3.select("#threedButeneTrans"),
+		maxWid: 320,
+		maxHt: 800
+	});
+	
+var fullrot = new ImageViewer({
+		items:
+			[
+				new Image({
+				URI: 'img/butene/trans01.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/trans03.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/trans05.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/trans07.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/trans09.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/trans11.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+
+
+			],
+	}, eventManager);
+	
+	var fullrot2 = new ImageViewer({
+		items:
+			[
+				new Image({
+				URI: 'img/butene/cis01.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/cis03.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/cis05.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/cis07.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/cis09.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+				new Image({
+				URI: 'img/butene/cis11.jpg',
+				caption: "",
+				actualSize: {height: 375, width: 400}
+				}),
+			],
+	}, eventManager);
+svg3D.append(fullrot, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: 1});
+svg3D.append(fullrot2, {topPercentOffset: 0.5, leftPercentOffset: 0, heightPercent: .5, widthPercent: 1});
 	
 ///////////////////////////////////////////////
 
