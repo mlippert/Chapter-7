@@ -332,6 +332,7 @@ var svg1 = new SVGContainer({
 		maxHt: 600
 	});
 
+// original sketch, does not change
 var sketch1_1 = new Sketch ({
 		id: "sketch1_1",
 		drawShape:
@@ -352,7 +353,8 @@ var sketch1_1 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
-	
+
+// duplicated sketch is split up so different parts can move separately
 var sketch1_2 = new Sketch ({
 		id: "sketch1_2",
 		drawShape:
@@ -370,6 +372,7 @@ var sketch1_2 = new Sketch ({
 		]
 	});
 
+// right side of molecule is separated so it can be reflected
 var sketch1_3 = new Sketch ({
 		id: "sketch1_3",
 		drawShape:
@@ -381,6 +384,8 @@ var sketch1_3 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
+	
+// message is also a sketch
 var sketch1_4 = new Sketch ({
 		id: "sketch1_4",
 		drawShape:
@@ -396,8 +401,10 @@ svg1.append(sketch1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg1.append(sketch1_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
 svg1.append(sketch1_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
 
+// message starts out invisible
 sketch1_4.setOpacity(0, 0, 0);
 
+// button used to advance the animation
 var button1 = new Button ({
 		id: "b1",
 		text: "Click to advance"
@@ -407,20 +414,25 @@ $('#button1').append(button1.getRootEl());
 
 eventManager.subscribe(button1.pressedEventId, handleClick1);
 
+
+// animation is advanced by clicking a button
 var click1 = 0;
 function handleClick1 ()
 {
+	// move duplicate sketch to the side
 	if (click1 == 0)
 	{
 		sketch1_2.move(.7, 0, 1000, 0);
 		sketch1_3.move(.7, 0, 1000, 0);
 		click1 ++;
 	}
+	// switch
 	else if (click1 == 1)
 	{
 		sketch1_3.reflect(null, .8, 500, 0);
 		click1 ++;
 	}
+	// superimpose second sketch on top of the first and display the message
 	else if (click1 == 2)
 	{
 		sketch1_2.move(-.7, -.07, 1000, 0);
@@ -428,6 +440,7 @@ function handleClick1 ()
 		sketch1_4.setOpacity(1, 500, 1000);
 		click1 ++;
 	}
+	// reset
 	else if (click1 == 3)
 	{
 		sketch1_2.move(0, .07, 0, 0);
@@ -580,6 +593,7 @@ var svg4 = new SVGContainer({
 		maxHt: 300
 	});
 
+// original sketch does not change
 var sketch4_1 = new Sketch ({
 		id: "sketch4_1",
 		drawShape:
@@ -600,7 +614,8 @@ var sketch4_1 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
-	
+
+// duplicate sketch is divided into parts	
 var sketch4_2 = new Sketch ({
 		id: "sketch4_2",
 		drawShape:
@@ -612,7 +627,8 @@ var sketch4_2 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.4, .78], text: 'C'}]},
 		]
 	});
-	
+
+// left side is able to be flipped
 var sketch4_3 = new Sketch ({
 		id: "sketch4_3",
 		drawShape:
@@ -625,6 +641,7 @@ var sketch4_3 = new Sketch ({
 		]
 	});
 
+// right side is also able to be flipped
 var sketch4_4 = new Sketch ({
 		id: "sketch4_4",
 		drawShape:
@@ -636,6 +653,8 @@ var sketch4_4 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
+	
+// message to be displayed
 var sketch4_5 = new Sketch ({
 		id: "sketch4_5",
 		drawShape:
@@ -652,8 +671,10 @@ svg4.append(sketch4_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg4.append(sketch4_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg4.append(sketch4_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// message starts out invisible
 sketch4_5.setOpacity(0, 0, 0);
 
+// button used to advance the animation
 var button4 = new Button ({
 		id: "b4",
 		text: "Click to advance"
@@ -663,9 +684,11 @@ $('#button4').append(button4.getRootEl());
 
 eventManager.subscribe(button4.pressedEventId, handleClick4);
 
+// animation is advanced by clicking the button
 var click4 = 0;
 function handleClick4 ()
 {
+	// move duplicate sketch to the side
 	if (click4 == 0)
 	{
 		sketch4_2.move(.7, 0, 1000, 0);
@@ -673,16 +696,19 @@ function handleClick4 ()
 		sketch4_4.move(.7, 0, 1000, 0);
 		click4 ++;
 	}
+	// flip the right side
 	else if (click4 == 1)
 	{
 		sketch4_4.reflect(null, .8, 500, 0);
 		click4 ++;
 	}
+	// flip the left side
 	else if (click4 == 2)
 	{
 		sketch4_3.reflect(null, .8, 500, 0);
 		click4 ++;
 	}
+	// flip the entire molecule
 	else if (click4 == 3)
 	{
 		sketch4_2.reflect(null, .8, 500, 0);
@@ -690,6 +716,7 @@ function handleClick4 ()
 		sketch4_3.reflect(null, .8, 500, 0);
 		click4 ++;
 	}
+	// superimpose second sketch on top of the first and display the message
 	else if (click4 == 4)
 	{
 		sketch4_2.move(-.7, -.07, 1000, 0);
@@ -698,6 +725,7 @@ function handleClick4 ()
 		sketch4_5.setOpacity(1, 500, 1000);
 		click4 ++;
 	}
+	// reset
 	else if (click4 == 5)
 	{
 		sketch4_2.move(0, .07, 0, 0);
@@ -717,6 +745,7 @@ var svg5 = new SVGContainer({
 		maxHt: 300
 	});
 
+// original sketch does not change
 var sketch5_1 = new Sketch ({
 		id: "sketch5_1",
 		drawShape:
@@ -735,7 +764,8 @@ var sketch5_1 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
-	
+
+// left carbon is encircled and clickable
 var sketch5_2 = new Sketch ({
 		id: "sketch5_2",
 		drawShape:
@@ -744,7 +774,8 @@ var sketch5_2 = new Sketch ({
 			{ shape: "circle", data: [{ xyPos: [.23, .8], radius: .03 }]},
 		]
 	}, eventManager);
-	
+
+// right carbon is encircled and clickable
 var sketch5_3 = new Sketch ({
 		id: "sketch5_3",
 		drawShape:
@@ -753,7 +784,8 @@ var sketch5_3 = new Sketch ({
 			{ shape: "circle", data: [{ xyPos: [.4, .8], radius: .03 }]},
 		]
 	}, eventManager);
-	
+
+// duplicate sketch is divided into parts
 var sketch5_4 = new Sketch ({
 		id: "sketch5_4",
 		drawShape:
@@ -765,7 +797,8 @@ var sketch5_4 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.4, .78], text: 'C'}]},
 		]
 	});
-	
+
+// left side is able to be flipped
 var sketch5_5 = new Sketch ({
 		id: "sketch5_5",
 		drawShape:
@@ -778,6 +811,7 @@ var sketch5_5 = new Sketch ({
 		]
 	});
 
+// right side is able to be flipped
 var sketch5_6 = new Sketch ({
 		id: "sketch5_6",
 		drawShape:
@@ -789,15 +823,6 @@ var sketch5_6 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
-var sketch5_7 = new Sketch ({
-		id: "sketch5_7",
-		drawShape:
-		[
-			{ shape: "textBit", data: [{ xyPos: [.85, .84], text: 'These structures are' }]},
-			{ shape: "textBit", data: [{ xyPos: [.85, .8], text: 'superposable and are' }]},
-			{ shape: "textBit", data: [{ xyPos: [.85, .76], text: 'therefore homomers (identical)' }]},
-		]
-	});
 	
 svg5.append(sketch5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -805,10 +830,8 @@ svg5.append(sketch5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg5.append(sketch5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-svg5.append(sketch5_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
-sketch5_7.setOpacity(0, 0, 0);
-
+// button used to reset animation
 var button5 = new Button ({
 		id: "b5",
 		text: "Click to reset"
@@ -823,8 +846,10 @@ eventManager.subscribe(button5.pressedEventId, handleClick5_3);
 var carbon = 0;
 var selected = false;
 
+// click the left carbon
 function handleClick5_1 (eventDetails)
 {
+	// move the duplicated sketch over and flip the left side
 	if (!selected)
 	{
 		carbon = 1;
@@ -836,9 +861,10 @@ function handleClick5_1 (eventDetails)
 		sketch5_2.lite(eventDetails.selectKey)
 	}
 }
-
+// click the right carbon
 function handleClick5_2 (eventDetails)
 {
+	// move the duplicated sketch over and flip the right side
 	if (!selected)
 	{
 		carbon = 2;
@@ -850,7 +876,7 @@ function handleClick5_2 (eventDetails)
 		sketch5_3.lite(eventDetails.selectKey)
 	}
 }
-
+// click the reset button
 function handleClick5_3 ()
 {
 	// if a carbon has not been selected
@@ -858,6 +884,7 @@ function handleClick5_3 ()
 	{
 		return;
 	}
+	// reset
 	else
 	{
 		sketch5_4.move(-.7, 0, 0, 0);
@@ -886,6 +913,7 @@ var svg6 = new SVGContainer({
 		maxHt: 300
 	});
 
+// original sketch is divided into two parts
 var sketch6_1 = new Sketch ({
 		id: "sketch6_1",
 		drawShape:
@@ -903,7 +931,8 @@ var sketch6_1 = new Sketch ({
 			
 		]
 	});
-	
+
+// the right side of the molecule can be flipped
 var sketch6_2 = new Sketch ({
 		id: "sketch6_2",
 		drawShape:
@@ -915,7 +944,8 @@ var sketch6_2 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.54, .6], text: 'Cl' }]},
 		]
 	});
-	
+
+// message to be displayed
 var sketch6_3 = new Sketch ({
 		id: "sketch6_3",
 		drawShape:
@@ -931,7 +961,8 @@ var sketch6_3 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.6, .69], length: .04, angle: -2*Math.PI/3, type: "vector" }]},
 		]
 	});
-	
+
+// button used to reset animation
 var button6 = new Button ({
 		id: "b6",
 		text: "Click to advance"
@@ -943,19 +974,23 @@ svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// message starts out invisible
 sketch6_3.setOpacity(0, 0, 0);
 
 eventManager.subscribe(button6.pressedEventId, handleClick6);
 
+// animation can be played once and reset using the button
 var click6 = 0;
 function handleClick6 ()
 {
+	// play the animation
 	if (click6 == 0)
 	{
 		sketch6_2.reflect(null, .7, 800, 0);
 		sketch6_3.setOpacity(1, 600, 1000);
 		click6 ++;
 	}
+	// reset
 	else if (click6 == 1)
 	{
 		sketch6_3.setOpacity(0, 0, 0);
@@ -970,7 +1005,8 @@ var svg7 = new SVGContainer({
 		maxWid: 400,
 		maxHt: 400
 	});
-	
+
+// message for part 1 of interactive exercise
 var sketch7_0 = new Sketch ({
 		id: "sketch7_0",
 		drawShape:
@@ -979,7 +1015,7 @@ var sketch7_0 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.98, .76], text: "to simplify it" }]}
 		]
 	});
-	
+// message for part 2 of interactive exercise
 var sketch7_01 = new Sketch ({
 		id: "sketch7_01",
 		drawShape:
@@ -989,6 +1025,7 @@ var sketch7_01 = new Sketch ({
 		]
 	});
 
+// left molecule (clickable)
 var sketch7_1 = new Sketch ({
 		id: "sketch7_1",
 		drawShape:
@@ -1007,6 +1044,7 @@ var sketch7_1 = new Sketch ({
 		]
 	}, eventManager);
 
+// middle molecule (clickable)
 var sketch7_2 = new Sketch ({
 		id: "sketch7_2",
 		drawShape:
@@ -1024,7 +1062,8 @@ var sketch7_2 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.484, .7], length: .05, angle: -Math.PI/6 }]},
 		]
 	}, eventManager);
-	
+
+// right molecule (clickable)
 var sketch7_3 = new Sketch ({
 		id: "sketch7_3",
 		drawShape:
@@ -1042,7 +1081,8 @@ var sketch7_3 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.784, .825], length: .05, angle: Math.PI/6 }]},
 		]
 	}, eventManager);
-	
+
+// arrow with left molecule
 var sketch7_4 = new Sketch ({
 		id: "sketch7_4",
 		drawShape:
@@ -1050,7 +1090,8 @@ var sketch7_4 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.15, .625], length: .05, angle: -Math.PI/2, type: "vector" }]},
 		]
 	});
-	
+
+// arrow with middle molecule	
 var sketch7_5 = new Sketch ({
 		id: "sketch7_5",
 		drawShape:
@@ -1058,7 +1099,8 @@ var sketch7_5 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.442, .625], length: .05, angle: -Math.PI/2, type: "vector" }]},
 		]
 	});
-	
+
+// arrow with right molecule
 var sketch7_6 = new Sketch ({
 		id: "sketch7_6",
 		drawShape:
@@ -1066,7 +1108,8 @@ var sketch7_6 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.72, .625], length: .05, angle: -Math.PI/2, type: "vector" }]},
 		]
 	});
-	
+
+// simplified left molecule (clickable)	
 var sketch7_7 = new Sketch ({
 		id: "sketch7_7",
 		drawShape:
@@ -1085,6 +1128,7 @@ var sketch7_7 = new Sketch ({
 		]
 	}, eventManager);
 
+// simplified middle molecule (clickable)
 var sketch7_8 = new Sketch ({
 		id: "sketch7_8",
 		drawShape:
@@ -1103,6 +1147,7 @@ var sketch7_8 = new Sketch ({
 		]
 	}, eventManager);
 
+// simplified right molecule (clickable)
 var sketch7_9 = new Sketch ({
 		id: "sketch7_9",
 		drawShape:
@@ -1120,7 +1165,8 @@ var sketch7_9 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.755, .355], text: 'Et' }]},
 		]
 	}, eventManager);
-	
+
+// message to be displayed upon incorrect answer
 var sketch7_10 = new Sketch ({
 		id: "sketch7_10",
 		drawShape:
@@ -1128,7 +1174,8 @@ var sketch7_10 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.5, .2], text: "Incorrect" }]}
 		]
 	});
-	
+
+// message to be displayed upon correct answer	
 var sketch7_11 = new Sketch ({
 		id: "sketch7_11",
 		drawShape:
@@ -1148,7 +1195,8 @@ var sketch7_11 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.5, .2], text: "Correct" }]},
 		]
 	});
-	
+
+// button used to reset animation
 var button7 = new Button ({
 		id: "b7",
 		text: "Click to reset"
@@ -1178,6 +1226,7 @@ eventManager.subscribe(sketch7_8.selectedEventId, handleClick7_5);
 eventManager.subscribe(sketch7_9.selectedEventId, handleClick7_6);
 eventManager.subscribe(button7.pressedEventId, handleClick7_7);
 
+// much of the exercise starts out invisible
 sketch7_01.setOpacity(0, 0, 0);
 sketch7_4.setOpacity(0, 0, 0);
 sketch7_5.setOpacity(0, 0, 0);
@@ -1188,14 +1237,14 @@ sketch7_9.setOpacity(0, 0, 0);
 sketch7_10.setOpacity(0, 0, 0);
 sketch7_11.setOpacity(0, 0, 0);
 
-var reveal7_1 = 0;
-var reveal7_2 = 0;
-var reveal7_3 = 0;
-var click7 = 0;
-var first7 = 0;
-var second7 = 0;
+var reveal7_1 = 0;	// flag for when simplified left molecule is revealed
+var reveal7_2 = 0;	// flag for when simplified middle molecule is revealed
+var reveal7_3 = 0;	// flag for when simplified right molecule is revealed
+var click7 = 0;		// keeps track of how many simplified molecules have been clicked
+var first7 = 0;		// marks which simplified molecule was chosen first
+var second7 = 0;	// marks which simplified molecule was chosen second
 
-
+// reveal left simplifed molecule
 function handleClick7_1 ()
 {
 	sketch7_4.setOpacity(1, 500, 0);
@@ -1203,6 +1252,7 @@ function handleClick7_1 ()
 	reveal7_1 = 1;
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
+// reveal middle simplified molecule
 function handleClick7_2 ()
 {
 	sketch7_5.setOpacity(1, 500, 0);
@@ -1210,6 +1260,7 @@ function handleClick7_2 ()
 	reveal7_2 = 1;
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
+// reveal right simplified molecule
 function handleClick7_3 ()
 {
 	sketch7_6.setOpacity(1, 500, 0);
@@ -1217,6 +1268,7 @@ function handleClick7_3 ()
 	reveal7_3 = 1;
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
+// click left simplified molecule
 function handleClick7_4 (eventDetails)
 {
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
@@ -1228,6 +1280,7 @@ function handleClick7_4 (eventDetails)
 		checkAnswer7();
 	}
 }
+// click middle simplified molecule
 function handleClick7_5 (eventDetails)
 {
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
@@ -1239,6 +1292,7 @@ function handleClick7_5 (eventDetails)
 		checkAnswer7();
 	}
 }
+// click right simplified molecule
 function handleClick7_6 (eventDetails)
 {
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
@@ -1250,6 +1304,7 @@ function handleClick7_6 (eventDetails)
 		checkAnswer7();
 	}
 }
+// reset
 function handleClick7_7 ()
 {
 	
@@ -1274,7 +1329,7 @@ function handleClick7_7 ()
 	reveal7_2 = 0;
 	reveal7_3 = 0;
 }
-
+// check for correct answer (middle and right simplified molecules)
 function checkAnswer7 ()
 {
 	if (click7 >= 2)
@@ -1303,7 +1358,8 @@ var sketch8_1 = new Sketch ({
 		]
 	});
 
-//make a set of callouts in a table that lights up with the labels.
+// popup referene (currently stuck in the page)
+// reference is a callout
 var reference8 = new Callouts ({
 	id: "reference",
 	headers: ["Structure", "Group", "Abbreviation"],
