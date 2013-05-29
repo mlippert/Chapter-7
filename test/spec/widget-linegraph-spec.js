@@ -5,15 +5,6 @@
 (function () {
     var expect = chai.expect;
 
-	/**
-	 * createNewDiv will find the mocha div and create and return a sibling div following it
-	 */
-	var createNewDiv = function () {
-		var mochaDiv = d3.select("div#mocha");
-		var parent = d3.select(mochaDiv.node().parentNode);
-		return parent.append("div").node();
-	};
-
     describe('LineGraphs should be awesome', function () {
 		var eventManager = null;
 
@@ -67,15 +58,6 @@
 				var targetEl = null;
 				var cntr = null;
 
-				var createNewSvgContainer = function () {
-					// Clean up node from previous test
-					configCntr.node && configCntr.node.remove();
-					// Get a reference to an empty div to create the widget in.
-					configCntr.node = d3.select(createNewDiv());
-					// Create an empty svg container to be able to append a LineGraph to.
-					cntr = new SVGContainer(configCntr);
-				};
-
 				after(function () {
 					// Clean up test modifications to the DOM
 					configCntr.node && configCntr.node.remove();
@@ -83,7 +65,7 @@
 					
 				describe('draw()', function () {
 					before(function () {
-						createNewSvgContainer();
+						cntr = helper.createNewSvgContainer(configCntr);
 						// append will call draw()
 						cntr.append(myGraph);
 					});

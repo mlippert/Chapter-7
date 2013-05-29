@@ -17,15 +17,6 @@
 (function () {
     var expect = chai.expect;
 
-	/**
-	 * createNewDiv will find the mocha div and create and return a sibling div following it
-	 */
-	var createNewDiv = function () {
-		var mochaDiv = d3.select("div#mocha");
-		var parent = d3.select(mochaDiv.node().parentNode);
-		return parent.append("div").node();
-	};
-
     describe('Carousels: when you need more than one', function () {
 		var eventManager = null;
 
@@ -145,15 +136,6 @@
 				var targetEl = null;
 				var cntr = null;
 
-				var createNewSvgContainer = function () {
-					// Clean up node from previous test
-					configCntr.node && configCntr.node.remove();
-					// Get a reference to an empty div to create the widget in.
-					configCntr.node = d3.select(createNewDiv());
-					// Create an empty svg container to be able to append a LineGraph to.
-					cntr = new SVGContainer(configCntr);
-				};
-
 				after(function () {
 					// Clean up test modifications to the DOM
 					configCntr.node && configCntr.node.remove();
@@ -161,7 +143,7 @@
 					
 				describe('draw()', function () {
 					before(function () {
-						createNewSvgContainer();
+						cntr = helper.createNewSvgContainer(configCntr);
 						// append will call draw()
 						cntr.append(myCarousel);
 					});
@@ -198,15 +180,33 @@
 						expect(lastSelectEventDetails.selectKey).is.equal('foo');
 					});
 
-					it('should re-select an already selected item', function() {
+					it('should give only the selected child g.widgetItem a class of \'selected\' and no other', function () {
+						// Arrange - item 1 is selected
+						myCarousel.selectItemAtIndex(1);
 						var prevSelectEventCount = selectEventCount;
-						myCarousel.selectItemAtIndex(1);
-						expect(selectEventCount).is.equal(prevSelectEventCount + 1);
-						expect(lastSelectEventDetails.selectKey).is.equal('foo');
 						lastSelectEventDetails = null;
+						// Act - select item 2
+						myCarousel.selectItemAtIndex(2);
+						// Assert - only item 2 group has class 'selected'
+						var itemGroups = myCarousel.lastdrawn.widgetGroup.selectAll("g.widgetItem");
+						itemGroups.each(
+							function (d, i)
+							{
+								var hasClassSelected = d3.select(this).classed('selected');
+								expect(i == 2, 'item ' + i).to.equal(hasClassSelected);
+							});
+					});
+
+					it('should do nothing when selecting an already selected item (no event)', function() {
+						// Arrange - item 1 is selected
 						myCarousel.selectItemAtIndex(1);
-						expect(selectEventCount).is.equal(prevSelectEventCount + 2);
-						expect(lastSelectEventDetails.selectKey).is.equal('foo');
+						var prevSelectEventCount = selectEventCount;
+						lastSelectEventDetails = null;
+						// Act - re-select item 1
+						myCarousel.selectItemAtIndex(1);
+						// Assert - select event was not published
+						expect(selectEventCount, "select event count").is.equal(prevSelectEventCount);
+						expect(lastSelectEventDetails).to.be.null;
 					});
 				});
 			});	

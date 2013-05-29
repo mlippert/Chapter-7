@@ -243,6 +243,23 @@ ImageViewer.prototype.selectItemAtIndex = function (index)
 };
 
 /* **************************************************************************
+ * ImageViewer.itemKeyToIndex                                           *//**
+ *
+ * Find the first item in the list of items in this ImageViewer which has the
+ * specified key and return its index. If no item has that key return null.
+ *
+ * @param {Object}	key		-The key of the item to find
+ *
+ * @return {?number} the index of the item in the list of items with the
+ * 			specified key.
+ *
+ ****************************************************************************/
+ImageViewer.prototype.itemKeyToIndex = function(key)
+{
+	return this.carousel.itemKeyToIndex(key);
+};
+
+/* **************************************************************************
  * ImageViewer.assignMissingItemKeys_                                   *//**
  *
  * Assign a key property value of the index in the item list to any
@@ -266,8 +283,8 @@ ImageViewer.prototype.assignMissingItemKeys_ = function ()
 /* **************************************************************************
  * ImageViewer.lite                                                     *//**
  *
- * Highlight the image(s) associated w/ the given liteKey (key) and
- * remove any highlighting on all other images.
+ * Highlight the image(s) associated w/ the given liteKey (key) in the
+ * carousel, and select the 1st highlighted image.
  *
  * @param {string|number}	liteKey	-The key associated with the image(s) to be highlighted.
  *
@@ -276,9 +293,14 @@ ImageViewer.prototype.lite = function (liteKey)
 {
 	console.log("called ImageViewer.lite( " + liteKey + " )");
 
+	var i = this.itemKeyToIndex(liteKey);
+
+	if (i !== null)
+	{
+		this.selectItemAtIndex(i);
+	}
+
 	this.carousel.lite(liteKey);
-	//this.image.lite(liteKey);
-	this.selectItemAtIndex(liteKey);
-	
+		
 }; // end of ImageViewer.lite()
 

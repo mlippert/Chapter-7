@@ -292,18 +292,23 @@ eventManager.subscribe(button0_2.pressedEventId, handleClick0_2);
 //TODO this next line is broken, the clicks on the image carousel are not
 // firing the eventManager, although they should.  The carousel buttons (images)
 // should be used in place of the swap button. -lb
-eventManager.subscribe(ballStick_imgs, handleClick0_1);
-//set the index so we can swap between carousel images
-var index = "0";
+eventManager.subscribe(ballStick_imgs.selectedEventId, handleSelect);
 
-function handleClick0_1 (eventDetails)
+//set the lite key so we can swap between carousel images
+var liteKey = "0";
+
+function handleSelect(eventDetails)
 {
 	sketch0_2.reflect(null, .8, 500, 0);
 	sketch0_5.reflect(null, .8, 500, 0);
 	sketch0_6.reflect(null, .8, 500, 0);
-	index = (index == "0") ? "1" : "0";
-	ballStick_imgs.lite(index);
-	
+	liteKey = eventDetails.selectKey;
+	ballStick_imgs.lite(liteKey);
+}
+function handleClick0_1 (eventDetails)
+{
+	liteKey = (liteKey == "0") ? "1" : "0";
+	ballStick_imgs.lite(liteKey);
 }
 var opaque0 = true;
 function handleClick0_2 ()
