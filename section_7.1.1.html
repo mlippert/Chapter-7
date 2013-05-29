@@ -106,6 +106,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Identical to the interactive previously described. This is an abbreviated version.]</p>
 				
+				<span id="button6"></span>
 				<div id="picture6"></div>
 				
 				<p>As the substituents about the alkene increase in complexity it is advantageous to simplify the groups using substitutive labels. For example, the relationship among the three alkene isomers shown is not immediately obvious. The alkyl branches have been inconveniently drawn in different conformations. This precludes a simple inspection of superposability. By replacing the alkyl substituents with their <b>abbreviated labels</b> [Provide a pop-up list; see below after Figure 7.1.7] the conformational permutations, while still occurring, no longer complicate the analysis and the relationships become apparent.</p>
@@ -114,11 +115,14 @@
 				
 				<p style="color:blue;">[INTERACTIVE: The following figure needs to be revealed in steps. The first three structures will appear immediately. The black arrow and the corresponding structure in the next row appears after a touch. The student is directed to touch the two identical structures. If the 2nd and 3rd structures are touched then the red and blue boxes with the labels appears with feedback (Correct).]</p>
 				
+				<span id="button7"></span>
 				<div id="picture7"></div>
 				
 				<p style="color:blue;">[POP-UP REFERENCE: The following table is a pop-up reference that will be useful across multiple chapters.]</p>
 				
+				<p><b>Hydrocarbon Group Prefixes</b></p>
 				<div id="picture8"></div>
+				<p></p>
 				
 				<p><b>Worked Example 7.1.1 Identifying Stereogenic Alkenes</b></p>
 				
@@ -160,6 +164,7 @@
 	<script src="js/widget-image.js"></script>
     <script src="js/widget-carousel.js"></script>
     <script src="js/widget-imageviewer.js"></script>
+	<script src="js/widget-callouts.js"></script>
     
 	<script src="js/eventmanager.js"></script>
 	
@@ -861,12 +866,12 @@ function handleClick5_3 ()
 		if (carbon == 1)
 		{
 			sketch5_5.reflect(null, .8, 0, 0);
-			sketch5_2.lite("0");
+			sketch5_2.lite("");
 		}
 		else if (carbon == 2)
 		{
 			sketch5_6.reflect(null, .8, 0, 0);
-			sketch5_3.lite("0");
+			sketch5_3.lite("");
 		}
 		selected = false;
 		carbon = 0;
@@ -875,26 +880,88 @@ function handleClick5_3 ()
 	
 ///////////////////////////////////////////////
 
-var svg6 = new MakeSVGContainer(
-	{node: d3.select("#picture6"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg6.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg6.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_10.png', caption: "Placeholder for interactive exercise."}]
+var svg6 = new SVGContainer({
+		node: d3.select("#picture6"),
+		maxWid: 300,
+		maxHt: 300
 	});
+
+var sketch6_1 = new Sketch ({
+		id: "sketch6_1",
+		drawShape:
+		[
+			{ shape: "line", 	data: [{ xyPos: [.14, .8], length: 0.1, angle: -Math.PI/5 }]},
+			{ shape: "line", 	data: [{ xyPos: [.14, .6], length: 0.1, angle: Math.PI/5 }]},
+			
+			{ shape: "line", 	data: [{ xyPos: [.26, .68], length: 0.1, angle: 0 }]},
+			{ shape: "line", 	data: [{ xyPos: [.26, .72], length: 0.1, angle: 0 }]},
+
+		 	{ shape: "textBit", data: [{ xyPos: [.12, .79], text: 'H'}]},
+			{ shape: "textBit", data: [{ xyPos: [.23, .68], text: 'C'}]},
+			{ shape: "textBit", data: [{ xyPos: [.4, .68], text: 'C'}]},
+		  	{ shape: "textBit", data: [{ xyPos: [.08, .59], text: 'H3C'}]},
+			
+		]
+	});
+	
+var sketch6_2 = new Sketch ({
+		id: "sketch6_2",
+		drawShape:
+		[
+			{ shape: "line", 	data: [{ xyPos: [.5, .8], length: 0.1, angle: -4*Math.PI/5 }]},
+			{ shape: "line", 	data: [{ xyPos: [.5, .6], length: 0.1, angle: 4*Math.PI/5 }]},
+		
+			{ shape: "textBit", data: [{ xyPos: [.54, .8], text: 'Cl' }]},
+			{ shape: "textBit", data: [{ xyPos: [.54, .6], text: 'Cl' }]},
+		]
+	});
+	
+var sketch6_3 = new Sketch ({
+		id: "sketch6_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.4, .9], text: "Not a stereocenter" }]},
+			{ shape: "line", data: [{ xyPos: [.4, .88], length: .13, angle: -Math.PI/2, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.35, .5], text: "Not a stereocenter" }]},
+			{ shape: "line", data: [{ xyPos: [.32, .54], length: .12, angle: 2*Math.PI/3, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.7, .7], text: "Identical" }]},
+			{ shape: "line", data: [{ xyPos: [.6, .73], length: .04, angle: 2*Math.PI/3, type: "vector" }]},
+			{ shape: "line", data: [{ xyPos: [.6, .69], length: .04, angle: -2*Math.PI/3, type: "vector" }]},
+		]
+	});
+	
+var button6 = new Button ({
+		id: "b6",
+		text: "Click to advance"
+	}, eventManager);
+
+$('#button6').append(button6.getRootEl());
+	
+svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch6_3.setOpacity(0, 0, 0);
+
+eventManager.subscribe(button6.pressedEventId, handleClick6);
+
+var click6 = 0;
+function handleClick6 ()
+{
+	if (click6 == 0)
+	{
+		sketch6_2.reflect(null, .7, 800, 0);
+		sketch6_3.setOpacity(1, 600, 1000);
+		click6 ++;
+	}
+	else if (click6 == 1)
+	{
+		sketch6_3.setOpacity(0, 0, 0);
+		click6 = 0;
+	}
+}
 	
 ///////////////////////////////////////////
 
@@ -902,6 +969,24 @@ var svg7 = new SVGContainer({
 		node: d3.select("#picture7"),
 		maxWid: 400,
 		maxHt: 400
+	});
+	
+var sketch7_0 = new Sketch ({
+		id: "sketch7_0",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.98, .8], text: "Touch each structure" }]},
+			{ shape: "textBit", data: [{ xyPos: [.98, .76], text: "to simplify it" }]}
+		]
+	});
+	
+var sketch7_01 = new Sketch ({
+		id: "sketch7_01",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.98, .45], text: "Touch the two" }]},
+			{ shape: "textBit", data: [{ xyPos: [.98, .41], text: "identical structures" }]},
+		]
 	});
 
 var sketch7_1 = new Sketch ({
@@ -986,29 +1071,93 @@ var sketch7_7 = new Sketch ({
 		id: "sketch7_7",
 		drawShape:
 		[
-			{ shape: "line", data: [{ xyPos: [.125, .45], length: .05, angle: Math.PI/2 }]},
-			{ shape: "line", data: [{ xyPos: [.125, .45], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.125, .45], length: .04, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.125, .45], length: .04, angle: 7*Math.PI/6 }]},
 			{ shape: "line", data: [{ xyPos: [.125, .45], length: .05, angle: -Math.PI/6 }]},
-			{ shape: "line", data: [{ xyPos: [.13, .46], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.135, .455], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.167, .425], length: .04, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.167, .425], length: .04, angle: Math.PI/6 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.125, .5], text: 'Me' }]},
+			{ shape: "textBit", data: [{ xyPos: [.065, .41], text: 'Pr' }]},
+			{ shape: "textBit", data: [{ xyPos: [.22, .45], text: 'Et' }]},
+			{ shape: "textBit", data: [{ xyPos: [.165, .355], text: 'Pr' }]},
 		]
-	});
+	}, eventManager);
 
 var sketch7_8 = new Sketch ({
 		id: "sketch7_8",
 		drawShape:
 		[
-
+			{ shape: "line", data: [{ xyPos: [.437, .425], length: .04, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.437, .425], length: .04, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.437, .425], length: .05, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.447, .42], length: .04, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.479, .45], length: .04, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.479, .45], length: .04, angle: -Math.PI/6 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.48, .5], text: 'Me' }]},
+			{ shape: "textBit", data: [{ xyPos: [.385, .45], text: 'Pr' }]},
+			{ shape: "textBit", data: [{ xyPos: [.435, .355], text: 'Et' }]},
+			{ shape: "textBit", data: [{ xyPos: [.535, .41], text: 'Pr' }]},
 		]
-	});
+	}, eventManager);
 
 var sketch7_9 = new Sketch ({
 		id: "sketch7_9",
 		drawShape:
 		[
-
+			{ shape: "line", data: [{ xyPos: [.715, .45], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.715, .45], length: .04, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.715, .45], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.725, .455], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.757, .425], length: .04, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.757, .425], length: .04, angle: -Math.PI/2 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.715, .5], text: 'Me' }]},
+			{ shape: "textBit", data: [{ xyPos: [.655, .41], text: 'Pr' }]},
+			{ shape: "textBit", data: [{ xyPos: [.81, .45], text: 'Pr' }]},
+			{ shape: "textBit", data: [{ xyPos: [.755, .355], text: 'Et' }]},
+		]
+	}, eventManager);
+	
+var sketch7_10 = new Sketch ({
+		id: "sketch7_10",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.5, .2], text: "Incorrect" }]}
 		]
 	});
+	
+var sketch7_11 = new Sketch ({
+		id: "sketch7_11",
+		drawShape:
+		[
+			{ shape: "rectangle", data: [{ xyPos: [.04, .54], width: .22, height: .2 }]},
+		
+			{ shape: "rectangle", data: [{ xyPos: [.355, .54], width: .48, height: .2 }]},
+			{ shape: "line", data: [{ xyPos: [.58, .45], length: .03, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.58, .435], length: .03, angle: 0 }]},
+		
+			{ shape: "textBit", data: [{ xyPos: [.6, .3], text: "homomers" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.32, .26], text: "stereoisomers" }]},
+			{ shape: "line", data: [{ xyPos: [.25, .29], length: .1, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.39, .29], length: .1, angle: Math.PI/6 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.5, .2], text: "Correct" }]},
+		]
+	});
+	
+var button7 = new Button ({
+		id: "b7",
+		text: "Click to reset"
+	}, eventManager);
 
+$('#button7').append(button7.getRootEl());
+
+svg7.append(sketch7_0, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_01, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1018,48 +1167,178 @@ svg7.append(sketch7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg7.append(sketch7_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_10, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_11, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
 eventManager.subscribe(sketch7_1.selectedEventId, handleClick7_1);
 eventManager.subscribe(sketch7_2.selectedEventId, handleClick7_2);
 eventManager.subscribe(sketch7_3.selectedEventId, handleClick7_3);
+eventManager.subscribe(sketch7_7.selectedEventId, handleClick7_4);
+eventManager.subscribe(sketch7_8.selectedEventId, handleClick7_5);
+eventManager.subscribe(sketch7_9.selectedEventId, handleClick7_6);
+eventManager.subscribe(button7.pressedEventId, handleClick7_7);
+
+sketch7_01.setOpacity(0, 0, 0);
+sketch7_4.setOpacity(0, 0, 0);
+sketch7_5.setOpacity(0, 0, 0);
+sketch7_6.setOpacity(0, 0, 0);
+sketch7_7.setOpacity(0, 0, 0);
+sketch7_8.setOpacity(0, 0, 0);
+sketch7_9.setOpacity(0, 0, 0);
+sketch7_10.setOpacity(0, 0, 0);
+sketch7_11.setOpacity(0, 0, 0);
+
+var reveal7_1 = 0;
+var reveal7_2 = 0;
+var reveal7_3 = 0;
+var click7 = 0;
+var first7 = 0;
+var second7 = 0;
 
 
 function handleClick7_1 ()
 {
-	
+	sketch7_4.setOpacity(1, 500, 0);
+	sketch7_7.setOpacity(1, 500, 0);
+	reveal7_1 = 1;
+	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
 function handleClick7_2 ()
 {
-	
+	sketch7_5.setOpacity(1, 500, 0);
+	sketch7_8.setOpacity(1, 500, 0);
+	reveal7_2 = 1;
+	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
 function handleClick7_3 ()
 {
+	sketch7_6.setOpacity(1, 500, 0);
+	sketch7_9.setOpacity(1, 500, 0);
+	reveal7_3 = 1;
+	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
+}
+function handleClick7_4 (eventDetails)
+{
+	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
+	{
+		sketch7_7.lite(eventDetails.selectKey);
+		if (click7 == 0) first7 = 1;
+		else if (click7 == 1) second7 == 1;
+		click7 ++;
+		checkAnswer7();
+	}
+}
+function handleClick7_5 (eventDetails)
+{
+	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
+	{
+		sketch7_8.lite(eventDetails.selectKey);
+		if (click7 == 0) first7 = 2;
+		else if (click7 == 1) second7 = 2;
+		click7 ++;
+		checkAnswer7();
+	}
+}
+function handleClick7_6 (eventDetails)
+{
+	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
+	{
+		sketch7_9.lite(eventDetails.selectKey);
+		if (click7 == 0) first7 = 3;
+		else if (click7 == 1) second7 = 3;
+		click7 ++;
+		checkAnswer7();
+	}
+}
+function handleClick7_7 ()
+{
 	
+	sketch7_01.setOpacity(0, 0, 0);
+	sketch7_4.setOpacity(0, 0, 0);
+	sketch7_5.setOpacity(0, 0, 0);
+	sketch7_6.setOpacity(0, 0, 0);
+	sketch7_7.setOpacity(0, 0, 0);
+	sketch7_8.setOpacity(0, 0, 0);
+	sketch7_9.setOpacity(0, 0, 0);
+	sketch7_10.setOpacity(0, 0, 0);
+	sketch7_11.setOpacity(0, 0, 0);
+	
+	sketch7_7.lite("");
+	sketch7_8.lite("");
+	sketch7_9.lite("");
+	
+	click7 = 0;
+	first7 = 0;
+	second7 = 0;
+	reveal7_1 = 0;
+	reveal7_2 = 0;
+	reveal7_3 = 0;
+}
+
+function checkAnswer7 ()
+{
+	if (click7 >= 2)
+	{
+		if ((first7 == 2 && second7 == 3) || (first7 == 3 && second7 == 2))
+		{
+			sketch7_11.setOpacity(1, 500, 0);
+		}
+		else
+		{
+			sketch7_10.setOpacity(1, 500, 0);
+		}
+	}
 }
 
 	
 /////////////////////////////////////////
 
-var svg8 = new MakeSVGContainer(
-	{node: d3.select("#picture8"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg8.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg8.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_12.png', caption: "Pop-reference"}]
+var sketch8_1 = new Sketch ({
+		id: "sketch8_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [0, .5], length: .1, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.1, .5], length: .1, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.0, .5], length: .1, angle: -Math.PI/3 }]},
+		]
 	});
+
+//make a set of callouts in a table that lights up with the labels.
+var reference8 = new Callouts ({
+	id: "reference",
+	headers: ["Structure", "Group", "Abbreviation"],
+	show: "all",
+	textBits: [
+		{key: "methyl",
+		cols: ["-CH<sub>3</sub>", "methyl", "Me"]
+		},
+		{key: "ethyl",
+		cols: ["-CH<sub>2</sub>CH<sub>3</sub>", "ethyl", "Et"]
+		},
+		{key: "propyl",
+		cols: ["-CH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub>", "propyl", "Pr"]
+		},
+ 		{key: "butyl",
+		cols: ["-CH<sub>2</sub>CH<sub>2</sub>CH<sub>2</sub>CH<sub>3</sub>", "butyl", "Bu"]
+		},
+		{key: "isopropyl",
+		cols: ["-CH(CH<sub>3</sub>)<sub>2</sub>", "isopropyl", "<em>i-</em>Pr"]
+		},
+		{key: "secbutyl",
+		cols: ["-CH(CH<sub>3</sub>)CH<sub>2</sub>CH<sub>3</sub>", "<em>sec-</em>butyl", "<em>sec-</em>Bu"]
+		},
+		{key: "tertbutyl",
+		cols: ["-C(CH<sub>3</sub>)<sub>3</sub>", "<em>tert-</em>butyl", "<em>t-</em>Bu"]
+		},
+		{key: "phenyl",
+		cols: ["[will have picture]", "phenyl", "Ph"]
+		},
+		{key: "benzyl",
+		cols: ["[will have picture]", "benzyl", "Bn"]
+		}]
+}, eventManager);
+
+reference8.draw(d3.select("#picture8"));
 	
 ///////////////////////////////////////
 
