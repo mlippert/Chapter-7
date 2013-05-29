@@ -1,4 +1,4 @@
-// sample test for widget-base
+// sample test for widget-linegraph
 'use strict';
 
 

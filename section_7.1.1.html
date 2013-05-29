@@ -1387,12 +1387,20 @@ var reference8 = new Callouts ({
 		cols: ["-C(CH<sub>3</sub>)<sub>3</sub>", "<em>tert-</em>butyl", "<em>t-</em>Bu"]
 		},
 		{key: "phenyl",
-		cols: ["[will have picture]", "phenyl", "Ph"]
+		cols: ["<div id='blah'></div>", "phenyl", "Ph"]
 		},
 		{key: "benzyl",
 		cols: ["[will have picture]", "benzyl", "Bn"]
 		}]
 }, eventManager);
+
+/*var svg8 = new SVGContainer({
+		node: d3.select("#blah"),
+		maxWid: 400,
+		maxHt: 400
+	});
+	
+svg8.append(sketch8_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});*/
 
 reference8.draw(d3.select("#picture8"));
 	
