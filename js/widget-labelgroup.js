@@ -363,3 +363,27 @@ LabelGroup.prototype.setLastdrawnScaleFns2ExplicitOrDefault_ = function (cntrSiz
 	}
 }; // end of LabelGroup.setLastdrawnScaleFns2ExplicitOrDefault_()
 
+/* **************************************************************************
+ * LabelGroup.setOpacity                                                  *//**
+ *
+ * Set the opacity of the sketch
+ *
+ * @param {number}		opacity		- opacity value to be set to (0: transparent, 1: opaque)
+ * @param {number}		duration	- the duration of the transition in milliseconds
+ * @param {number}		delay		- the delay before the transition starts in milliseconds
+ *
+ ****************************************************************************/
+
+LabelGroup.prototype.setOpacity = function (opacity, duration, delay)
+{
+	var xScale = this.lastdrawn.xScale;
+	var yScale = this.lastdrawn.yScale;
+
+	var allLabels = this.lastdrawn.labelCollection;
+
+	allLabels.transition()
+		.style('opacity', opacity)
+		.duration(duration).delay(delay);
+
+
+};

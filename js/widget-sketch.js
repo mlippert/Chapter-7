@@ -22,12 +22,12 @@
 			id: "sketch1",
 			drawShape: 	
 			[	
-				{ shape: "rectangle",	xyPos: [ 0, 5], width: 2, height: 2 },
-				{ shape: "circle",	xyPos: [5, 5], radius:  2 }, 
-				{ shape: "hexagon",	xyPos: [3,3], side:  1 },
-				{ shape: "triangle", xyPos: [4, 4], side: 2 },
-				{ shape: "line",	xyPos: [1,1], length: .5, angle: Math.PI/3 },
-				{ shape: "wedge", xyPos: [2, 4], length: .5, width: .2, angle: Math.PI/6 }
+				{ shape: "rectangle", fill: "White", data:[{xyPos: [ 0, 5], width: 2, height: 2 }]},
+				{ shape: "circle", data:[{xyPos: [5, 5], radius:  2 }]}, 
+				{ shape: "hexagon", data:[{xyPos: [3,3], side:  1 }]},
+				{ shape: "triangle", data:[{xyPos: [4, 4], side: 2 }]},
+				{ shape: "line", data:[{xyPos: [1,1], length: .5, angle: Math.PI/3 }]},
+				{ shape: "wedge", data:[{xyPos: [2, 4], length: .5, width: .2, angle: Math.PI/6 }]}
 			],
 		};
 });
@@ -51,6 +51,8 @@
  *								 in order to manipulate it (such as highlight it).
  *								 does not need to be unique, and if not all labels
  *								 with the same key will be addressed.
+ * @property {string|undefined} 
+ *						fill	- optional string used to determine fill color from css
  */
 	
 /* **************************************************************************
@@ -686,9 +688,6 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 
 Sketch.prototype.setOpacity = function (opacity, duration, delay)
 {
-	var xScale = this.lastdrawn.xScale;
-	var yScale = this.lastdrawn.yScale;
-
 	var sketchContainer = this.lastdrawn.widgetGroup;
 
 	// get the collection of shapes
@@ -696,6 +695,30 @@ Sketch.prototype.setOpacity = function (opacity, duration, delay)
 
 	drawCollection.transition()
 		.style('opacity', opacity)
+		.duration(duration).delay(delay);
+
+};
+
+/* **************************************************************************
+ * Sketch.setColor                                                     *//**
+ *
+ * Set the color of the sketch
+ *
+ * @param {string}		color		- color the sketch should be set to
+ * @param {number}		duration	- the duration of the transition in milliseconds
+ * @param {number}		delay		- the delay before the transition starts in milliseconds
+ *
+ ****************************************************************************/
+
+Sketch.prototype.setColor = function (color, duration, delay)
+{
+	var sketchContainer = this.lastdrawn.widgetGroup;
+
+	// get the collection of shapes
+	var drawCollection = sketchContainer.selectAll("g.shape");
+
+	drawCollection.transition()
+		.style('stroke', color)
 		.duration(duration).delay(delay);
 
 	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
@@ -726,8 +749,9 @@ Sketch.prototype.redraw = function ()
 	// shape into the graup with the same relative positioning, like a label.  
 	drawCollection.enter()
 		.append("g")
-		.attr("class","shape")
-			;
+		.attr("class", function (d) { return "shape fill" +
+			 ('fill' in d ? d.fill : "None");
+			 });
 		
 	// get rid of any shapes without data
 	drawCollection.exit().remove();
@@ -751,7 +775,8 @@ Sketch.prototype.redraw = function ()
 	rectangles.attr("width", function(d) { return xScale(d.width); })
 		.attr("height", function(d) { return yScale(0) - yScale(d.height); })
 		.attr("x", function(d) { return xScale(d.xyPos[0]); })
-		.attr("y", function(d) { return yScale(d.xyPos[1]); });
+		.attr("y", function(d) { return yScale(d.xyPos[1]); })
+		;
 	
 	// TODO: we're likely going to want to label the drawBits, but 
 	// I don't need it now, and it's not clear if we should just layer a labelGroup
@@ -760,7 +785,6 @@ Sketch.prototype.redraw = function ()
 	var circles = drawCollection.selectAll("circle")
 		.data(function (d,i) {return d.shape == "circle"? d.data : [];});
 
-	//var circles = drawCollection.filter(function (d, i) { return d.shape === "circle"; }).data(function (d,i) {return d});
 	circles.enter().append("circle");
 	circles.exit().remove();
 	// update the properties on all new or changing rectangles
@@ -769,6 +793,7 @@ Sketch.prototype.redraw = function ()
 		.attr("cx", function(d) { return xScale(d.xyPos[0]); })
 		.attr("cy", function(d) { return yScale(d.xyPos[1]); });
 
+	
 
 	var hexagons = drawCollection.selectAll("polygon.hex")
 		.data(function (d) { 
@@ -913,7 +938,7 @@ Sketch.prototype.redraw = function ()
 					  if (fragments[i-1])
 					  {
 						  node.append("tspan").text(fragments[i-1])
-						  	.attr("font-size", "16px")
+						  	.attr("font-size", "14px")
 							.attr("text-anchor", "middle");
 					  }
 
@@ -921,7 +946,7 @@ Sketch.prototype.redraw = function ()
 					  node.append("tspan")
 						  .attr("baseline-shift", "sub")
 						  .text(fragments[i])
-						  .attr("font-size", "12px")
+						  .attr("font-size", "10px")
 						  .attr("text-anchor", "middle");
 				  }
 				
@@ -930,7 +955,7 @@ Sketch.prototype.redraw = function ()
 				  if (last)
 				  {
 				  	  node.append("tspan").text(last)	
-						  .attr("font-size", "16px")
+						  .attr("font-size", "14px")
 						  .attr("text-anchor", "middle");
 				  }
 			  });
@@ -1014,7 +1039,8 @@ Sketch.prototype.lite = function (liteKey)
 	{
 		// for numbered labels, highlight the selected circle and any others
 		// with the same liteKey
-		set.classed('lit', true);
+		set.classed('lit', true).style('opacity',0.4);
+		
 	} 
 	else
 	{

@@ -199,7 +199,7 @@ Carousel.prototype.draw = function(container, size)
 			.attr("height", size.height);
 
 	// Create a group for each item then draw the item in that group
-	itemGroups = widgetGroup.selectAll("g.widgetItem").data(this.items);
+	var itemGroups = widgetGroup.selectAll("g.widgetItem").data(this.items);
 	
 	itemGroups.enter()
 		.append("g")
@@ -264,7 +264,8 @@ Carousel.prototype.selectedItem = function ()
 /* **************************************************************************
  * Carousel.selectItemAtIndex                                           *//**
  *
- * Select the item in the carousel at the given index.
+ * Select the item in the carousel at the given index. If the item is
+ * already selected, do nothing.
  *
  * @param {number}	index	-the 0-based index of the item to flag as selected.
  *
@@ -278,6 +279,31 @@ Carousel.prototype.selectItemAtIndex = function (index)
 	selectedItemGroup.classed("selected", true);
 
 	this.eventManager.publish(this.selectedEventId, {selectKey: selectedItemGroup.datum().key});
+};
+
+/* **************************************************************************
+ * Carousel.itemKeyToIndex                                              *//**
+ *
+ * Find the first item in the list of items in this Carousel which has the
+ * specified key and return its index. If no item has that key return null.
+ *
+ * @param {Object}	key		-The key of the item to find
+ *
+ * @return {number} the index of the item in the list of items with the specified
+ * 			key.
+ *
+ ****************************************************************************/
+Carousel.prototype.itemKeyToIndex = function(key)
+{
+	for (var i = 0; i < this.items.length; ++i)
+	{
+		if (this.items[i].key === key)
+		{
+			return i;
+		}
+	};
+
+	return null;
 };
 
 /* **************************************************************************
