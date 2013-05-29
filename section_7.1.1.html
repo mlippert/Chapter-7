@@ -110,7 +110,7 @@
 				
 				<p style="color:blue;">End of interactive exercise.</p>
 				
-				<p style="color:blue;">[INTERACTIVE: The following figure needs to be revealed in steps. The first three structures will appear immediately. The black arrow and the corresponding structure in the next row appears after a touch. The student is directed to touch the two identical structures. If the 2nd and 3rd structures are touched then the red and blue boxes with the labels appears with feedback (“Correct”).]</p>
+				<p style="color:blue;">[INTERACTIVE: The following figure needs to be revealed in steps. The first three structures will appear immediately. The black arrow and the corresponding structure in the next row appears after a touch. The student is directed to touch the two identical structures. If the 2nd and 3rd structures are touched then the red and blue boxes with the labels appears with feedback (Correct).]</p>
 				
 				<div id="picture7"></div>
 				
@@ -378,9 +378,9 @@ var sketch1_4 = new Sketch ({
 		id: "sketch1_4",
 		drawShape:
 		[
-			{ shape: "textBit", data: [{ xyPos: [.85, .83], text: 'These structures are non-' }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .84], text: 'These structures are non-' }]},
 			{ shape: "textBit", data: [{ xyPos: [.85, .8], text: 'superposable and are' }]},
-			{ shape: "textBit", data: [{ xyPos: [.85, .77], text: 'therefore stereoisomers.' }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .76], text: 'therefore stereoisomers.' }]},
 		]
 	});
 	
@@ -546,9 +546,9 @@ var sketch4_5 = new Sketch ({
 		id: "sketch4_5",
 		drawShape:
 		[
-			{ shape: "textBit", data: [{ xyPos: [.85, .83], text: 'These structures are' }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .84], text: 'These structures are' }]},
 			{ shape: "textBit", data: [{ xyPos: [.85, .8], text: 'superposable and are' }]},
-			{ shape: "textBit", data: [{ xyPos: [.85, .77], text: 'therefore homomers (identical)' }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .76], text: 'therefore homomers (identical)' }]},
 		]
 	});
 	
@@ -647,6 +647,7 @@ var sketch5_2 = new Sketch ({
 		drawShape:
 		[
 			{ shape: "textBit", data: [{ xyPos: [.23, .78], text: 'C'}]},
+			{ shape: "circle", data: [{ xyPos: [.23, .8], radius: .03 }]},
 		]
 	}, eventManager);
 	
@@ -655,6 +656,7 @@ var sketch5_3 = new Sketch ({
 		drawShape:
 		[
 			{ shape: "textBit", data: [{ xyPos: [.4, .78], text: 'C'}]},
+			{ shape: "circle", data: [{ xyPos: [.4, .8], radius: .03 }]},
 		]
 	}, eventManager);
 	
@@ -697,9 +699,9 @@ var sketch5_7 = new Sketch ({
 		id: "sketch5_7",
 		drawShape:
 		[
-			{ shape: "textBit", data: [{ xyPos: [.85, .83], text: 'These structures are' }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .84], text: 'These structures are' }]},
 			{ shape: "textBit", data: [{ xyPos: [.85, .8], text: 'superposable and are' }]},
-			{ shape: "textBit", data: [{ xyPos: [.85, .77], text: 'therefore homomers (identical)' }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .76], text: 'therefore homomers (identical)' }]},
 		]
 	});
 	
@@ -715,7 +717,7 @@ sketch5_7.setOpacity(0, 0, 0);
 
 var button5 = new Button ({
 		id: "b5",
-		text: "Click to advance"
+		text: "Click to reset"
 	}, eventManager);
 	
 $('#button5').append(button5.getRootEl());
@@ -725,24 +727,36 @@ eventManager.subscribe(sketch5_3.selectedEventId, handleClick5_2);
 eventManager.subscribe(button5.pressedEventId, handleClick5_3);
 
 var carbon = 0;
+var selected = false;
 
-function handleClick5_1 ()
+function handleClick5_1 (eventDetails)
 {
-	carbon = 1;
-	sketch5_4.move(.7, 0, 1000, 0);
-	sketch5_5.move(.7, 0, 1000, 0);
-	sketch5_6.move(.7, 0, 1000, 0);
+	if (!selected)
+	{
+		carbon = 1;
+		selected = true;
+		sketch5_4.move(.7, 0, 1000, 0);
+		sketch5_5.move(.7, 0, 1000, 0);
+		sketch5_6.move(.7, 0, 1000, 0);
+		sketch5_5.reflect(null, .8, 500, 1000);
+		sketch5_2.lite(eventDetails.selectKey)
+	}
 }
 
-function handleClick5_2 ()
+function handleClick5_2 (eventDetails)
 {
-	carbon = 2;
-	sketch5_4.move(.7, 0, 1000, 0);
-	sketch5_5.move(.7, 0, 1000, 0);
-	sketch5_6.move(.7, 0, 1000, 0);
+	if (!selected)
+	{
+		carbon = 2;
+		selected = true;
+		sketch5_4.move(.7, 0, 1000, 0);
+		sketch5_5.move(.7, 0, 1000, 0);
+		sketch5_6.move(.7, 0, 1000, 0);
+		sketch5_6.reflect(null, .8, 500, 1000);
+		sketch5_3.lite(eventDetails.selectKey)
+	}
 }
 
-var click5 = 0;
 function handleClick5_3 ()
 {
 	// if a carbon has not been selected
@@ -750,77 +764,23 @@ function handleClick5_3 ()
 	{
 		return;
 	}
-	if (click5 == 0)
+	else
 	{
+		sketch5_4.move(-.7, 0, 0, 0);
+		sketch5_5.move(-.7, 0, 0, 0);
+		sketch5_6.move(-.7, 0, 0, 0);
 		if (carbon == 1)
 		{
-			
+			sketch5_5.reflect(null, .8, 0, 0);
+			sketch5_2.lite("0");
 		}
-		else
+		else if (carbon == 2)
 		{
-			
+			sketch5_6.reflect(null, .8, 0, 0);
+			sketch5_3.lite("0");
 		}
-		click5 ++;
-	}
-	else if (click5 == 1)
-	{
-		if (carbon == 1)
-		{
-			
-		}
-		else
-		{
-			
-		}
-		click5 ++;
-	}
-	else if (click5 == 2)
-	{
-		if (carbon == 1)
-		{
-			
-		}
-		else
-		{
-			
-		}
-		click5 ++;
-	}
-	else if (click5 == 3)
-	{
-		if (carbon == 1)
-		{
-			
-		}
-		else
-		{
-			
-		}
-		click5 ++;
-	}
-	else if (click5 == 4)
-	{
-		if (carbon == 1)
-		{
-			
-		}
-		else
-		{
-			
-		}
-		click5 ++;
-	}
-	else if (click5 == 5)
-	{
-		if (carbon == 1)
-		{
-			
-		}
-		else
-		{
-			
-		}
-		click5 = 0;
+		selected = false;
+		carbon = 0;
 	}
 }
 	
@@ -849,26 +809,145 @@ svg6.ScalableImage(
 	
 ///////////////////////////////////////////
 
-var svg7 = new MakeSVGContainer(
-	{node: d3.select("#picture7"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg7.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg7.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_11.png', caption: "Figure 7.1.7 Streamlining the Analysis of Alkene Stereoisomers"}]
+var svg7 = new SVGContainer({
+		node: d3.select("#picture7"),
+		maxWid: 400,
+		maxHt: 400
 	});
+
+var sketch7_1 = new Sketch ({
+		id: "sketch7_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.15, .8], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .8], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .8], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.108, .775], length: .05, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.065, .8], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .79], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.192, .775], length: .05, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.192, .775], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.192, .725], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .7], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.235, .8], length: .05, angle: -Math.PI/6 }]},
+		]
+	}, eventManager);
+
+var sketch7_2 = new Sketch ({
+		id: "sketch7_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.4, .75], length: .05, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.358, .775], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.358, .825], length: .05, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.4, .75], length: .05, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.442, .775], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.41, .745], length: .04, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.4, .75], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.4, .7], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.442, .775], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.484, .75], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.484, .7], length: .05, angle: -Math.PI/6 }]},
+		]
+	}, eventManager);
+	
+var sketch7_3 = new Sketch ({
+		id: "sketch7_3",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.7, .775], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.658, .75], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.658, .7], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .775], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .775], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .765], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.742, .75], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.742, .7], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.742, .75], length: .05, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.784, .775], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.784, .825], length: .05, angle: Math.PI/6 }]},
+		]
+	}, eventManager);
+	
+var sketch7_4 = new Sketch ({
+		id: "sketch7_4",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.15, .625], length: .05, angle: -Math.PI/2, type: "vector" }]},
+		]
+	});
+	
+var sketch7_5 = new Sketch ({
+		id: "sketch7_5",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.442, .625], length: .05, angle: -Math.PI/2, type: "vector" }]},
+		]
+	});
+	
+var sketch7_6 = new Sketch ({
+		id: "sketch7_6",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.72, .625], length: .05, angle: -Math.PI/2, type: "vector" }]},
+		]
+	});
+	
+var sketch7_7 = new Sketch ({
+		id: "sketch7_7",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.125, .45], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.125, .45], length: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.125, .45], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.13, .46], length: .04, angle: -Math.PI/6 }]},
+		]
+	});
+
+var sketch7_8 = new Sketch ({
+		id: "sketch7_8",
+		drawShape:
+		[
+
+		]
+	});
+
+var sketch7_9 = new Sketch ({
+		id: "sketch7_9",
+		drawShape:
+		[
+
+		]
+	});
+
+svg7.append(sketch7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(sketch7_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+eventManager.subscribe(sketch7_1.selectedEventId, handleClick7_1);
+eventManager.subscribe(sketch7_2.selectedEventId, handleClick7_2);
+eventManager.subscribe(sketch7_3.selectedEventId, handleClick7_3);
+
+
+function handleClick7_1 ()
+{
+	
+}
+function handleClick7_2 ()
+{
+	
+}
+function handleClick7_3 ()
+{
+	
+}
+
 	
 /////////////////////////////////////////
 
