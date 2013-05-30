@@ -71,7 +71,8 @@
  * @param {Object}		config			-The settings to configure this Sketch
  * @param {string}		config.id		-String to uniquely identify this Sketch.
  * @param {Array.<SketchConfig>}
- *						config.drawStuff	-An array describing each drawing object in the group.
+ *						config.drawShape	-An array describing each drawing object in the group.
+ * @param {string}		config.type		- "hot" draws transparent hotspots
  *
  * NOTES:
  * @todo: this might or might not be the start of something like an 
@@ -89,6 +90,11 @@ function Sketch(config, eventManager)
 	 * Array of objects to be drawn, where each object specifies the shape, position, and size
  	 */
 	this.drawShape = config.drawShape;
+	
+	/**
+	 * string specifying whether to use the hotspots class
+ 	 */
+	this.type = config.type;
 	
 	/**
 	 * The event manager to use to publish (and subscribe to) events for this widget
@@ -183,7 +189,6 @@ Sketch.prototype.draw = function(container, size)
 		.attr("id", this.lastdrawn.sketchId)
 		.attr("class","widgetSketch");
 	
-	
 	// definition of arrowheads if you need 'em
 	sketchContainer.append("defs").append("marker")
 		.attr("id","triangle")
@@ -243,9 +248,10 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 	var yScale = this.lastdrawn.yScale;
 	
 	var sketchContainer = this.lastdrawn.widgetGroup;
-	
+
 	// get the collection of shapes
 	var drawCollection = sketchContainer.selectAll("g.shape");
+	
 
 	// get collection of rectangles			  
 	var rectangles = drawCollection.selectAll("rect");
@@ -755,7 +761,15 @@ Sketch.prototype.redraw = function ()
 		
 	// get rid of any shapes without data
 	drawCollection.exit().remove();
-
+	
+	if (this.type == "hot"){
+	//when the sketch type is hotspots, the following class will make all the 
+	//groups invisble, except when selected (+ .lit).  This is all done with 
+	//classes and not inline styles because styles tend to be sticky, and the class
+	//information won't overwrite them.  So it makes it tough to change the 
+	//highlighting.
+		drawCollection.classed("hot",true);
+	}
 	// autokey entries which have no key with the data index
 	drawCollection.each(function (d, i) { 
 					// if there is no key assigned, make one from the index
@@ -1025,8 +1039,7 @@ Sketch.prototype.lite = function (liteKey)
 	
 	// return all styles to normal on all the labels and numbers
 	this.lastdrawn.drawCollection
-		.classed('lit', false);
-	 
+		.classed('lit', false);	 
 	
 	// create a filter function that will match all instances of the liteKey
 	// then find the set that matches
@@ -1039,8 +1052,8 @@ Sketch.prototype.lite = function (liteKey)
 	{
 		// for numbered labels, highlight the selected circle and any others
 		// with the same liteKey
-		set.classed('lit', true).style('opacity',0.4);
-		
+		set.classed('lit', true);
+	
 	} 
 	else
 	{

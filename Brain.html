@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="Author" content="Leslie Bondaryk" />
+	<meta name="Owner" content="Pearson" />
+	<meta name="Copyright" content="Copyright (c) 2013 Pearson. All rights reserved." />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="Carmen Santiago, Demo Book" name="description" />
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap_plus.css" rel="stylesheet" media="screen">
+	<link href="css/widgets.css" rel="stylesheet">
+	<link href="css/learning-objective.css" rel="stylesheet">
+	<link href="css/eCourse-master.css" rel="stylesheet" media="screen">
+	<link href="css/grey-thing.css" rel="stylesheet">
+	<title class="setTitle"></title>
+</head>
+
+<body>
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span6 leftCol">
+            	<h2 class="setTitle"></h2>
+              	<div id="carousel"></div>
+ 				
+			</div>
+			<div class="span6 rightCol">
+           
+         	   	<p>The brain is uses a subsystem of eyes and other neurological components to process incoming light.  Light entering the eyes can be separated into the left and right visual fields. Light travels in a straight line through the cornea and lens. The resulting image projected on the retina is actually upside down and reversed. Our brain compensates for this. </p>
+             <p>The image from the left visual field on the right side of each retina goes to the right visual cortex, while the right visual field goes to the left visual cortex. The axons from the temporal halves of each retina project to the visual cortex on the same size of the brain, while the axons from the nasal halves cross over to the opposite side. The optic chiasm is the point of crossover.</p>
+			<p>Photoreceptors in the retina, the rods, are found all over the retina except in the very center, which contains only cones.  Rods sense changes in brightness but not wavelength, so they see only black or white and shades of gray. They are very sensitive. Because rods work well in low light, they are also the cells that adapt to low light.  Dark adaptation occurs as the eye recovers its ability to see when moving from a brightly lit state to a dark state.
+            </p>
+             <div id="callouts"></div>
+            
+			</div>
+		</div>
+	</div>
+
+	
+    <script src="js/jquery-latest.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!-- script src="js/jquery.touchSwipe.min.js"></script-->
+	<script src="js/jquery-ui-1.10.2.custom.js"></script>
+	<script src="js/toc-structure.js"></script>    
+	<script src="js/eCourse-master.js"></script>    
+	<script src="js/d3.v3.min.js"></script>
+
+	<script src="js/widget-base.js"></script>
+	<script src="js/widget-callouts.js"></script>
+  	<script src="js/eventmanager.js"></script>
+	<script src="js/widget-image.js"></script>
+    <script src="js/widget-carousel.js"></script>
+    <script src="js/widget-imageviewer.js"></script>
+    <script src="js/widget-labelgroup.js"></script>
+    <script src="js/widget-sketch.js"></script>
+
+	<script>
+
+
+
+	//the eventManager is an object that is specific to this page.  A new one
+	//is created for every page, and then passed to the widgets in that page
+	//that must talk to it.
+	var eventManager = new EventManager();
+	
+	var imgvwrConfig4 =
+		{
+			items:
+				[
+					new Image({
+					URI: 'img/brainVisualSystem.jpg',
+					caption: "Cross section of human brain visual system.",
+					actualSize: {height: 492, width: 716}
+					}),
+					new Image({
+					URI: 'img/brainVisual60.jpg',
+					caption: "60 degree view of the brain.",
+					actualSize: {height: 492, width: 716},
+					}),
+					new Image({
+					URI: 'img/brainVisualFront.jpg',
+					caption: "Human brain front view.",
+					actualSize: {height: 492, width: 716},
+					}),
+					new Image({
+					URI: 'img/brainBack.jpg',
+					caption: "Human brain rear view.",
+					actualSize: {height: 492, width: 716}
+					})
+				],
+		};
+
+	var cntrConfig4 = 
+		{
+			node: d3.select("#carousel"),
+			maxWid: 600,
+			maxHt: 560
+		};
+
+	var cntr4 = new SVGContainer(cntrConfig4);
+	var imgvwr4 = new ImageViewer(imgvwrConfig4, eventManager);
+	
+	cntr4.append(imgvwr4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+	
+	var textChunks = new Callouts (
+		{id: "brainStuff",
+		headers: ["Function"],
+		textBits: [
+			{cols:["About 90% of the axons in the optic nerve go to the lateral geniculate nucleus in the thalamus. These axons originate from the retina. This parallel processing is important for reconstructing the visual world."], key: "thalamus"
+			},
+			{cols: ["The dorsal stream, commonly referred to as the 'where' stream, is involved in spatial attention (covert and overt), and communicates with regions that control eye movements and hand movements. More recently, this area has been called the 'how' stream to emphasize its role in guiding behaviors to spatial locations. "], key: "dorsal"
+			},
+			{cols:["Primary Visual Pathway is the connection from the retina to the visual cortex via the optic nerve. The visual cortex is the largest system in the human brain and is responsible for processing the visual image."], key: "pathway"
+			},
+			{cols: ["The ventral stream, commonly referred as the 'what' stream, is involved in the recognition, identification and categorization of visual stimuli. There is still much debate about the degree of specialization between this and the dorsal stream; the two streams are heavily interconnected."], key: "ventral"},
+			{cols: ["Different populations of ganglion cells in the retina sense light, and send  that information to the brain through the optic nerve. "], key: "eye"},
+			{cols: ["Vision affects many other physical systems, including balance. Vision information is communicated to the rest of the body through the brainstem."], key: "stem"}
+			]
+		});
+		
+	textChunks.draw(d3.select("#callouts"));	
+	
+	var hotspots = new Sketch({
+			id: "spots",
+			type: "hot",
+			drawShape: 	
+			[	
+				{ key: "thalamus", fill: "White", shape: "circle", data: [{xyPos: [0.53, 0.55], radius: .05 }]},
+				{ key: "dorsal", fill: "White", shape: "circle", data: [{xyPos: [0.35, 0.7], radius: .06 }]},
+				{ key: "pathway", fill: "White", shape: "circle", data: [{xyPos: [0.25, 0.5], radius: .05 }]},
+				{ key: "pathway", fill: "White", shape: "circle", data: [{xyPos: [0.4, 0.5], radius: .05 }]},
+				{ key: "ventral", fill: "White", shape: "rectangle", data: [{xyPos: [0.33, 0.36], height: .05, width: .2 }]},
+				{ key: "eye", fill: "White", shape: "circle", data: [{xyPos: [0.76, 0.43], radius: .05 }]},
+			],
+		}, eventManager);
+	
+	cntr4.append(hotspots, {topPercentOffset: 0.2, leftPercentOffset: 0, heightPercent: 0.8, widthPercent: 1});
+
+	var brainLabels = new LabelGroup(
+		{id: "brainLabel",
+		labels: 	
+		  [	
+			{content: "Thalamus", xyPos: [.45,.65], width: 80, key: "thalamus"},
+			{content: "Dorsal Stream",	xyPos:[.15,.8], width: 80, key: "dorsal"},
+			{content: "Primary Visual Pathway", xyPos:[.15,.5], width: 130, key: "pathway"},
+			{content:"Ventral Stream",	xyPos:[.1,.3], width: 120, key: "ventral"},
+			{content:"Eye", xyPos:[.85,.45], width: 60, key: "eye"},
+			{content:"Brainstem", xyPos:[.5,.25], width: 100, key: "stem"},
+		  ]
+		}, eventManager);
+
+	cntr4.append(brainLabels, {topPercentOffset: .2, leftPercentOffset: 0, heightPercent: .8, widthPercent: 1});
+	
+	//if we click off the first image, then blank out the hotspots
+	eventManager.subscribe(imgvwr4.selectedEventId, handleCarouselOverlay);
+	eventManager.subscribe(hotspots.selectedEventId, handleSelection);
+	eventManager.subscribe(brainLabels.selectedEventId, handleSelection);
+	//and show the first piece of text - state
+	handleSelection({selectKey: "eye"});
+	
+/* EventHandler */
+	function handleSelection (eventDetails) {
+			textChunks.lite(eventDetails.selectKey);
+			brainLabels.lite(eventDetails.selectKey);
+			hotspots.lite(eventDetails.selectKey);
+			}
+	
+	function handleCarouselOverlay(eventDetails)
+	{
+		if (eventDetails.selectKey==0)
+		{
+			brainLabels.setOpacity(1,100,0);
+		}
+		else
+		{
+			//this is not right.  It makes all the hotspots invisible, but they are still there
+			//and active.  What we want is to remove them entirely.
+			hotspots.setOpacity(0, 100, 0);
+			brainLabels.setOpacity(0,100,0);
+		}
+	}
+	
+	
+	</script>
+</body>
+</html>
