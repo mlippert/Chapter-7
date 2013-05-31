@@ -412,7 +412,7 @@ sketch1_4.setOpacity(0, 0, 0);
 // button used to advance the animation
 var button1 = new Button ({
 		id: "b1",
-		text: "Click to advance"
+		text: "Play step 1 / 3"
 	}, eventManager);
 	
 $('#button1').append(button1.getRootEl());
@@ -422,37 +422,66 @@ eventManager.subscribe(button1.pressedEventId, handleClick1);
 
 // animation is advanced by clicking a button
 var click1 = 0;
+var canclick1 = true;
 function handleClick1 ()
 {
 	// move duplicate sketch to the side
-	if (click1 == 0)
+	if (click1 == 0 && canclick1)
 	{
-		sketch1_2.move(.7, 0, 1000, 0);
-		sketch1_3.move(.7, 0, 1000, 0);
+		canclick1 = false
+		sketch1_2.setColor("red", 500, 0);
+		sketch1_3.setColor("red", 500, 0);
+		sketch1_2.move(.7, 0, 1000, 500);
+		sketch1_3.move(.7, 0, 1000, 500);
 		click1 ++;
+		setTimeout(function ()
+						{
+							canclick1 = true;
+							button1.setText("Play step 2 / 3");
+						}, 2000);
 	}
 	// switch
-	else if (click1 == 1)
+	else if (click1 == 1 && canclick1)
 	{
+		canclick1 = false;
 		sketch1_3.reflect(null, .8, 500, 0);
 		click1 ++;
+		setTimeout(function ()
+						{
+							canclick1 = true;
+							button1.setText("Play step 3 / 3");
+						}, 1000);
 	}
 	// superimpose second sketch on top of the first and display the message
-	else if (click1 == 2)
+	else if (click1 == 2 && canclick1)
 	{
+		canclick1 = false;
 		sketch1_2.move(-.7, -.07, 1000, 0);
 		sketch1_3.move(-.7, -.07, 1000, 0);
 		sketch1_4.setOpacity(1, 500, 1000);
 		click1 ++;
+		setTimeout(function ()
+						{
+							canclick1 = true;
+							button1.setText("Restart");
+						}, 2000);
 	}
 	// reset
-	else if (click1 == 3)
+	else if (click1 == 3 && canclick1)
 	{
-		sketch1_2.move(0, .07, 0, 0);
-		sketch1_3.move(0, .07, 0, 0);
-		sketch1_3.reflect(null, .8, 0, 0);
+		canclick1 = false;
+		sketch1_2.setColor("grey", 10, 0);
+		sketch1_3.setColor("grey", 10, 0);
+		sketch1_2.move(0, .07, 0, 10);
+		sketch1_3.move(0, .07, 0, 10);
+		sketch1_3.reflect(null, .8, 0, 10);
 		sketch1_4.setOpacity(0, 0, 0);
 		click1 = 0;
+		setTimeout(function ()
+						{
+							canclick1 = true;
+							button1.setText("Play step 1 / 3");
+						}, 15);
 	}
 	
 }
@@ -682,7 +711,7 @@ sketch4_5.setOpacity(0, 0, 0);
 // button used to advance the animation
 var button4 = new Button ({
 		id: "b4",
-		text: "Click to advance"
+		text: "Play step 1 / 5"
 	}, eventManager);
 	
 $('#button4').append(button4.getRootEl());
@@ -691,54 +720,96 @@ eventManager.subscribe(button4.pressedEventId, handleClick4);
 
 // animation is advanced by clicking the button
 var click4 = 0;
+var canclick4 = true;
 function handleClick4 ()
 {
 	// move duplicate sketch to the side
-	if (click4 == 0)
+	if (click4 == 0 && canclick4)
 	{
-		sketch4_2.move(.7, 0, 1000, 0);
-		sketch4_3.move(.7, 0, 1000, 0);
-		sketch4_4.move(.7, 0, 1000, 0);
+		canclick4 = false;
+		sketch4_2.setColor("red", 500, 0);
+		sketch4_3.setColor("red", 500, 0);
+		sketch4_4.setColor("red", 500, 0);
+		sketch4_2.move(.7, 0, 1000, 500);
+		sketch4_3.move(.7, 0, 1000, 500);
+		sketch4_4.move(.7, 0, 1000, 500);
 		click4 ++;
+		setTimeout(function ()
+						{
+							canclick4 = true;
+							button4.setText("Play step 2 / 5");
+						}, 2000);
 	}
 	// flip the right side
-	else if (click4 == 1)
+	else if (click4 == 1 && canclick4)
 	{
+		canclick4 = false;
 		sketch4_4.reflect(null, .8, 500, 0);
 		click4 ++;
+		setTimeout(function ()
+						{
+							canclick4 = true;
+							button4.setText("Play step 3 / 5");
+						}, 1000);
 	}
 	// flip the left side
-	else if (click4 == 2)
+	else if (click4 == 2 && canclick4)
 	{
+		canclick4 = false;
 		sketch4_3.reflect(null, .8, 500, 0);
 		click4 ++;
+		setTimeout(function ()
+						{
+							canclick4 = true;
+							button4.setText("Play step 4 / 5");
+						}, 1000);
 	}
 	// flip the entire molecule
-	else if (click4 == 3)
+	else if (click4 == 3 && canclick4)
 	{
+		canclick4 = false;
 		sketch4_2.reflect(null, .8, 500, 0);
 		sketch4_4.reflect(null, .8, 500, 0);
 		sketch4_3.reflect(null, .8, 500, 0);
 		click4 ++;
+		setTimeout(function ()
+						{
+							canclick4 = true;
+							button4.setText("Play step 5 / 5");
+						}, 1000);
 	}
 	// superimpose second sketch on top of the first and display the message
-	else if (click4 == 4)
+	else if (click4 == 4 && canclick4)
 	{
+		canclick4 = false;
 		sketch4_2.move(-.7, -.07, 1000, 0);
 		sketch4_3.move(-.7, -.07, 1000, 0);
 		sketch4_4.move(-.7, -.07, 1000, 0);
 		sketch4_5.setOpacity(1, 500, 1000);
 		click4 ++;
+		setTimeout(function ()
+						{
+							canclick4 = true;
+							button4.setText("Restart");
+						}, 2000);
 	}
 	// reset
 	else if (click4 == 5)
 	{
-		sketch4_2.move(0, .07, 0, 0);
-		sketch4_3.move(0, .07, 0, 0);
-		sketch4_4.move(0, .07, 0, 0);
-		sketch4_2.reflect(null, .8, 0, 0);
+		sketch4_2.setColor("grey", 10, 0);
+		sketch4_3.setColor("grey", 10, 0);
+		sketch4_4.setColor("grey", 10, 0);
+		sketch4_2.move(0, .07, 0, 10);
+		sketch4_3.move(0, .07, 0, 10);
+		sketch4_4.move(0, .07, 0, 10);
+		sketch4_2.reflect(null, .8, 0, 10);
 		sketch4_5.setOpacity(0, 0, 0);
 		click4 = 0;
+		setTimeout(function ()
+						{
+							canclick4 = true;
+							button4.setText("Play step 1 / 5");
+						}, 15);
 	}
 }
 
@@ -839,7 +910,7 @@ svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 // button used to reset animation
 var button5 = new Button ({
 		id: "b5",
-		text: "Click to reset"
+		text: "Restart"
 	}, eventManager);
 	
 $('#button5').append(button5.getRootEl());
@@ -850,35 +921,42 @@ eventManager.subscribe(button5.pressedEventId, handleClick5_3);
 
 var carbon = 0;
 var selected = false;
+var canclick5 = true;
 
 // click the left carbon
 function handleClick5_1 (eventDetails)
 {
 	// move the duplicated sketch over and flip the left side
-	if (!selected)
+	if (!selected && canclick5)
 	{
+		canclick5 = false;
 		carbon = 1;
 		selected = true;
 		sketch5_4.move(.7, 0, 1000, 0);
 		sketch5_5.move(.7, 0, 1000, 0);
 		sketch5_6.move(.7, 0, 1000, 0);
-		sketch5_5.reflect(null, .8, 500, 1000);
+		sketch5_5.setColor("red", 500, 1000);
+		sketch5_5.reflect(null, .8, 500, 1500);
 		sketch5_2.lite(eventDetails.selectKey)
+		setTimeout(function () {canclick5 = true;}, 2500);
 	}
 }
 // click the right carbon
 function handleClick5_2 (eventDetails)
 {
 	// move the duplicated sketch over and flip the right side
-	if (!selected)
+	if (!selected && canclick5)
 	{
+		canclick5 = false;
 		carbon = 2;
 		selected = true;
 		sketch5_4.move(.7, 0, 1000, 0);
 		sketch5_5.move(.7, 0, 1000, 0);
 		sketch5_6.move(.7, 0, 1000, 0);
-		sketch5_6.reflect(null, .8, 500, 1000);
+		sketch5_6.setColor("red", 500, 1000);
+		sketch5_6.reflect(null, .8, 500, 1500);
 		sketch5_3.lite(eventDetails.selectKey)
+		setTimeout(function () {canclick5 = true;}, 2500);
 	}
 }
 // click the reset button
@@ -890,23 +968,27 @@ function handleClick5_3 ()
 		return;
 	}
 	// reset
-	else
+	else if (canclick5)
 	{
+		canclick5 = false;
 		sketch5_4.move(-.7, 0, 0, 0);
 		sketch5_5.move(-.7, 0, 0, 0);
 		sketch5_6.move(-.7, 0, 0, 0);
 		if (carbon == 1)
 		{
 			sketch5_5.reflect(null, .8, 0, 0);
+			sketch5_5.setColor("grey", 0, 10);
 			sketch5_2.lite("");
 		}
 		else if (carbon == 2)
 		{
 			sketch5_6.reflect(null, .8, 0, 0);
+			sketch5_6.setColor("grey", 0, 10);
 			sketch5_3.lite("");
 		}
 		selected = false;
 		carbon = 0;
+		setTimeout(function () {canclick5 = true;}, 15);
 	}
 }
 	
@@ -943,16 +1025,23 @@ var sketch6_2 = new Sketch ({
 		drawShape:
 		[
 			{ shape: "line", 	data: [{ xyPos: [.5, .8], length: 0.1, angle: -4*Math.PI/5 }]},
-			{ shape: "line", 	data: [{ xyPos: [.5, .6], length: 0.1, angle: 4*Math.PI/5 }]},
 		
 			{ shape: "textBit", data: [{ xyPos: [.54, .8], text: 'Cl' }]},
+		]
+	});
+var sketch6_3 = new Sketch ({
+		id: "sketch6_3",
+		drawShape:
+		[
+			{ shape: "line", 	data: [{ xyPos: [.5, .6], length: 0.1, angle: 4*Math.PI/5 }]},
+
 			{ shape: "textBit", data: [{ xyPos: [.54, .6], text: 'Cl' }]},
 		]
 	});
 
 // message to be displayed
-var sketch6_3 = new Sketch ({
-		id: "sketch6_3",
+var sketch6_4 = new Sketch ({
+		id: "sketch6_4",
 		drawShape:
 		[
 			{ shape: "textBit", data: [{ xyPos: [.4, .9], text: "Not a stereocenter" }]},
@@ -970,7 +1059,7 @@ var sketch6_3 = new Sketch ({
 // button used to reset animation
 var button6 = new Button ({
 		id: "b6",
-		text: "Click to advance"
+		text: "Play animation"
 	}, eventManager);
 
 $('#button6').append(button6.getRootEl());
@@ -978,28 +1067,49 @@ $('#button6').append(button6.getRootEl());
 svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(sketch6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
 // message starts out invisible
-sketch6_3.setOpacity(0, 0, 0);
+sketch6_4.setOpacity(0, 0, 0);
 
 eventManager.subscribe(button6.pressedEventId, handleClick6);
 
 // animation can be played once and reset using the button
 var click6 = 0;
+var canclick6 = true;
 function handleClick6 ()
 {
 	// play the animation
-	if (click6 == 0)
+	if (click6 == 0 && canclick6)
 	{
-		sketch6_2.reflect(null, .7, 800, 0);
-		sketch6_3.setOpacity(1, 600, 1000);
+		canclick6 = false;
+		sketch6_2.setColor("blue", 500, 0);
+		sketch6_3.setColor("red", 500, 0);
+		sketch6_2.reflect(null, .7, 800, 500);
+		sketch6_3.reflect(null, .7, 800, 500);
+		sketch6_4.setOpacity(1, 600, 1000);
 		click6 ++;
+		setTimeout(function ()
+						{
+							canclick6 = true;
+							button6.setText("Restart");
+						}, 2000);
 	}
 	// reset
-	else if (click6 == 1)
+	else if (click6 == 1 && canclick6)
 	{
-		sketch6_3.setOpacity(0, 0, 0);
+		canclick6 = false;
+		sketch6_2.reflect(null, .7, 0, 0);
+		sketch6_3.reflect(null, .7, 0, 0);
+		sketch6_2.setColor("grey", 0, 10);
+		sketch6_3.setColor("grey", 0, 10);
+		sketch6_4.setOpacity(0, 0, 0);
 		click6 = 0;
+		setTimeout(function ()
+						{
+							canclick6 = true;
+							button6.setText("Play animation");
+						}, 15);
 	}
 }
 	
@@ -1248,6 +1358,7 @@ var reveal7_3 = 0;	// flag for when simplified right molecule is revealed
 var click7 = 0;		// keeps track of how many simplified molecules have been clicked
 var first7 = 0;		// marks which simplified molecule was chosen first
 var second7 = 0;	// marks which simplified molecule was chosen second
+var canclick7 = true;
 
 // reveal left simplifed molecule
 function handleClick7_1 ()
@@ -1278,11 +1389,13 @@ function handleClick7_4 (eventDetails)
 {
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
 	{
-		sketch7_7.lite(eventDetails.selectKey);
+		canclick7 = false;
+		sketch7_7.setColor("blue", 200, 0);
 		if (click7 == 0) first7 = 1;
 		else if (click7 == 1) second7 == 1;
 		click7 ++;
 		checkAnswer7();
+		setTimeout(function () {canclick7 = true;}, 500);
 	}
 }
 // click middle simplified molecule
@@ -1290,11 +1403,13 @@ function handleClick7_5 (eventDetails)
 {
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
 	{
-		sketch7_8.lite(eventDetails.selectKey);
+		canclick7 = false;
+		sketch7_8.setColor("blue", 200, 0);
 		if (click7 == 0) first7 = 2;
 		else if (click7 == 1) second7 = 2;
 		click7 ++;
 		checkAnswer7();
+		setTimeout(function () {canclick7 = true;}, 500);
 	}
 }
 // click right simplified molecule
@@ -1302,37 +1417,42 @@ function handleClick7_6 (eventDetails)
 {
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
 	{
-		sketch7_9.lite(eventDetails.selectKey);
+		canclick7 = false;
+		sketch7_9.setColor("blue", 200, 0);
 		if (click7 == 0) first7 = 3;
 		else if (click7 == 1) second7 = 3;
 		click7 ++;
 		checkAnswer7();
+		setTimeout(function () {canclick7 = true;}, 500);
 	}
 }
 // reset
 function handleClick7_7 ()
 {
+	if (canclick7)
+	{
+		canclick7 = false;
+		sketch7_7.setColor("grey", 10, 0);
+		sketch7_8.setColor("grey", 10, 0);
+		sketch7_9.setColor("grey", 10, 0);
+		sketch7_01.setOpacity(0, 0, 0);
+		sketch7_4.setOpacity(0, 0, 0);
+		sketch7_5.setOpacity(0, 0, 0);
+		sketch7_6.setOpacity(0, 0, 0);
+		sketch7_7.setOpacity(0, 0, 10);
+		sketch7_8.setOpacity(0, 0, 10);
+		sketch7_9.setOpacity(0, 0, 10);
+		sketch7_10.setOpacity(0, 0, 0);
+		sketch7_11.setOpacity(0, 0, 0);
 	
-	sketch7_01.setOpacity(0, 0, 0);
-	sketch7_4.setOpacity(0, 0, 0);
-	sketch7_5.setOpacity(0, 0, 0);
-	sketch7_6.setOpacity(0, 0, 0);
-	sketch7_7.setOpacity(0, 0, 0);
-	sketch7_8.setOpacity(0, 0, 0);
-	sketch7_9.setOpacity(0, 0, 0);
-	sketch7_10.setOpacity(0, 0, 0);
-	sketch7_11.setOpacity(0, 0, 0);
-	
-	sketch7_7.lite("");
-	sketch7_8.lite("");
-	sketch7_9.lite("");
-	
-	click7 = 0;
-	first7 = 0;
-	second7 = 0;
-	reveal7_1 = 0;
-	reveal7_2 = 0;
-	reveal7_3 = 0;
+		click7 = 0;
+		first7 = 0;
+		second7 = 0;
+		reveal7_1 = 0;
+		reveal7_2 = 0;
+		reveal7_3 = 0;
+		setTimeout(function () {canclick7 = true;}, 15);
+	}
 }
 // check for correct answer (middle and right simplified molecules)
 function checkAnswer7 ()

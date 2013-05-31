@@ -726,6 +726,16 @@ Sketch.prototype.setColor = function (color, duration, delay)
 	drawCollection.transition()
 		.style('stroke', color)
 		.duration(duration).delay(delay);
+		
+	var wedges = drawCollection.selectAll("wedge");
+	wedges.transition()
+		.style('fill', color)
+		.duration(duration).delay(delay);
+		
+	var textbits = drawCollection.selectAll("text");
+	textbits.transition()
+		.style('fill', color)
+		.duration(duration).delay(delay);
 
 	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
 
