@@ -302,7 +302,49 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 				return d.points;
 			})
 		.duration(duration).delay(delay);
-	
+		
+	var wedges = drawCollection.selectAll("polygon.wedge");
+	wedges.each(function (d)
+		{
+			if (d.type == "hash")
+			{
+				var mask = sketchContainer.select("defs").select("mask");
+				var lines = mask.selectAll("line");
+				
+				var ratio = .9;
+				
+				lines.each(function ()
+					{
+						var line = d3.select(this);
+						line.transition()
+						.attr("x1", function ()
+									{
+									return xScale(d.xyPos[0] + ratio*d.length*Math.cos(d.angle)
+												+ d.width/2*Math.cos(d.angle + Math.PI/2));
+								})
+							.attr("y1", function ()
+								{
+									return yScale(d.xyPos[1] + ratio*d.length*Math.sin(d.angle)
+												+ d.width/2*Math.sin(d.angle + Math.PI/2));
+								})
+							.attr("x2", function ()
+								{
+									return xScale(d.xyPos[0] + ratio*d.length*Math.cos(d.angle)
+												+ d.width/2*Math.cos(d.angle - Math.PI/2));
+								})
+							.attr("y2", function ()
+								{
+									return yScale(d.xyPos[1] + ratio*d.length*Math.sin(d.angle)
+												+ d.width/2*Math.sin(d.angle - Math.PI/2));
+								})
+							.attr("stroke-width", "4px")
+							.attr("stroke", "white").attr("opacity", 1)
+							.duration(duration).delay(delay);
+					ratio = ratio - .33;
+				});
+			}
+		});
+
 	// get collection of lines
 	var lines = drawCollection.selectAll("line");
 	// add the given offset to the x and y positions of both endpoints
@@ -481,6 +523,64 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				return d.points;
 			})
 		.duration(duration).delay(delay);
+		
+		var wedges = drawCollection.selectAll("polygon.wedge");
+		wedges.each(function (d)
+			{
+				// reflect over the vertical line (if provided)
+				if (xLine != null)
+				{
+					var angle = d.angle;
+					var diff = Math.PI/2 - angle;
+					d.angle = Math.PI/2 + diff;
+				}
+				// reflect over the horizontal line (if provided)
+				if (yLine != null)
+				{
+					var angle = d.angle;
+					var diff = Math.PI - angle;
+					d.angle = Math.PI + diff;
+				}
+				
+				if (d.type == "hash")
+				{
+					var mask = sketchContainer.select("defs").select("mask");
+					var lines = mask.selectAll("line");
+					
+					var ratio = .9;
+					
+					lines.each(function ()
+						{
+							var line = d3.select(this);
+							line.transition()
+							.attr("x1", function ()
+										{
+										return xScale(d.xyPos[0] + ratio*d.length*Math.cos(d.angle)
+													+ d.width/2*Math.cos(d.angle + Math.PI/2));
+									})
+								.attr("y1", function ()
+									{
+										return yScale(d.xyPos[1] + ratio*d.length*Math.sin(d.angle)
+													+ d.width/2*Math.sin(d.angle + Math.PI/2));
+									})
+								.attr("x2", function ()
+									{
+										return xScale(d.xyPos[0] + ratio*d.length*Math.cos(d.angle)
+													+ d.width/2*Math.cos(d.angle - Math.PI/2));
+									})
+								.attr("y2", function ()
+									{
+										return yScale(d.xyPos[1] + ratio*d.length*Math.sin(d.angle)
+													+ d.width/2*Math.sin(d.angle - Math.PI/2));
+									})
+								.attr("stroke-width", "4px")
+								.attr("stroke", "white").attr("opacity", 1)
+								.duration(duration).delay(delay);
+						ratio = ratio - .33;
+					});
+					
+				}
+			});
 
 	// get collection of lines
 	var lines = drawCollection.selectAll("line");
@@ -727,7 +827,7 @@ Sketch.prototype.setColor = function (color, duration, delay)
 		.style('stroke', color)
 		.duration(duration).delay(delay);
 		
-	var wedges = drawCollection.selectAll("wedge");
+	var wedges = drawCollection.selectAll("polygon.wedge");
 	wedges.transition()
 		.style('fill', color)
 		.duration(duration).delay(delay);
@@ -913,6 +1013,51 @@ Sketch.prototype.redraw = function ()
 				return d.points;
 			})
 		.style('fill', 'grey');
+		
+	wedges.each(function(d)
+		{
+			// if type is a hash, put a mask on it
+			if (d.type == "hash")
+			{
+				var hash = d3.select(this);
+				hash.style("stroke-width", "0px");
+				
+				var defs = sketchContainer.select("defs");
+				var mask = defs.append("mask")
+					.attr("x", 0).attr("y", 0).attr("width", 1).attr("height", 1)
+					.attr("id", "hashmask");
+				var i;
+				var ratio = .9;
+				for (i = 0; i < 3; i++)
+				{
+					mask.append("line")
+						.attr("x1", function ()
+							{
+								return xScale(d.xyPos[0] + ratio*d.length*Math.cos(d.angle)
+											+ d.width/2*Math.cos(d.angle + Math.PI/2));
+							})
+						.attr("y1", function ()
+							{
+								return yScale(d.xyPos[1] + ratio*d.length*Math.sin(d.angle)
+											+ d.width/2*Math.sin(d.angle + Math.PI/2));
+							})
+						.attr("x2", function ()
+							{
+								return xScale(d.xyPos[0] + ratio*d.length*Math.cos(d.angle)
+											+ d.width/2*Math.cos(d.angle - Math.PI/2));
+							})
+						.attr("y2", function ()
+							{
+								return yScale(d.xyPos[1] + ratio*d.length*Math.sin(d.angle)
+											+ d.width/2*Math.sin(d.angle - Math.PI/2));
+							})
+						.attr("stroke-width", "4px")
+						.attr("stroke", "white").attr("opacity", 1);
+					ratio = ratio - .33;
+				}
+				hash.style("mask", "url(#hashmask)");
+			}
+		});
 
 
 	//lines are just degenerate paths, wonder if we should do these similarly
@@ -932,12 +1077,14 @@ Sketch.prototype.redraw = function ()
 					return yScale(d.length * Math.sin(d.angle) + d.xyPos[1]);
 					});
 	
-	lines.each(function (d, i) { 
-					// if type is a vector, put a triangle on the end
-					if(d.type == "vector"){
-						lines.attr("marker-end","url(#triangle)");
-							}
-						});
+	lines.each(function (d, i)
+		{ 
+			// if type is a vector, put a triangle on the end
+			if(d.type == "vector")
+			{
+				lines.attr("marker-end","url(#triangle)");
+			}
+		});
 
 	var lineGen = d3.svg.line()
 		// TODO: someday might want to add options for other interpolations -lb
