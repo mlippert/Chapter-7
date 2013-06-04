@@ -130,6 +130,9 @@
 				
 				<p>Identify if the following alkenes are stereogenic.</p>
 				
+				<span id="button9_1"></span>
+				<span id="button9_2"></span>
+				<span id="button9_3"></span>
 				<div id="picture9"></div>
 
 				<p style="color:blue;">[ANIMATE: These solutions will benefit from the animation/interactive treatment applied earlier. Maybe we don&apos;t want to give the students control for solved examples and simply have them watch the animation.]</p>
@@ -1643,26 +1646,158 @@ svg8_2.append(sketch8_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPerce
 	
 ///////////////////////////////////////
 
-var svg9 = new MakeSVGContainer(
-	{node: d3.select("#picture9"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg9.Axes({
-	xPosPerc: .25, yPosPerc: .25,
-	xPerc: .5, yPerc: .5,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg9.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_13.png', caption: "Placeholder for interactive."}]
+var svg9 = new SVGContainer({
+		node: d3.select("#picture9"),
+		maxWid: 400,
+		maxHt: 200
 	});
+
+var sketch9_1 = new Sketch ({
+		id: "sketch9_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.5, .5], length: .2, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.5, .5], length: .2, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.32, .4], length: .2, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.14, .5], length: .2, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.68, .4], length: .15, angle: Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.85, .47], text: "Cl" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.05, .85], text: "a." }]},
+		]
+	});
+var sketch9_2 = new Sketch ({
+		id: "sketch9_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.5, .5], length: .2, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.53, .515], length: .17, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.5, .7], length: .15, angle: Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.67, .77], text: "Cl" }]},
+		]
+	});
+var sketch9_3 = new Sketch ({
+		id: "sketch9_3",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.5, .7], length: .15, angle: 5*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.33, .77], text: "H" }]},
+		]
+	});
+	
+var sketch9_4 = new Sketch ({
+		id: "sketch9_4",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.1, .7], length: .2, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.1, .5], length: .2, angle: -Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [.29, .44], length: .2, angle: 3*Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [.41, .6], length: .2, angle: 7*Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [.29, .76], length: .2, angle: 11*Math.PI/10 }]},
+			
+		]
+	});
+var sketch9_5 = new Sketch ({
+		id: "sketch9_5",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.41, .6], length: .2, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.425, .57], length: .17, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.61, .6], length: .2, angle: -Math.PI/3 }]},
+		]
+	});
+var sketch9_6 = new Sketch ({
+		id: "sketch9_6",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.61, .6], length: .15, angle: Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.72, .76], text: "H" }]}
+		]
+	});
+var sketch9_7 = new Sketch ({
+		id: "sketch9_7",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.05, .85], text: "b." }]},
+		]
+	});
+	
+svg9.append(sketch9_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: .5});
+svg9.append(sketch9_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: .5});
+svg9.append(sketch9_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: .5});
+
+svg9.append(sketch9_4, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
+svg9.append(sketch9_5, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
+svg9.append(sketch9_6, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
+svg9.append(sketch9_7, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
+
+sketch9_3.setColor("blue");
+sketch9_6.setColor("blue");
+
+var button9_1 = new Button ({
+		id: "b9_1",
+		text: "Hide H"
+	}, eventManager);
+
+$('#button9_1').append(button9_1.getRootEl());
+
+var button9_2 = new Button ({
+		id: "b9_2",
+		text: "Click to switch"
+	}, eventManager);
+
+$('#button9_2').append(button9_2.getRootEl());
+
+var button9_3 = new Button ({
+		id: "b9_3",
+		text: "Click to rotate (b only)"
+	}, eventManager);
+
+$('#button9_3').append(button9_3.getRootEl());
+
+eventManager.subscribe(button9_1.pressedEventId, handleClick9_1);
+eventManager.subscribe(button9_2.pressedEventId, handleClick9_2);
+eventManager.subscribe(button9_3.pressedEventId, handleClick9_3);
+
+var opaque9 = true;
+function handleClick9_1 ()
+{
+	if (opaque9)
+	{
+		sketch9_3.setOpacity(0, 500, 0);
+		sketch9_6.setOpacity(0, 500, 0);
+		setTimeout(function ()
+			{
+				button9_1.setText("Show H");
+				opaque9 = false;
+			}, 500);
+	}
+	else
+	{
+		sketch9_3.setOpacity(1, 500, 0);
+		sketch9_6.setOpacity(1, 500, 0);
+		setTimeout(function ()
+			{
+				button9_1.setText("Hide H");
+				opaque9 = true;
+			}, 500);
+	}
+}
+
+function handleClick9_2 ()
+{
+	sketch9_2.reflect(.5, null, 1000, 0);
+	sketch9_3.reflect(.5, null, 1000, 0);
+	sketch9_5.reflect(null, .6, 1000, 0);
+	sketch9_6.reflect(null, .6, 1000, 0);
+}
+
+function handleClick9_3 ()
+{
+	sketch9_4.reflect(null, .6, 1000, 0);
+	sketch9_5.reflect(null, .6, 1000, 0);
+	sketch9_6.reflect(null, .6, 1000, 0);
+}
 	
 ///////////////////////////////////////
 
