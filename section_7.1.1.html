@@ -56,6 +56,8 @@
 			</div>
             <div class="span6">
             	<div id="threedButeneTrans"></div>
+				<span id="buteneslider1"></span>
+				<span id="buteneslider2"></span>
             </div>
 		</div>
         
@@ -165,6 +167,8 @@
     <script src="js/widget-carousel.js"></script>
     <script src="js/widget-imageviewer.js"></script>
 	<script src="js/widget-callouts.js"></script>
+	<script src="js/widget-slider.js"></script>
+	<script src="js/widget-numeric.js"></script>
     
 	<script src="js/eventmanager.js"></script>
 	
@@ -570,8 +574,68 @@ var fullrot = new ImageViewer({
 				}),
 			],
 	}, eventManager);
+	
 svg3D.append(fullrot, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: 1});
 svg3D.append(fullrot2, {topPercentOffset: 0.5, leftPercentOffset: 0, heightPercent: .5, widthPercent: 1});
+
+var buteneExtent = [1, 6];
+
+var buteneSlide1 = new Slider ({
+		id: "b1Val",
+		startVal: 1,
+		minVal: buteneExtent[0],
+		maxVal: buteneExtent[1],
+		stepVal: 1,
+		label: "Image set 1",
+		format: d3.format('5.2f'),
+	}, eventManager);
+	
+buteneSlide1.draw(d3.select("#buteneslider1"));
+
+var buteneSlide2 = new Slider ({
+		id: "b2Val",
+		startVal: 1,
+		minVal: buteneExtent[0],
+		maxVal: buteneExtent[1],
+		stepVal: 1,
+		label: "Image set 1",
+		format: d3.format('5.2f'),
+	}, eventManager);
+	
+buteneSlide2.draw(d3.select("#buteneslider2"));
+
+eventManager.subscribe(buteneSlide1.changedValueEventId, buteneHandleChangedValue1);
+eventManager.subscribe(fullrot.selectedEventId, buteneHandleSelection1);
+
+function buteneHandleChangedValue1 (newValue)
+{
+	var newval = d3.round(buteneSlide1.getValue(), 1);
+	fullrot.selectItemAtIndex(newval - 1);
+}
+
+function buteneHandleSelection1 ()
+{
+	var newImage = fullrot.selectedItem();
+	var newval = fullrot.itemKeyToIndex(newImage.key);
+	buteneSlide1.setValue(newval + 1);
+}
+
+eventManager.subscribe(buteneSlide2.changedValueEventId, buteneHandleChangedValue2);
+eventManager.subscribe(fullrot2.selectedEventId, buteneHandleSelection2);
+
+function buteneHandleChangedValue2 (newValue)
+{
+	var newval = d3.round(buteneSlide2.getValue(), 1);
+	fullrot2.selectItemAtIndex(newval - 1);
+}
+
+function buteneHandleSelection2 ()
+{
+	var newImage = fullrot2.selectedItem();
+	var newval = fullrot2.itemKeyToIndex(newImage.key);
+	buteneSlide2.setValue(newval + 1);
+}
+
 	
 ///////////////////////////////////////////////
 
