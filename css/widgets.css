@@ -90,6 +90,21 @@ svg g.widgetLabel.lit .descLabel
 	background-color: #e3effe;
 }
 
+/* Radio groups
+================================================== */
+div.widgetRadioGroup tr>td
+{
+	padding: 0;
+}
+div.widgetRadioGroup table.questionTable tr>td:first-child
+{
+	width: 			5em;
+	text-align: 	right;
+}
+div.widgetRadioGroup table.questionTable tr>td:nth-of-type(2)
+{
+	padding-left:	8px;
+}
 
 /* tables of callouts
 ================================================== */
@@ -123,12 +138,6 @@ table tr.widgetCallout.lit
 
 svg g.widgetSketch .shape {
 	
-	stroke: #666;
-	stroke-width: 2;
-}
-
-svg g.widgetSketch .shape > .hex {
-	fill: none;
 	stroke: #666;
 	stroke-width: 2;
 }
@@ -400,7 +409,8 @@ svg g.widgetLineGraph .traces
   stroke-width: 3; 
 }
 
-svg g.widgetLineGraph .traces.lit  
+svg g.widgetLineGraph .traces.lit,
+svg g.widgetLineGraph .traces.selected    
 {
 	opacity:		1;
 	stroke-width:	5;

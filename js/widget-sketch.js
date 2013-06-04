@@ -813,10 +813,14 @@ Sketch.prototype.redraw = function ()
 	circles.exit().remove();
 	// update the properties on all new or changing rectangles
 	// unclear how to scale the radius, with x or y scale ? -lb
-	circles.attr("r", function(d) { return xScale(d.radius); })
+	circles.attr("r", function(d) {
+		//this handles the case where the scale does not start at 0
+		//so in order for the radius to be to scale, find the distance
+		//in the local scale of the given radius from zero in the local
+		//scale.  Absolute value because it must always be positive.
+			return Math.abs(xScale(d.radius) - xScale(0)); })
 		.attr("cx", function(d) { return xScale(d.xyPos[0]); })
 		.attr("cy", function(d) { return yScale(d.xyPos[1]); });
-
 	
 
 	var hexagons = drawCollection.selectAll("polygon.hex")
@@ -910,18 +914,9 @@ Sketch.prototype.redraw = function ()
 			})
 		.style('fill', 'grey');
 
-/*
-	var lines = drawCollection.selectAll("line")
-		.data(function (d) { return d.shape == "line"? d.data : []; });
-	lines.enter().append("line");
-	lines.exit().remove();
-	lines.attr("x1", function(d) { return xScale(d.xyPos[0]); })
-		.attr("y1", function(d) { return yScale(d.xyPos[1]); })
-		.attr("x2", function(d) { return xScale(d.xyEnd[0]); })
-		.attr("y2", function(d) { return yScale(d.xyEnd[1]); });
 
-*/
-
+	//lines are just degenerate paths, wonder if we should do these similarly
+	//probably have reason to do vector arrows on both straight lines and paths
 	var lines = drawCollection.selectAll("line")
 	.data(function (d) { return d.shape == "line"? d.data : []; });
 	lines.enter().append("line");
@@ -944,7 +939,27 @@ Sketch.prototype.redraw = function ()
 							}
 						});
 
+	var lineGen = d3.svg.line()
+		// TODO: someday might want to add options for other interpolations -lb
+		//	.interpolate("basis")
+			.x(function (d) {return xScale(d.x);})
+			.y(function (d) {return yScale(d.y);});
 
+	var paths = drawCollection.selectAll("path")
+		.data(function (d) { return d.shape == "path"? d.data : []; });
+	paths.enter().append("path");
+	paths.exit().remove();
+	//d.d is the SVG path data for whatever shape you want to draw
+	//it carries with it the information about starting location on 
+	//the canvas, so it has to be in coordinates, it doesn't get scaled
+	paths.attr("d", function(d) { return d.d});
+	//if I supply x-y coordinates, we'd do it like this
+	//TODO might need this as an alternative data format
+	//just like graphs
+	//paths.attr("d", function(d) {return lineGen(d);});
+	
+	
+	
 	var textBits = drawCollection.selectAll("text")
 		.data(function (d) { return d.shape == "textBit"? d.data : []; });
 	textBits.enter().append("text");
