@@ -598,7 +598,7 @@ var buteneSlide2 = new Slider ({
 		minVal: buteneExtent[0],
 		maxVal: buteneExtent[1],
 		stepVal: 1,
-		label: "Image set 1",
+		label: "Image set 2",
 		format: d3.format('5.2f'),
 	}, eventManager);
 	
@@ -1541,9 +1541,51 @@ var sketch8_1 = new Sketch ({
 		id: "sketch8_1",
 		drawShape:
 		[
-			{ shape: "line", data: [{ xyPos: [0, .5], length: .1, angle: 0 }]},
-			{ shape: "line", data: [{ xyPos: [.1, .5], length: .1, angle: Math.PI/3 }]},
-			{ shape: "line", data: [{ xyPos: [.0, .5], length: .1, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.05, .4], length: .2, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.05, .5], length: .2, angle: 0 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.25, .5], length: .2, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.28, .5], length: .17, angle: Math.PI/3 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.35, .675], length: .2, angle: 0 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.55, .675], length: .2, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.62, .5], length: .17, angle: 2*Math.PI/3 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.65, .5], length: .2, angle: -2*Math.PI/3 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.55, .325], length: .2, angle: Math.PI }]},
+			{ shape: "line", data: [{ xyPos: [.535, .35], length: .17, angle: Math.PI }]},
+			
+			{ shape: "line", data: [{ xyPos: [.35, .325], length: .2, angle: 2*Math.PI/3 }]},
+		]
+	});
+	
+var sketch8_2 = new Sketch ({
+		id: "sketch8_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.05, .43], length: .2, angle: -Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.23, .47], length: .15, angle: -3*Math.PI/4 }]},
+		
+			{ shape: "textBit", data: [{ xyPos: [.3, .48], text: "CH2" }]},
+		
+			{ shape: "line", data: [{ xyPos: [.35, .5], length: .1, angle: 0 }]},
+		
+			{ shape: "line", data: [{ xyPos: [.45, .5], length: .2, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.48, .5], length: .17, angle: Math.PI/3 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.55, .675], length: .2, angle: 0 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.75, .675], length: .2, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.82, .5], length: .17, angle: 2*Math.PI/3 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.85, .5], length: .2, angle: -2*Math.PI/3 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.75, .325], length: .2, angle: Math.PI }]},
+			{ shape: "line", data: [{ xyPos: [.735, .35], length: .17, angle: Math.PI }]},
+			
+			{ shape: "line", data: [{ xyPos: [.55, .325], length: .2, angle: 2*Math.PI/3 }]},
 		]
 	});
 
@@ -1579,19 +1621,25 @@ var reference8 = new Callouts ({
 		cols: ["<div id='blah'></div>", "phenyl", "Ph"]
 		},
 		{key: "benzyl",
-		cols: ["[will have picture]", "benzyl", "Bn"]
+		cols: ["<div id='blah2'></div>", "benzyl", "Bn"]
 		}]
 }, eventManager);
 
-/*var svg8 = new SVGContainer({
+reference8.draw(d3.select("#picture8"));
+
+var svg8_1 = new SVGContainer({
 		node: d3.select("#blah"),
-		maxWid: 400,
-		maxHt: 400
+		maxWid: 150,
+		maxHt: 150
+	});
+var svg8_2 = new SVGContainer({
+		node: d3.select("#blah2"),
+		maxWid: 150,
+		maxHt: 150
 	});
 	
-svg8.append(sketch8_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});*/
-
-reference8.draw(d3.select("#picture8"));
+svg8_1.append(sketch8_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg8_2.append(sketch8_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 	
 ///////////////////////////////////////
 
