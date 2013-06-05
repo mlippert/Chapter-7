@@ -34,11 +34,13 @@ function measure(container)
 
 function logFormat(d)
 {
-	var x = (Math.log(d) / Math.log(10)) + 1e-6; //find the log base 10 (plus a little for zero padding)
+	//find the log base 10 (plus a little for zero padding)
+	var x = (Math.log(d) / Math.log(10)) + 1e-6;  
 	//then see if the log has abscissa 1, and only return numbers for those, and even
 	return (Math.abs(x - Math.floor(x)) < .1)&&(Math.floor(x)%2==0) ? d3.round(Math.log(d)/Math.log(10)) : "";
 }
 
+function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
 
 /* **************************************************************************
  * attrFnVal                                                            *//**
@@ -102,12 +104,6 @@ function getIdFromConfigOrAuto(config, autoIdClass)
  * Count of class autoIdPrefix properties that have been set by getIdFromConfigOrAuto.
  */
 getIdFromConfigOrAuto.autoPrefixCount = 0;
-
-//Tests for logFormat function
-console.log("logFormat 10^-2 produces negative decade tick label -2", logFormat(Math.pow(10, -2)) == -2);
-console.log("logFormat 2*10^-3 produces no tick label", logFormat(2 * Math.pow(10, -3)) == "");
-console.log("logFormat 10^3 produces no odd decade tick label", logFormat(Math.pow(10, 3)) == "");
-
 
 /* **************************************************************************
  * Rect                                                                 *//**

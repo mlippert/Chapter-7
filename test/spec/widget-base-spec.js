@@ -15,5 +15,22 @@
                 expect(logFormat(Math.pow(10, -3))).to.equal('');
             });
         });
+		
+		describe('sign function determines sign of a number', function () {
+            it('negative numbers should return -1', function () {
+                expect(sign(-42)).to.equal(-1);
+            });
+            it('positive numbers should return 1', function () {
+                expect(sign(4.5)).to.equal(1);
+            });
+            it('strings should produce 1', function () {
+                expect(sign("foo")).to.equal(1);
+            });
+			it('NaNs should produce 0', function () {
+                expect(sign(NaN)).to.equal(0);
+            });
+        });
     });
+	
+	
 })();
