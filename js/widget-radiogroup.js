@@ -147,6 +147,7 @@ function RadioGroup(config, eventManager)
 		{
 			container: null,
 			widgetGroup: null,
+			choiceSelected: null,
 		};
 } // end of RadioGroup constructor
 
@@ -190,10 +191,12 @@ RadioGroup.prototype.draw = function(container)
 	var ansRows = tbody.selectAll("tr").data(this.choices);
 	ansRows.enter().append("tr");
 
+	var getButtonId = function (d, i) {return that.id + "_btn" + i;};
+
 	var buttonCell = ansRows.append("td");
 	if (this.numberFormat !== "none")
 	{
-		var choiceIndex = this.getChoiceNumberToDisplayFn();
+		var choiceIndex = this.getChoiceNumberToDisplayFn_();
 
 		buttonCell
 			.text(function (d, i) {return choiceIndex(i) + ") ";});
@@ -201,12 +204,16 @@ RadioGroup.prototype.draw = function(container)
 
 	buttonCell
 		.append("input")
+			.attr("id", getButtonId)
 			.attr("type", "radio")
 			.attr("name", this.id)
 			.attr("value", function (d) {return d.answerKey;});
 
-	ansRows
-		.append("td")
+	var labelCell = ansRows.append("td");
+
+	labelCell
+		.append("label")
+			.attr("for", getButtonId)
 			.text(function (d) {return d.content;});
 	
 	this.lastdrawn.widgetGroup = widgetGroup;
@@ -214,13 +221,28 @@ RadioGroup.prototype.draw = function(container)
 }; // end of RadioGroup.draw()
 
 /* **************************************************************************
- * RadioGroup.getChoiceNumberToDisplayFn                                *//**
+ * RadioGroup.selectedItem                                              *//**
+ *
+ * Return the selected item in the radio group.
+ *
+ * @return {Object} the radio group item which is currently selected.
+ *
+ ****************************************************************************/
+RadioGroup.prototype.selectedItem = function ()
+{
+	return this.lastdrawn.widgetGroup.select("div.widgetRadioGroup input[name='" + this.id + "']:checked").datum();
+};
+
+/* **************************************************************************
+ * RadioGroup.getChoiceNumberToDisplayFn_                               *//**
  *
  * Get a function which returns the string that should be prefixed to the
  * choice at a given index
  *
+ * @private
+ *
  ****************************************************************************/
-RadioGroup.prototype.getChoiceNumberToDisplayFn = function ()
+RadioGroup.prototype.getChoiceNumberToDisplayFn_ = function ()
 {
 	var formatIndexUsing =
 	{

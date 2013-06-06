@@ -40,7 +40,24 @@ function logFormat(d)
 	return (Math.abs(x - Math.floor(x)) < .1)&&(Math.floor(x)%2==0) ? d3.round(Math.log(d)/Math.log(10)) : "";
 }
 
-function sign(x) { return x ? x < 0 ? -1 : 1 : 0; }
+/* **************************************************************************
+ * sign                                                                 *//**
+ *
+ * Return 1 for positive numbers, -1 for negative numbers and 0 for things
+ * which are neither.
+ *
+ * @param {number}	x		-The number whose sign is to be returned
+ *
+ * @todo The algorithm may want to be tweaked because I'm not sure this is what
+ * I'd want, I think I'd want 0 to return 1 not 0.
+ * My reasoning is that to give y the same sign as x I would want to
+ * write: y = sign(x) * abs(y);
+ * so it is useful to consider 0 positive even though it isn't. -mjl
+ ****************************************************************************/
+function sign(x)
+{
+	return x ? x < 0 ? -1 : 1 : 0;
+};
 
 /* **************************************************************************
  * attrFnVal                                                            *//**
