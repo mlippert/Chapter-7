@@ -86,7 +86,7 @@ function Sketch(config, eventManager)
 	 * A unique id for this instance of the labelgroup widget
 	 * @type {string}
 	 */
-	this.id = getIdFromConfigOrAuto(config, sketchGroup);
+	this.id = getIdFromConfigOrAuto(config, Sketch);
 
 	/**
 	 * Array of objects to be drawn, where each object specifies the shape, position, and size
@@ -148,6 +148,12 @@ function Sketch(config, eventManager)
 		};
 } // end of Label constructor
 
+/**
+ * Prefix to use when generating ids for instances of LineGraph.
+ * @const
+ * @type {string}
+ */
+Sketch.autoIdPrefix = "auto_";
 /* **************************************************************************
  * Sketch.draw                                                      *//**
  *
