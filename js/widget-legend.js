@@ -58,7 +58,7 @@ function Legend(config, eventManager)
 	 * A unique id for this instance of the widget
 	 * @type {string}
 	 */
-	this.id = config.id;
+	this.id = getIdFromConfigOrAuto(config, Legend);
 
 	/**
 	 * Array of strings for the labels, one per row 
@@ -78,6 +78,7 @@ function Legend(config, eventManager)
 	this.xPos = config.xPos;
 	this.yPos = config.yPos;
 	this.key = config.key;
+	
 	/**
 	 * Information about the last drawn instance of this widget (from the draw method)
 	 * @type {Object}
@@ -93,7 +94,13 @@ function Legend(config, eventManager)
 	//legends must be selectable to highlight related graph elements for accessibility
 	//we will eventually have to figure out how to do this with they keyboard too -lb
 	this.eventManager = eventManager;
-	this.changedEventId = this.id + 'legendSelected';
+	/**
+	 * The event id published when a row in this group is selected.
+	 * @const
+	 * @type {string}
+	 */
+
+	this.selectedEventId = this.id + '_legendSelected';
 } // end of Legend constructor
 
 
@@ -131,11 +138,16 @@ Legend.prototype.draw = function (container, size)
 	
 	//to calculate the width of the box big enough for the longest text string, we have to
 	//render the string, get its bounding box, then remove it.
-	//note: this is the simple algorithm and may fail because of proportional fonts, in which case we'll have to measure all labels.
-	var longest = this.labels.reduce(function (prev, cur) { return prev.length > cur.length ? prev : cur; });
+	//note: this is the simple algorithm and may fail because of proportional fonts, 
+	//in which case we'll have to measure all labels.
+	
+	var longest = this.labels.reduce(function (prev, cur) { 
+		return prev.content.length > cur.content.length ? prev : cur; }).content;
 	var longBox = container.append("g");
 	longBox.append("text").text(longest);
-	this.boxWid = longBox.node().getBBox().width + inset/2 + boxLength;
+	 
+	this.boxWid = longBox.node().getBBox().width + inset/2 + boxLength + 4;
+
 	//the box around the legend should be the width of the
 	//longest piece of text + inset + the marker length
 	//so it's always outside the text and markers, plus a little padding
@@ -149,10 +161,11 @@ Legend.prototype.draw = function (container, size)
 	var yOffset = (this.yPos == "bottom") ? size.height - boxHeight - inset : inset;
 	//if the position is at the bottom, measure up from bottom of graph,
 	//otherwise just space it down from the top.
-	
-	var legendBox = container.append("g")
+		
 	//make a new group to hold the legend
-	.attr('id', legendId)
+	var legendBox = container.append("g")
+	.attr("class","widgetLegend")
+	.attr('id', this.id)
 	//move it to left/right/top/bottom position
 	.attr('transform', 'translate(' + xOffset + ',' + yOffset + ')');
 
@@ -171,22 +184,30 @@ Legend.prototype.draw = function (container, size)
 	//create small padding around the contents at leading edge
 	.attr("width", this.boxWid).attr("height", boxHeight) //lineheight+padding x rows
 	.attr("class", "legendBox");
-
+	
+	//this selects all <g> elements with class legend  
 	var legendRows = legendBox.selectAll("g.legend")
-	//this selects all <g> elements with class slice (there aren't any yet)
-	.data(this.labels) //associate the data to create stacked slices
-	.enter() //this will create <g> elements for every data element
+	.data(this.labels); //associate the data to create stacked slices
+	
+	// get rid of any rows without data
+	legendRows.exit().remove();
+	
+	legendRows.enter() //this will create <g> elements for every data element
 	.append("g") //create groups
-	.attr("class","legend")
-	.attr("transform", function(d, i) {
-		return "translate(0," + (rowCt - i - 1) * (boxLength+4) + ")";
-	})
+		.attr("class","legend")
 	//each row contains a colored marker and a label.  They are spaced according to the
-	//vertical size of the markers plus a little padding, 3px in this case
+	//vertical size of the markers plus a little padding, 4px in this case
 	//counting up from the bottom, make a group for each series and move to stacked position
-	.attr("id", function(d, i) {return d.key ? (legendId + d.key) : i;});
-			//if a key has been specified for the row, put it on the ID,  
-			//otherwise, use the index
+		.attr("transform", function(d, i) {
+			return "translate(0," + (rowCt - i - 1) * (boxLength+4) + ")";
+	});
+	
+	
+	// autokey entries which have no key with the data index
+	legendRows.each(function (d, i) { 
+					//if there is no key assigned, make one from the index
+					d.key = 'key' in d ? d.key : i.toString();
+					});
 
 	if (this.type == "box") {
 		legendRows.append("rect")
@@ -200,7 +221,7 @@ Legend.prototype.draw = function (container, size)
 	} else {
 		legendRows.append("line") //add a line to each slice
 		.attr("class", function(d, i) {
-			return "trace stroke" + i;
+			return "traces stroke" + i;
 		}).attr("x1", 0) //start at the left edge of box
 		.attr("x2", boxLength) //set line width
 		.attr("y1", boxLength / 2).attr("y2", boxLength / 2);
@@ -215,13 +236,59 @@ Legend.prototype.draw = function (container, size)
 	.attr("alignment-baseline","central")
 	//and put the vertical center of the text on that midline
 	.text(function(d, i) {
-		return d; //get the label from legend array
+		return d.content; //get the label from legend array
 	});
 	
+	legendRows.on('click',
+				function (d, i)
+				{
+					that.eventManager.publish(that.selectedEventId, {selectKey:d.key});
+				});
+
 	this.lastdrawn.legendRows = legendBox.selectAll("g.legend");
 	
 }; //end of Legend.draw
 
 Legend.prototype.setScale = function ()
 {
+};
+
+/* **************************************************************************
+ * Legend.lite                                                      *//**
+ *
+ * Highlight the members of the collection associated w/ the given liteKey (key) and
+ * remove any highlighting on all other labels.
+ *
+ * @param {string}	liteKey	-The key associated with the label(s) to be highlighted.
+ *
+ ****************************************************************************/
+Legend.prototype.lite = function(liteKey)
+{
+	
+	console.log("TODO: log fired Legend highlite " + liteKey);
+	
+	// Turn off all current highlights
+	var allRows = this.lastdrawn.legendRows;
+	allRows
+		.classed("lit", false);
+		
+	//var allSeries = this.lastdrawn.series;
+	//allSeries
+		//.classed("lit", false);
+
+	// create a filter function that will match all instances of the liteKey
+	// then find the set that matches
+	var matchesKey = function (d, i) { return d.key === liteKey; };
+	
+	var rowsToLite = allRows.filter(matchesKey);
+
+	// Highlight the labels w/ the matching key
+	rowsToLite
+		.classed("lit", true);
+
+	if (rowsToLite.empty())
+	{
+		console.log("No key '" + liteKey + "' in legend " + this.id );
+	}
+
 };

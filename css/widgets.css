@@ -264,18 +264,6 @@ table.questionTable td {
   text-align:right;
 }
 
-.legendLabel {
-  font: 0.85em/1.1em HelveticaNeue-Light,HelveticaNeue,Helvetica, Arial, Lucida Grande, sans-serif;
-  color: #000; 
-  text-align: left;
-  padding: 2px;
-}
-
-.legendBox {
-  fill: #fff;
-  stroke: #3A87AD;
-  stroke-width: 1px;
-}
 
 /* todo: double check if it is still used anywhere -mjl */
 .numSteps {
@@ -387,22 +375,13 @@ table.questionTable td {
   padding: .2em;
   margin: .2em; }
 
-.legendLabel {
-  font: .85em/1.1em;
-  color: #000;
-  text-align: left;
-  padding: 2px; }
-
-.legendBox {
-  fill: #fff;
-  stroke: #3A87AD;
-  stroke-width: 1px; }
 
 
 /* LineGraph and legends highlights and styles
 ================================================== */
 
-svg g.widgetLineGraph .traces 
+svg g.widgetLineGraph .traces,
+svg g.widgetLegend .traces 
 {
   opacity:		0.8;
   fill: none;
@@ -410,10 +389,29 @@ svg g.widgetLineGraph .traces
 }
 
 svg g.widgetLineGraph .traces.lit,
-svg g.widgetLineGraph .traces.selected    
+svg g.widgetLineGraph .traces.selected,    
+svg g.widgetLegend .lit .traces
 {
 	opacity:		1;
 	stroke-width:	5;
+}
+
+svg g.widgetLegend .legendLabel {
+  font: 0.9em/1.1em HelveticaNeue-Light,HelveticaNeue,Helvetica, Arial, Lucida Grande, sans-serif;
+  color: #000; 
+  text-align: left;
+  padding: 2px;
+}
+
+svg g.widgetLegend .lit>text
+{
+	font-weight: bold;
+}
+
+svg g.widgetLegend .legendBox {
+  fill: #fff;
+  stroke: #3A87AD;
+  stroke-width: 1px;
 }
 
 svg g .stroke0 {

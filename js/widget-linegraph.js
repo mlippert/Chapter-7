@@ -57,7 +57,7 @@
  * @todo: need to add custom symbols or images for scatter plots.
  *
  ****************************************************************************/
-function LineGraph(config)
+function LineGraph(config,eventManager)
 {
 	/**
 	 * A unique id for this instance of the line graph widget
@@ -114,6 +114,18 @@ function LineGraph(config)
 			traces: null,
 			series: null,
 		};
+		
+	//linegraphs must be selectable to highlight related graph elements and use
+	// for inputs for mc questions. For accessibility
+	//we will eventually have to figure out how to do this with they keyboard too -lb
+	this.eventManager = eventManager;
+	/**
+	 * The event id published when a row in this group is selected.
+	 * @const
+	 * @type {string}
+	 */
+
+	this.selectedEventId = this.id + '_lineSelected';
 } // end of LineGraph constructor
 
 /**
@@ -305,7 +317,8 @@ LineGraph.prototype.drawData_ = function ()
 	var linesId = this.lastdrawn.linesId;
 	var xScale = this.lastdrawn.xScale;
 	var yScale = this.lastdrawn.yScale;
-
+	var that = this;
+	
 	// get the group that contains the graph lines
 	var graph = this.lastdrawn.graph;
 
@@ -352,7 +365,7 @@ LineGraph.prototype.drawData_ = function ()
 					});
 					
 		this.lastdrawn.traces = graph.selectAll("g.traces");
-		
+		 
 		traces.on('click',
 				function (d, i)
 				{
@@ -413,7 +426,14 @@ LineGraph.prototype.drawData_ = function ()
 						//pick the shapes sequentially off the list
 						return (d3.svg.symbol().type(d3.svg.symbolTypes[j])());
 					});
-	}
+					
+		series.on('click',
+				function (d, i)
+				{
+					that.eventManager.publish(that.selectedEventId, {selectKey: d.key});
+				});
+				
+	}// end of points drawing block
 } // end of LineGraph.drawData_()
 
 /* **************************************************************************
@@ -499,7 +519,7 @@ LineGraph.prototype.append_one_ = function(widget, zOrder)
 /* **************************************************************************
  * LineGraph.lite                                                      *//**
  *
- * Highlight the label(s) associated w/ the given liteKey (key) and
+ * Highlight the members of the collection associated w/ the given liteKey (key) and
  * remove any highlighting on all other labels.
  *
  * @param {string}	liteKey	-The key associated with the label(s) to be highlighted.
@@ -521,9 +541,9 @@ LineGraph.prototype.lite = function(liteKey)
 
 	// create a filter function that will match all instances of the liteKey
 	// then find the set that matches
-	var matchesLabelIndex = function (d, i) { return d.key === liteKey; };
+	var matchesKey = function (d, i) { return d.key === liteKey; };
 	
-	var linesToLite = allTraces.filter(matchesLabelIndex);
+	var linesToLite = allTraces.filter(matchesKey);
 
 	// Highlight the labels w/ the matching key
 	linesToLite

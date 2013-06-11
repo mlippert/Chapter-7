@@ -86,7 +86,7 @@ function Sketch(config, eventManager)
 	 * A unique id for this instance of the labelgroup widget
 	 * @type {string}
 	 */
-	this.id = config.id;
+	this.id = getIdFromConfigOrAuto(config, sketchGroup);
 
 	/**
 	 * Array of objects to be drawn, where each object specifies the shape, position, and size
