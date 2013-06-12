@@ -32,6 +32,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: TOGGLE (adjusts display of information): Show/Hide H. The blue hydrogens and their blue bonds will be revealed/hidden. The horizontal bond will need to be bent out slightly to accommodate the hydrogen if it is shown.]</p>
 				
+				<span id="button0_1"></span><span id="button0_2"></span>
 				<div id="picture0"></div>
 				
 				<p>It can be concluded that both of the substituted carbons in 1,4-dimethylcyclohexane are stereocenters. Switching both stereocenters returns the original compound.</p>
@@ -40,6 +41,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Below is the reappearance of the interactivity described for alkenes in 7.1.1. Now, with tetrahedral carbons, we will definitely need to include rotation as one of the permissible manipulations by the student user. It will be important to come up with a smooth animation for these rotations when using the line-angle drawings. It’s straightforward for ball-and-stick, but the line-angle formulas are a bit different. For example, at what point do we have the wedges transform into hashes as the rotation proceeds?]</p>
 				
+				<span id="button2_1"></span><span id="button2_2"></span>
 				<div id="picture2"></div>
 				
 			</div>
@@ -111,34 +113,220 @@
 	<script src="js/d3.v3.min.js"></script>
 
 	<script src="js/widget-base.js"></script>
+	<script src="js/widget-sketch.js"></script>
+	<script src="js/widget-button.js"></script>
 	<script src="js/widgets.js"></script>
 	
 	<script src="js/eventmanager.js"></script>
 	
 <script>
 
+var eventManager = new EventManager();
+
 //////////////////////////////////////////////
 
-var svg0 = new MakeSVGContainer(
-	{node: d3.select("#picture0"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg0.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg0.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_16.png', caption: "Figure 7.1.8 Stereoisomerism in 1,4-Dimethylcyclohexane"}]
+var svg0 = new SVGContainer({
+		node: d3.select("#picture0"),
+		maxWid: 400,
+		maxHt: 400
 	});
+	
+var sketch0_1 = new Sketch({
+		id: "sketch0_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.25, .5], length: .2, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.35, .67], length: .2, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.55, .67], length: .2, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .5], length: .2, angle: -2*Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.55, .33], length: .2, angle: Math.PI }]},
+			{ shape: "line", data: [{ xyPos: [.35, .33], length: .2, angle: 2*Math.PI/3 }]},
+		]
+	});
+	
+var sketch0_2 = new Sketch({
+		id: "sketch0_2",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: Math.PI }]}
+		]
+	});
+	
+var sketch0_3 = new Sketch({
+		id: "sketch0_3",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: 0 }]}
+		]
+	});
+	
+var sketch0_4 = new Sketch({
+		id: "sketch0_4",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: 0, type: "hash" }]}
+		]
+	});
+	
+var sketch0_5 = new Sketch({
+		id: "sketch0_5",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: 7*Math.PI/6 }]}
+		]
+	});
+	
+var sketch0_6 = new Sketch({
+		id: "sketch0_6",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: 5*Math.PI/6, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.06, .62], text: "H" }]}
+		]
+	});
+
+var sketch0_7 = new Sketch({
+		id: "sketch0_7",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: -Math.PI/6 }]}
+		]
+	});
+	
+var sketch0_8 = new Sketch({
+		id: "sketch0_8",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: Math.PI/6, type: "hash" }]},
+		]
+	});
+
+var sketch0_9 = new Sketch({
+		id: "sketch0_9",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.84, .62], text: "H" }]}
+		]
+	});
+	
+svg0.append(sketch0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch0_4.setOpacity(0, 0, 0);
+sketch0_5.setOpacity(0, 0, 0);
+sketch0_6.setColor("blue", 0, 0);
+sketch0_6.setOpacity(0, 0, 0);
+sketch0_7.setOpacity(0, 0, 0);
+sketch0_8.setColor("blue", 0, 0);
+sketch0_8.setOpacity(0, 0, 0);
+sketch0_9.setColor("blue", 0, 0);
+sketch0_9.setOpacity(0, 0, 0);
+
+var button0_1 = new Button ({
+		id: "b0_1",
+		text: "Swap Cis/Trans"
+	}, eventManager);
+	
+var button0_2 = new Button ({
+		id: "b0_2",
+		text: "Show/Hide Hydrogens"
+	}, eventManager);
+	
+$('#button0_1').append(button0_1.getRootEl());
+$('#button0_2').append(button0_2.getRootEl());
+
+eventManager.subscribe(button0_1.pressedEventId, handleClick0_1);
+eventManager.subscribe(button0_2.pressedEventId, handleClick0_2);
+
+var hydro0 = false;
+var swap0 = false;
+
+// swap function
+function handleClick0_1 ()
+{
+	sketch0_7.reflect(null, .5, 500, 0);
+	sketch0_8.reflect(null, .5, 500, 0);
+	
+	if (swap0)
+	{
+		sketch0_7.setColor("grey", 500, 500);
+		sketch0_8.setColor("blue", 500, 500);
+		
+		if(!hydro0)
+		{
+			sketch0_3.setOpacity(1, 500, 0);
+			sketch0_4.setOpacity(0, 500, 0);
+		}
+		
+		swap0 = false;
+	}
+	else
+	{
+		sketch0_7.setColor("blue", 500, 500);
+		sketch0_8.setColor("grey", 500, 500);
+		
+		if(!hydro0)
+		{
+			sketch0_3.setOpacity(0, 500, 0);
+			sketch0_4.setOpacity(1, 500, 0);
+		}
+		
+		swap0 = true;
+	}
+}
+// show / hide hydrogens function
+function handleClick0_2 ()
+{
+	if(hydro0)
+	{
+		sketch0_5.setOpacity(0, 500, 0);
+		sketch0_6.setOpacity(0, 500, 0);
+		sketch0_7.setOpacity(0, 500, 0);
+		sketch0_8.setOpacity(0, 500, 0);
+		sketch0_9.setOpacity(0, 500, 0);
+		
+		sketch0_2.setOpacity(1, 500, 0);
+		
+		if(swap0)
+		{
+			sketch0_4.setOpacity(1, 500, 0);
+		}
+		else
+		{
+			sketch0_3.setOpacity(1, 500, 0);
+		}
+		
+		hydro0 = false;
+	}
+	else
+	{
+		sketch0_5.setOpacity(1, 500, 0);
+		sketch0_6.setOpacity(1, 500, 0);
+		sketch0_7.setOpacity(1, 500, 0);
+		sketch0_8.setOpacity(1, 500, 0);
+		sketch0_9.setOpacity(1, 500, 0);
+		
+		sketch0_2.setOpacity(0, 500, 0);
+		
+		if(swap0)
+		{
+			sketch0_4.setOpacity(0, 500, 0);
+		}
+		else
+		{
+			sketch0_3.setOpacity(0, 500, 0);
+		}
+		
+		hydro0 = true;
+	}
+}
 	
 ////////////////////////////////////////////
 
@@ -165,26 +353,137 @@ svg1.ScalableImage(
 	
 /////////////////////////////////////////
 
-var svg2 = new MakeSVGContainer(
-	{node: d3.select("#picture2"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg2.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg2.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_18.png', caption: "Figure 7.1.10 Switching Both Stereocenters in 1,4-Dimethylcyclohexane Restores the Original Compound"}]
+var svg2 = new SVGContainer({
+		node: d3.select("#picture2"),
+		maxWid: 400,
+		maxHt: 400
 	});
+	
+var sketch2_1 = new Sketch({
+		id: "sketch2_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.25, .5], length: .2, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.35, .67], length: .2, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.55, .67], length: .2, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .5], length: .2, angle: -2*Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.55, .33], length: .2, angle: Math.PI }]},
+			{ shape: "line", data: [{ xyPos: [.35, .33], length: .2, angle: 2*Math.PI/3 }]},
+		]
+	});
+	
+var sketch2_2 = new Sketch({
+		id: "sketch2_2",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: -Math.PI/6 }]},
+		]
+	});
+	
+var sketch2_3 = new Sketch({
+		id: "sketch2_3",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: 5*Math.PI/6, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: Math.PI/6, type: "hash" }]},
+		]
+	});
+
+var sketch2_4 = new Sketch({
+		id: "sketch2_4",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: 7*Math.PI/6, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: -Math.PI/6, type: "hash" }]},
+		]
+	});
+
+var sketch2_5 = new Sketch({
+		id: "sketch2_5",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.25, .5], length: .2, width: .05, angle: 5*Math.PI/6}]},
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .2, width: .05, angle: Math.PI/6 }]},
+		]
+	});
+	
+var sketch2_6 = new Sketch({
+		id: "sketch2_6",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.06, .62], text: "H" }]},
+			{ shape: "textBit", data: [{ xyPos: [.84, .62], text: "H" }]}
+		]
+	});
+
+svg2.append(sketch2_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch2_3.setColor("blue", 0, 0);
+sketch2_5.setColor("blue", 0, 0);
+
+sketch2_4.setOpacity(0, 0, 0);
+sketch2_5.setOpacity(0, 0, 20);
+
+sketch2_6.setColor("blue", 0, 0);
+
+var button2_1 = new Button ({
+		id: "b2_1",
+		text: "Flip hydrogens"
+	}, eventManager);
+	
+var button2_2 = new Button ({
+		id: "b2_2",
+		text: "Flip molecule"
+	}, eventManager);
+	
+$('#button2_1').append(button2_1.getRootEl());
+$('#button2_2').append(button2_2.getRootEl());
+
+eventManager.subscribe(button2_1.pressedEventId, handleClick2_1);
+eventManager.subscribe(button2_2.pressedEventId, handleClick2_2);
+
+var swap2_1 = false;
+function handleClick2_1 ()
+{
+	sketch2_2.reflect(null, .5, 500, 0);
+	sketch2_3.reflect(null, .5, 500, 0);
+	sketch2_4.reflect(null, .5, 500, 0);
+	sketch2_5.reflect(null, .5, 500, 0);
+	sketch2_6.reflect(null, .5, 500, 0);
+	
+	if(swap2_1)
+	{
+		sketch2_4.setOpacity(0, 500, 500);
+		sketch2_5.setOpacity(0, 500, 500);
+		
+		sketch2_2.setOpacity(1, 500, 500);
+		sketch2_3.setOpacity(1, 500, 500);
+		
+		swap2_1 = false;
+	}
+	else
+	{
+		sketch2_2.setOpacity(0, 500, 500);
+		sketch2_3.setOpacity(0, 500, 500);
+		
+		sketch2_4.setOpacity(1, 500, 500);
+		sketch2_5.setOpacity(1, 500, 500);
+		
+		swap2_1 = true;
+	}
+}
+function handleClick2_2 ()
+{
+	sketch2_1.reflect(null, .5, 500, 0);
+	
+	handleClick2_1();
+}
 	
 //////////////////////////////////////////
 

@@ -316,7 +316,7 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 		{
 			if (d.type == "hash")
 			{
-				var mask = sketchContainer.select("defs").select("mask");
+				var mask = sketchContainer.select("#" + d.maskid);
 				var lines = mask.selectAll("line");
 				
 				var ratio = .9;
@@ -552,7 +552,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				
 				if (d.type == "hash")
 				{
-					var mask = sketchContainer.select("defs").select("mask");
+					var mask = sketchContainer.select("#" + d.maskid);
 					var lines = mask.selectAll("line");
 					
 					var ratio = .9;
@@ -884,7 +884,7 @@ Sketch.prototype.redraw = function ()
 				d["points"] = (left+","+bot)+" "+(right+","+bot)+" "+(mid+","+top);
 				return d.points;
 			});
-			
+	
 	var wedges = drawCollection.selectAll("polygon.wedge")
 		.data(function (d) { return d.shape == "wedge"? d.data : []; });
 	wedges.enter().append("polygon").attr("class", "wedge");
@@ -913,19 +913,24 @@ Sketch.prototype.redraw = function ()
 				return d.points;
 			})
 		.style('fill', 'grey');
-		
+	
+	var id = this.id;
+	var id2 = 0;
 	wedges.each(function(d)
 		{
+			id2++;
 			// if type is a hash, put a mask on it
 			if (d.type == "hash")
 			{
 				var hash = d3.select(this);
 				hash.style("stroke-width", "0px");
 				
+				d["maskid"] = id + id2.toString() + "hashmask";
+				
 				var defs = sketchContainer.select("defs");
 				var mask = defs.append("mask")
 					.attr("x", 0).attr("y", 0).attr("width", 1).attr("height", 1)
-					.attr("id", "hashmask");
+					.attr("id", d.maskid);
 				var i;
 				var ratio = .9;
 				for (i = 0; i < 3; i++)
@@ -955,7 +960,7 @@ Sketch.prototype.redraw = function ()
 						.attr("stroke", "white").attr("opacity", 1);
 					ratio = ratio - .33;
 				}
-				hash.style("mask", "url(#hashmask)");
+				hash.style("mask", "url(#" + d.maskid + ")");
 			}
 		});
 
