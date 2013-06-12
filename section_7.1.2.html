@@ -49,6 +49,7 @@
 		<div class="row-fluid">
 			<div class="span6 leftCol">
 				
+				<span id="button3_1"></span><span id="button3_2"></span>
 				<div id="picture3"></div>
 				
 			</div>
@@ -487,26 +488,167 @@ function handleClick2_2 ()
 	
 //////////////////////////////////////////
 
-var svg3 = new MakeSVGContainer(
-	{node: d3.select("#picture3"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg3.Axes({
-	xPosPerc: 0, yPosPerc: 0,
-	xPerc: 1, yPerc: 1,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg3.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_19.png', caption: "Figure 7.1.11 Stereoisomerism in 2-Bromobutane"}]
+var svg3 = new SVGContainer({
+		node: d3.select("#picture3"),
+		maxWid: 300,
+		maxHt: 300
 	});
+
+var sketch3_1 = new Sketch ({
+		id: "sketch3_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.05, .6], length: .1, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.135, .65], length: .1, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.22, .6], length: .1, angle: Math.PI/6 }]},
+		]
+	});
+
+var sketch3_2 = new Sketch ({
+		id: "sketch3_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.55, .6], length: .1, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.635, .65], length: .1, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.72, .6], length: .1, angle: Math.PI/6 }]},
+		]
+	});
+	
+var sketch3_3 = new Sketch ({
+		id: "sketch3_3",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.135, .65], width: .03, length: .08, angle: Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.135, .75], text: "Br" }]},
+		]
+	});
+	
+var sketch3_4 = new Sketch ({
+		id: "sketch3_4",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.635, .65], width: .03, length: .08, angle: Math.PI/2, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.635, .75], text: "Br" }]},
+		]
+	});
+	
+var sketch3_5 = new Sketch ({
+		id: "sketch3_5",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.135, .65], width: .03, length: .08, angle: 2*Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.095, .75], text: "Br" }]},
+		]
+	});
+
+var sketch3_6 = new Sketch ({
+		id: "sketch3_6",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.635, .65], width: .03, length: .08, angle: 2*Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.595, .75], text: "H" }]},
+		]
+	});
+	
+var sketch3_7 = new Sketch ({
+		id: "sketch3_7",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.135, .65], width: .03, length: .08, angle: Math.PI/3, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.175, .75], text: "H" }]},
+		]
+	});
+
+var sketch3_8 = new Sketch ({
+		id: "sketch3_8",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.635, .65], width: .03, length: .08, angle: Math.PI/3, type: "hash"}]},
+			{ shape: "textBit", data: [{ xyPos: [.675, .75], text: "Br" }]},
+		]
+	});
+	
+svg3.append(sketch3_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch3_6.setColor("blue", 0, 0);
+sketch3_7.setColor("blue", 0, 0);
+
+sketch3_5.setOpacity(0, 0, 0);
+sketch3_6.setOpacity(0, 0, 10);
+sketch3_7.setOpacity(0, 0, 10);
+sketch3_8.setOpacity(0, 0, 0);
+
+var button3_1 = new Button ({
+		id: "b3_1",
+		text: "Superpose"
+	}, eventManager);
+
+var button3_2 = new Button ({
+		id: "b3_2",
+		text: "Show H's"
+	}, eventManager);
+
+$('#button3_1').append(button3_1.getRootEl());
+$('#button3_2').append(button3_2.getRootEl());
+
+eventManager.subscribe(button3_1.pressedEventId, handleClick3_1);
+eventManager.subscribe(button3_2.pressedEventId, handleClick3_2);
+
+var superposed3 = false;
+function handleClick3_1 ()
+{
+	if(superposed3)
+	{
+		sketch3_1.move(-.4, .05, 500, 0);
+		sketch3_3.move(-.4, .05, 500, 0);
+		sketch3_5.move(-.4, .05, 500, 0);
+		sketch3_7.move(-.4, .05, 500, 0);
+		superposed3 = false;
+	}
+	else
+	{
+		sketch3_1.move(.4, -.05, 500, 0);
+		sketch3_3.move(.4, -.05, 500, 0);
+		sketch3_5.move(.4, -.05, 500, 0);
+		sketch3_7.move(.4, -.05, 500, 0);
+		superposed3 = true;
+	}
+}
+var hydro3 = false;
+function handleClick3_2 ()
+{
+	if(hydro3)
+	{
+		sketch3_3.setOpacity(1, 500, 0);
+		sketch3_4.setOpacity(1, 500, 0);
+		
+		sketch3_5.setOpacity(0, 500, 0);
+		sketch3_6.setOpacity(0, 500, 0);
+		sketch3_7.setOpacity(0, 500, 0);
+		sketch3_8.setOpacity(0, 500, 0);
+		
+		hydro3 = false;
+	}
+	else
+	{
+		sketch3_3.setOpacity(0, 500, 0);
+		sketch3_4.setOpacity(0, 500, 0);
+		
+		sketch3_5.setOpacity(1, 500, 0);
+		sketch3_6.setOpacity(1, 500, 0);
+		sketch3_7.setOpacity(1, 500, 0);
+		sketch3_8.setOpacity(1, 500, 0);
+		
+		hydro3 = true;
+	}
+}
 	
 /////////////////////////////////////////
 
