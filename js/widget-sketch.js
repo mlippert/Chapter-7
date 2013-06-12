@@ -293,36 +293,36 @@ Sketch.prototype.move = function (xOffset, yOffset, duration, delay)
 				d.xyPos[0] = d.xyPos[0] + xOffset;
 				d.xyPos[1] = d.xyPos[1] + yOffset;
 				
-				var points = d.points.split(" ");
+				// update the points
 				var i;
-				for (i = 0; i < points.length; i++)
+				for (i = 0; i < d.points.length; i++)
 				{
-					var point = points[i].split(",");
-					var x = parseFloat(point[0]) + xScale(xOffset);
-					var y = parseFloat(point[1]) - xScale(yOffset);
-					point[0] = x.toString();
-					point[1] = y.toString();
-					points[i] = point.join(",");
+					d.points[i][0] = d.points[i][0] + xOffset;
+					d.points[i][1] = d.points[i][1] + yOffset;
 				}
-				
-				d.points = points.join(" ");
-				// return the point string
-				return d.points;
+				return Sketch.pointString(d.points, xScale, yScale);
 			})
 		.duration(duration).delay(delay);
-		
+	
+	// wedges, although polygons, might have a mask that needs to be translated
 	var wedges = drawCollection.selectAll("polygon.wedge");
 	wedges.each(function (d)
 		{
+			// if the type is a hash-wedge
 			if (d.type == "hash")
 			{
+				// get the mask
 				var mask = sketchContainer.select("#" + d.maskid);
+				// get the lines inside the mask
 				var lines = mask.selectAll("line");
 				
 				var ratio = .9;
 				
+				// translate the lines using the offset
 				lines.each(function ()
 					{
+						// since the wedge has already had its data updated,
+						// just update the line data based on that
 						var line = d3.select(this);
 						line.transition()
 						.attr("x1", function ()
@@ -429,9 +429,11 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the vertical line (if provided)
 				if (xLine != null)
 				{
+					// rectangle are anchored at the top left corner, so
+					// get the center of the rectangle first
 					var x = d.xyPos[0] + (d.width/2);
-					var diff = xLine - x;
-					d.xyPos[0] = xLine + diff - (d.width/2);
+					// reflect it
+					d.xyPos[0] = Sketch.reflectValue(x, xLine) - (d.width/2);
 				}
 				return xScale(d.xyPos[0]);
 			})
@@ -441,9 +443,10 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
+					// get the center of the rectangle
 					var y = d.xyPos[1] - (d.height/2);
-					var diff = yLine - y;
-					d.xyPos[1] = yLine + diff + (d.height/2);
+					// reflect it
+					d.xyPos[1] = Sketch.reflectValue(y, yLine) + (d.height/2);
 				}
 				return yScale(d.xyPos[1]);
 			})
@@ -459,9 +462,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the vertical line (if provided)
 				if(xLine != null)
 				{
-					var x = d.xyPos[0];
-					var diff = xLine - x;
-					d.xyPos[0] = xLine + diff;
+					d.xyPos[0] = Sketch.reflectValue(d.xyPos[0], xLine);
 				}
 				return xScale(d.xyPos[0]);
 			})
@@ -471,9 +472,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
-					var y = d.xyPos[1];
-					var diff = yLine - y;
-					d.xyPos[1] = yLine + diff;
+					d.xyPos[1] = Sketch.reflectValue(d.xyPos[1], yLine);
 				}
 				return yScale(d.xyPos[1]);
 			})
@@ -490,75 +489,63 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the vertical line (if provided)
 				if (xLine != null)
 				{
-					var x = d.xyPos[0];
-					var diff = xLine - x;
-					d.xyPos[0] = xLine + diff;
+					d.xyPos[0] = Sketch.reflectValue(d.xyPos[0], xLine);
 				}
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
-					var y = d.xyPos[1];
-					var diff = yLine - y;
-					d.xyPos[1] = yLine + diff;
+					d.xyPos[1] = Sketch.reflectValue(d.xyPos[1], yLine);
 				}
 				// reflect all the points as well
-				var points = d.points.split(" ");
 				var i;
-				for (i = 0; i < points.length; i++)
+				for (i = 0; i < d.points.length; i++)
 				{
-					var point = points[i].split(",");
-					var x = parseFloat(point[0]);
-					var y = parseFloat(point[1]);
 					// reflect over the vertical line (if provided)
 					if (xLine != null)
 					{
-						var diff = xScale(xLine) - x;
-						x = xScale(xLine) + diff;
+						d.points[i][0] = Sketch.reflectValue(d.points[i][0], xLine);
 					}
 					// reflect over the horizontal line (if provided)
 					if (yLine != null)
 					{
-						var diff = yScale(yLine) - y;
-						y = yScale(yLine) + diff;
+						d.points[i][1] = Sketch.reflectValue(d.points[i][1], yLine);
 					}
-					point[0] = x.toString();
-					point[1] = y.toString();
-					points[i] = point.join(",");
+					
 				}
-				
-				d.points = points.join(" ");
 				// return the point string
-				return d.points;
+				return Sketch.pointString(d.points, xScale, yScale);
 			})
 		.duration(duration).delay(delay);
 		
+		// wedges need to have their angle updated as well
 		var wedges = drawCollection.selectAll("polygon.wedge");
 		wedges.each(function (d)
 			{
 				// reflect over the vertical line (if provided)
 				if (xLine != null)
 				{
-					var angle = d.angle;
-					var diff = Math.PI/2 - angle;
-					d.angle = Math.PI/2 + diff;
+					d.angle = Sketch.reflectValue(d.angle, Math.PI/2);
 				}
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
-					var angle = d.angle;
-					var diff = Math.PI - angle;
-					d.angle = Math.PI + diff;
+					d.angle = Sketch.reflectValue(d.angle, Math.PI);
 				}
 				
+				// if the wedge is a hash-wedge
 				if (d.type == "hash")
 				{
+					// get the mask
 					var mask = sketchContainer.select("#" + d.maskid);
 					var lines = mask.selectAll("line");
 					
 					var ratio = .9;
 					
+					// reflect each of the lines inside the mask
 					lines.each(function ()
 						{
+							// since the wedge data has already been changed, just
+							// update the line data based on that
 							var line = d3.select(this);
 							line.transition()
 							.attr("x1", function ()
@@ -600,9 +587,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the vertical line (if provided)
 				if (xLine != null)
 				{
-					var x = d.xyPos[0];
-					var diff = xLine - x;
-					d.xyPos[0] = xLine + diff;
+					d.xyPos[0] = Sketch.reflectValue(d.xyPos[0], xLine);
 				}
 				return xScale(d.xyPos[0]);
 			})
@@ -612,9 +597,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
-					var y = d.xyPos[1];
-					var diff = yLine - y;
-					d.xyPos[1] = yLine + diff;
+					d.xyPos[1] = Sketch.reflectValue(d.xyPos[1], yLine);
 				}
 				return yScale(d.xyPos[1]);
 			})
@@ -624,6 +607,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the vertical line (if provided)
 				if (xLine != null)
 				{
+					// update the angle to do so
 					var angle = Math.PI - d.angle;
 					d.angle = angle;
 				}
@@ -635,6 +619,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
+					// update the angle to do so
 					var angle = 2*Math.PI - d.angle;
 					d.angle = angle;
 				}
@@ -651,9 +636,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the vertical line (if provided)
 				if(xLine != null)
 				{
-					var x = d.xyPos[0];
-					var diff = xLine - x;
-					d.xyPos[0] = xLine + diff;
+					d.xyPos[0] = Sketch.reflectValue(d.xyPos[0], xLine);
 				}
 				return xScale(d.xyPos[0]);
 			})
@@ -663,9 +646,7 @@ Sketch.prototype.reflect = function (xLine, yLine, duration, delay)
 				// reflect over the horizontal line (if provided)
 				if (yLine != null)
 				{
-					var y = d.xyPos[1];
-					var diff = yLine - y;
-					d.xyPos[1] = yLine + diff;
+					d.xyPos[1] = Sketch.reflectValue(d.xyPos[1], yLine);
 				}
 				return yScale(d.xyPos[1]);
 			})
@@ -693,6 +674,7 @@ Sketch.prototype.setOpacity = function (opacity, duration, delay)
 	// get the collection of shapes
 	var drawCollection = sketchContainer.selectAll("g.shape");
 
+	// change the opacity to the given value
 	drawCollection.transition()
 		.style('opacity', opacity)
 		.duration(duration).delay(delay);
@@ -717,15 +699,18 @@ Sketch.prototype.setColor = function (color, duration, delay)
 	// get the collection of shapes
 	var drawCollection = sketchContainer.selectAll("g.shape");
 
+	// change the stroke color of all shapes
 	drawCollection.transition()
 		.style('stroke', color)
 		.duration(duration).delay(delay);
-		
+	
+	// wedges include a fill as well, so change that color
 	var wedges = drawCollection.selectAll("polygon.wedge");
 	wedges.transition()
 		.style('fill', color)
 		.duration(duration).delay(delay);
 		
+	// textBits also include a fill
 	var textbits = drawCollection.selectAll("text");
 	textbits.transition()
 		.style('fill', color)
@@ -784,7 +769,7 @@ Sketch.prototype.redraw = function ()
 	// includes both the update and the enter selections, so you can drag them around
 	// on a suitable event or redraw.
 
-				  
+	// get the collection of rectangles		  
 	var rectangles = drawCollection.selectAll("rect")
 		.data(function (d,i) {return d.shape == "rectangle"? d.data : [];});
 	rectangles.enter().append("rect");
@@ -800,12 +785,12 @@ Sketch.prototype.redraw = function ()
 	// I don't need it now, and it's not clear if we should just layer a labelGroup
 	// on it or make them part of the groups that hold each thing.
 	
+	// get the collection of circles
 	var circles = drawCollection.selectAll("circle")
 		.data(function (d,i) {return d.shape == "circle"? d.data : [];});
-
 	circles.enter().append("circle");
 	circles.exit().remove();
-	// update the properties on all new or changing rectangles
+	// update the properties on all new or changing circles
 	// unclear how to scale the radius, with x or y scale ? -lb
 	circles.attr("r", function(d) {
 		//this handles the case where the scale does not start at 0
@@ -816,123 +801,81 @@ Sketch.prototype.redraw = function ()
 		.attr("cx", function(d) { return xScale(d.xyPos[0]); })
 		.attr("cy", function(d) { return yScale(d.xyPos[1]); });
 	
-
+	// get the collection of hexagons
 	var hexagons = drawCollection.selectAll("polygon.hex")
 		.data(function (d) { 
 			return d.shape == "hexagon"? d.data : []; });
 	hexagons.enter().append("polygon").attr("class","hex");
 	hexagons.exit().remove();
-	// hexagons are drawn off a base shape of size 1% of the width
-	// then scaled and centered around the xyPosition, like circles
+	// hexagons are polygons, so they need a point string
 	hexagons.attr("points", 
 				function(d)
 				{
-					// scale the side length
-					var side = xScale(d.side);
+					// create an array of points representing a hexagon
+					d["points"] = Sketch.createHexagon(d.xyPos[0], d.xyPos[1], d.side);
 					
-					// scale the x and y positions
-					var midx = xScale(d.xyPos[0]);
-					var midy = yScale(d.xyPos[1]);
-					
-					// use trigonometry to calculate all the points
-					
-					var angle = (Math.PI/6);
-					
-					var round = d3.format('2f');
-					
-					var fartop = round(midy + side*(1/2 + Math.sin(angle))).toString();
-					var top = round(midy + side/2).toString();
-					var bot = round(midy - side/2).toString();
-					var farbot = round(midy - side*(1/2 + Math.sin(angle))).toString();
-					var left = round(midx - side*Math.cos(angle)).toString();
-					var mid = round(midx).toString();
-					var right = round(midx + side*Math.cos(angle)).toString();
-					
-					// return the point string
-					d["points"] = (left+","+bot)+" "+(mid+","+farbot)+" "+(right+","+bot)
-						+" "+(right+","+top)+" "+(mid+","+fartop)+" "+(left+","+top);
-					return d.points;
+					// turn the array into a string
+					return Sketch.pointString(d.points, xScale, yScale);
 				});
-					
+	
+	// get collection of triangles
 	var triangles = drawCollection.selectAll("polygon.tri")
 		.data(function (d) { return d.shape == "triangle"? d.data : []; });
 	triangles.enter().append("polygon").attr("class", "tri");
 	triangles.exit().remove();
+	// triangles are polygons, so they need a point string
 	triangles.attr("points", 
 			function(d)
 			{
-				// scale the side length
-				var side = xScale(d.side);
+				// create an array of points representing a triangle
+				d["points"] = Sketch.createTriangle(d.xyPos[0], d.xyPos[1], d.side);
 				
-				// scale the x and y positions
-				var midx = xScale(d.xyPos[0]);
-				var midy = yScale(d.xyPos[1]);
-				
-				// use trigonometry to calculate all the points
-				
-				var angle = (Math.PI/3);
-				
-				var round = d3.format('2f');
-				
-				var left = round(midx - side/2).toString();
-				var mid = round(midx).toString();
-				var right = round(midx + side/2).toString();
-				var bot = round(midy + (side*Math.sin(angle))/2).toString();
-				var top = round(midy - (side*Math.sin(angle))/2).toString();
-				
-				// return the point string
-				d["points"] = (left+","+bot)+" "+(right+","+bot)+" "+(mid+","+top);
-				return d.points;
+				// turn the array into a string
+				return Sketch.pointString(d.points, xScale, yScale);
 			});
 	
+	// get the collection of wedges
 	var wedges = drawCollection.selectAll("polygon.wedge")
 		.data(function (d) { return d.shape == "wedge"? d.data : []; });
 	wedges.enter().append("polygon").attr("class", "wedge");
 	wedges.exit().remove();
+	// wedges are a type of polygon, so they need a point string
 	wedges.attr("points", 
 			function(d)
-			{
-				var flatx = d.length * Math.cos(d.angle) + d.xyPos[0];
-				var flaty = d.length * Math.sin(d.angle) + d.xyPos[1];
-							
-				var angle = d.angle + Math.PI/2;
+			{	
+				// create an array of points representing a wedge
+				d["points"] = Sketch.createWedge(d.xyPos[0], d.xyPos[1], d.width,
+								d.length, d.angle);
 				
-				var round = d3.format('2f');
-				
-				var tip1x = xScale(flatx + d.width/2*Math.cos(angle));
-				var tip1y = yScale(flaty + d.width/2*Math.sin(angle));
-				var tip2x = xScale(flatx - d.width/2*Math.cos(angle));
-				var tip2y = yScale(flaty - d.width/2*Math.sin(angle));
-				
-				var xpos = xScale(d.xyPos[0]);
-				var ypos = yScale(d.xyPos[1]);
-							
-				d["points"] = (round(tip1x).toString()+","+round(tip1y).toString())+" "+
-							(round(xpos).toString()+","+round(ypos).toString())+" "+
-							(round(tip2x).toString()+","+round(tip2y).toString());
-				return d.points;
+				// turn the array into a string		
+				return Sketch.pointString(d.points, xScale, yScale);
 			})
 		.style('fill', 'grey');
-	
+		
+	// get the id to use for the hash mask (if needed)
 	var id = this.id;
 	var id2 = 0;
 	wedges.each(function(d)
 		{
+			// update unique id for each wedge
 			id2++;
 			// if type is a hash, put a mask on it
 			if (d.type == "hash")
 			{
+				// get rid of the outline on the wedge
 				var hash = d3.select(this);
 				hash.style("stroke-width", "0px");
 				
 				d["maskid"] = id + id2.toString() + "hashmask";
 				
+				// append a mask with a unique id
 				var defs = sketchContainer.select("defs");
 				var mask = defs.append("mask")
 					.attr("x", 0).attr("y", 0).attr("width", 1).attr("height", 1)
 					.attr("id", d.maskid);
 				var i;
 				var ratio = .9;
+				// the mask is hashed with three lines at different placements
 				for (i = 0; i < 3; i++)
 				{
 					mask.append("line")
@@ -1011,7 +954,7 @@ Sketch.prototype.redraw = function ()
 	//paths.attr("d", function(d) {return lineGen(d);});
 	
 	
-	
+	// get collection of textBits
 	var textBits = drawCollection.selectAll("text")
 		.data(function (d) { return d.shape == "textBit"? d.data : []; });
 	textBits.enter().append("text");
@@ -1052,7 +995,7 @@ Sketch.prototype.redraw = function ()
 			  });
 
 
-
+	// publish a selected event when any of the shapes in the sketch are clicked
 	drawCollection.on('click',
 				function (d, i)
 				{
@@ -1062,6 +1005,118 @@ Sketch.prototype.redraw = function ()
 	this.lastdrawn.drawCollection = sketchContainer.selectAll("g.shape");
 
 };
+
+/* **************************************************************************
+ * Sketch.createHexagon - static                                       *//**
+ *
+ * Return an array of points representing an equilateral hexagon
+ *
+ * @param {number}	x		-The x position of the hexagon's center
+ * @param {number}	y		-The y position of the hexagon's center
+ * @param {number}	side	-The length of the hexagon's side
+ *
+ ****************************************************************************/
+Sketch.createHexagon = function (x, y, side)
+{	
+	// use trigonometry to calculate all the points
+	
+	var angle = (Math.PI/6);
+	
+	// y values
+	var fartop = y + side*(1/2 + Math.sin(angle));	// the top point
+	var top = y + side/2;	// the upper middle point
+	var bot = y - side/2;	// the lower middle point
+	var farbot = y - side*(1/2 + Math.sin(angle));	// the bottom point
+	
+	// x values
+	var left = x - side*Math.cos(angle);	// the left point
+	var mid = x;	// the middle point
+	var right = x + side*Math.cos(angle);	// the right point
+	
+	// create an array of points using the values
+	var points = [[left, bot] , [mid, farbot] , [right, bot] ,
+					[right, top] , [mid, fartop] , [left, top]];
+	return points;
+}
+
+/* **************************************************************************
+ * Sketch.createTriangle - static                                       *//**
+ *
+ * Return an array of points representing an equilateral triangle
+ *
+ * @param {number}	x		-The x position of the triangle's center
+ * @param {number}	y		-The y position of the triangle's center
+ * @param {number}	side	-The length of the triangle's side
+ *
+ ****************************************************************************/
+Sketch.createTriangle = function (x, y, side)
+{	
+	// use trigonometry to calculate all the points
+	
+	var angle = (Math.PI/3);
+	
+	// x values
+	var left = x - side/2;	// the left point
+	var mid = x;	// the middle point
+	var right = x + side/2;	// the right point
+	
+	// y values
+	var bot = y - (side*Math.sin(angle))/2;	// the bottom point
+	var top = y + (side*Math.sin(angle))/2;	// the top point
+	
+	// create an array of points using the values
+	var points = [[left, bot] , [right, bot] , [mid, top]];
+	return points;
+}
+
+/* **************************************************************************
+ * Sketch.createWedge - static                                       *//**
+ *
+ * Return an array of points representing a wedge
+ *
+ * @param {number}	x		-The x position of the wedge's tip
+ * @param {number}	y		-The y position of the wedge's tip
+ * @param {number}	wid		-The width of the wedge at its widest
+ * @param {number}	len		-The length of the wedge
+ * @param {number}	ang		-The angle of the wedge's centerline
+ *
+ ****************************************************************************/
+Sketch.createWedge = function (x, y, wid, len, ang)
+{	
+	// calculate the centerpoint of the side perpendicular to the length
+	var flatx = len * Math.cos(ang) + x;
+	var flaty = len * Math.sin(ang) + y;
+	
+	// get the angle of the side perpendicular to the length
+	var angle = ang + Math.PI/2;
+	
+	// find the endpoints of the side perpendicular to the length
+	var tip1x = flatx + wid/2*Math.cos(angle);
+	var tip1y = flaty + wid/2*Math.sin(angle);
+	var tip2x = flatx - wid/2*Math.cos(angle);
+	var tip2y = flaty - wid/2*Math.sin(angle);
+	
+	// create an array of points based on the values
+	var points = [[tip1x, tip1y] , [x, y] , [tip2x, tip2y]];
+	return points;
+}
+
+/* **************************************************************************
+ * Sketch.reflectValue - static                                       *//**
+ *
+ * Reflects the value over the given line
+ *
+ * @param {number}	value	-The value to be translated
+ * @param {number}	line	-The line to be reflected over
+ *
+ ****************************************************************************/
+Sketch.reflectValue = function (value, line)
+{
+	// get the distance between the value and the reflection line
+	var diff = line - value;
+	// reflect it
+	return line + diff;
+}
 
 /* **************************************************************************
  * Sketch.splitOnNumbers - static                                       *//**
@@ -1097,6 +1152,40 @@ Sketch.splitOnNumbers = function (s)
 	return matches;
 };
 
+/* **************************************************************************
+ * Sketch.pointString - static                                       *//**
+ *
+ * Return a string matching the format needed for the point string of a d3
+ * polygon, based on the given 2-dimensional array of points.
+ *
+ * @param {array}	a		-The 2-dimensional array of points
+ * @param {number}	xScale	-function to convert a horizontal data offset
+ *								 to the pixel offset into the data area.
+ * @param {number}	yScale	-function to convert a vertical data offset
+ *								 to the pixel offset into the data area.
+ *
+ ****************************************************************************/
+Sketch.pointString = function (a, xScale, yScale)
+{	
+	// formatting function
+	var rnd = d3.format('2f');
+	
+	// start with an empty string
+	var pointstr = "";
+	
+	var i;
+	// add the points to the string in the correct format
+	for (i = 0; i < a.length; i++)
+	{
+		pointstr = pointstr + rnd(xScale(a[i][0])) + "," + rnd(yScale(a[i][1]))
+		 					+ " ";
+	}
+	// get rid of last space
+	pointstr = pointstr.substring(0, pointstr.length - 1);
+	
+	// return the string
+	return pointstr;
+}
 
 
 /* **************************************************************************
