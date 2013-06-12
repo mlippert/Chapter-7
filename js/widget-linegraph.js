@@ -188,6 +188,8 @@ LineGraph.prototype.draw = function(container, size)
 	axesConfig.xAxisFormat.extent = d3.extent(dataPts, function(pt) {return pt.x;});
 	axesConfig.yAxisFormat.extent = d3.extent(dataPts, function(pt) {return pt.y;});
 	
+	//Check to see whether ordinal or other scales will be generated
+	// and whether explicit ticks are set, which overrides the autoranging
 	if (axesConfig.xAxisFormat.type == 'ordinal' && !$.isArray(axesConfig.xAxisFormat.ticks))
 	{
 		var ordinalValueMap = d3.set(dataPts.map(function (pt) {return pt.x;}));
@@ -236,15 +238,12 @@ LineGraph.prototype.draw = function(container, size)
 	// the graph dynamically, or for data overflow into the tick and
 	// label areas
 
-	//TEST: the graph group now exists and reports it's ID correctly
-	console.log("graph group is made:", graph.attr("id") == linesId);
-	
 	this.lastdrawn.graph = graph;
 
 	// Draw the data (traces and/or points as specified by the graph type)
 	this.drawData_();
 
-	// Draw any 'after' child widgets that got appended before draw was called
+	// Draw any 'after' child widgets that got appended after draw was called
 	this.childWidgets.afterData.forEach(this.drawWidget_, this);
 	
 }; // end of LineGraph.draw()
@@ -321,9 +320,6 @@ LineGraph.prototype.drawData_ = function ()
 	
 	// get the group that contains the graph lines
 	var graph = this.lastdrawn.graph;
-
-	//TEST: the graph group now exists and reports it's ID correctly
-	console.log("line graph group is found:", graph.attr("id") == linesId);  
 
 	var clipId = linesId + "_clip";
 

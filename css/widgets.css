@@ -1,8 +1,6 @@
 /*
 * Axes, markers, ticks, and other graph styling
-* required for eCourses/Neff.
-* 1/15/2013 LBondaryk
-* adding math styling
+* required for San/Van.
 */
 
 /* highlights                                      
@@ -437,8 +435,13 @@ svg g .stroke6 {
 
 /* bars, lines and points
 ================================================== */
-.bar {
+svg g.widgetBarChart rect,
+svg g.widgetLegend rect {
   opacity: 0.8; }
+
+svg g.widgetBarChart rect .lit {
+  opacity: 1;
+  }
 
 
 svg g .fill0 {
@@ -473,25 +476,6 @@ svg g .fillBlack {
 svg g .fillNone {
   fill: none;
 }
-/* zoom and pan widget 
-================================================== */
-g.context g.axis path {
-  stroke-opacity: 0; }
-
-g.context g.axis line {
-  stroke-opacity: .1; }
-
-g.context g.brush rect.background {
-  fill: rgba(0, 0, 0, 0.1); }
-
-.brush .extent {
-  stroke: #fff;
-  fill-opacity: .125;
-  shape-rendering: crispEdges; }
-
-g.context rect.background {
-  fill: #c8c8ff;
-  visibility: visible !important; }
 
 /* tables of data and readouts
 ================================================== */
