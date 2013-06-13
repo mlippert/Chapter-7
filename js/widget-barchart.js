@@ -447,10 +447,10 @@ BarChart.prototype.redrawWidget_ = function (widget)
 }
 
 /* **************************************************************************
- * LineGraph.append                                                     *//**
+ * BarChart.append                                                     *//**
  *
- * Append the widget or widgets to this line graph and draw it/them on top
- * of the line graph's data area and any widgets appended earlier. If append
+ * Append the widget or widgets to this bar chart and draw it/them on top
+ * of the data area and any widgets appended earlier. If append
  * is called before draw has been called, then the appended widget(s) will be
  * drawn when draw is called.
  *
@@ -491,7 +491,7 @@ BarChart.prototype.append = function(svgWidgets, zOrder)
 }; // end of BarChart.append()
 
 /* **************************************************************************
- * LineGraph.append_one_                                                *//**
+ * BarChart.append_one_                                                *//**
  *
  * Helper for append that does the work needed to append a single widget.
  * This can handle drawing the widget after the data even after the data

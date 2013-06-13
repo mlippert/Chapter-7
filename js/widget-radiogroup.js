@@ -95,6 +95,9 @@
  * @param {string|undefined}
  *						config.numberFormat
  *										-The format for numbering the choices. default is "none"
+ * @param {EventManager|undefined}
+ * 						eventManager	-The event manager to use for publishing events
+ * 										 and subscribing to them. (Optional)
  *
  ****************************************************************************/
 function RadioGroup(config, eventManager)
@@ -124,7 +127,7 @@ function RadioGroup(config, eventManager)
 	 * The event manager to use to publish (and subscribe to) events for this widget
 	 * @type {EventManager}
 	 */
-	this.eventManager = eventManager;
+	this.eventManager = eventManager || { publish: function () {}, subscribe: function () {} };
 
 	/**
 	 * The event id published when an item in this carousel is selected.
@@ -216,6 +219,13 @@ RadioGroup.prototype.draw = function(container)
 			.attr("for", getButtonId)
 			.text(function (d) {return d.content;});
 	
+	var choiceInputs = widgetGroup.selectAll("div.widgetRadioGroup input[name='" + this.id + "']");
+	choiceInputs
+		.on("change", function (d)
+				{
+					that.eventManager.publish(that.selectedEventId, {selectKey: d.answerKey});
+				});
+	
 	this.lastdrawn.widgetGroup = widgetGroup;
 
 }; // end of RadioGroup.draw()
@@ -223,14 +233,42 @@ RadioGroup.prototype.draw = function(container)
 /* **************************************************************************
  * RadioGroup.selectedItem                                              *//**
  *
- * Return the selected item in the radio group.
+ * Return the selected choice in the radio group or null if nothing has been
+ * selected.
  *
- * @return {Object} the radio group item which is currently selected.
+ * @return {Object} the radio group choice which is currently selected or null.
  *
  ****************************************************************************/
 RadioGroup.prototype.selectedItem = function ()
 {
-	return this.lastdrawn.widgetGroup.select("div.widgetRadioGroup input[name='" + this.id + "']:checked").datum();
+	var selectedInputSelector = "div.widgetRadioGroup input[name='" + this.id + "']:checked";
+	var selectedInput = this.lastdrawn.widgetGroup.select(selectedInputSelector);
+	return !selectedInput.empty() ? selectedInput.datum() : null;
+};
+
+/* **************************************************************************
+ * RadioGroup.selectItemAtIndex                                         *//**
+ *
+ * Select the choice in the radio group at the given index. If the choice is
+ * already selected, do nothing.
+ *
+ * @param {number}	index	-the 0-based index of the choice to mark as selected.
+ *
+ ****************************************************************************/
+RadioGroup.prototype.selectItemAtIndex = function (index)
+{
+	var choiceInputs = this.lastdrawn.widgetGroup.selectAll("div.widgetRadioGroup input");
+	var selectedInput = choiceInputs[0][index];
+
+	if (selectedInput.checked)
+	{
+		return;
+	}
+
+	// choice at index is not selected, so select it and publish selected event
+	selectedInput.checked = true;
+
+	this.eventManager.publish(this.selectedEventId, {selectKey: d3.select(selectedInput).datum().answerKey});
 };
 
 /* **************************************************************************
