@@ -916,7 +916,15 @@ var sketch5_2 = new Sketch ({
 		drawShape:
 		[
 			{ shape: "textBit", data: [{ xyPos: [.23, .78], text: 'C'}]},
-			{ shape: "circle", data: [{ xyPos: [.23, .8], radius: .03 }]},
+		]
+	});
+	
+var hotspot5_1 = new Sketch ({
+		id: "hotspot5_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.23, .8], radius: .03 }]},
 		]
 	}, eventManager);
 
@@ -926,7 +934,15 @@ var sketch5_3 = new Sketch ({
 		drawShape:
 		[
 			{ shape: "textBit", data: [{ xyPos: [.4, .78], text: 'C'}]},
-			{ shape: "circle", data: [{ xyPos: [.4, .8], radius: .03 }]},
+		]
+	});
+	
+var hotspot5_2 = new Sketch ({
+		id: "hotspot5_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.4, .8], radius: .03 }]},
 		]
 	}, eventManager);
 
@@ -976,6 +992,9 @@ svg5.append(sketch5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg5.append(sketch5_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+svg5.append(hotspot5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(hotspot5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
 // button used to reset animation
 var button5 = new Button ({
 		id: "b5",
@@ -984,8 +1003,8 @@ var button5 = new Button ({
 	
 $('#button5').append(button5.getRootEl());
 
-eventManager.subscribe(sketch5_2.selectedEventId, handleClick5_1);
-eventManager.subscribe(sketch5_3.selectedEventId, handleClick5_2);
+eventManager.subscribe(hotspot5_1.selectedEventId, handleClick5_1);
+eventManager.subscribe(hotspot5_2.selectedEventId, handleClick5_2);
 eventManager.subscribe(button5.pressedEventId, handleClick5_3);
 
 var carbon = 0;
@@ -1006,7 +1025,6 @@ function handleClick5_1 (eventDetails)
 		sketch5_6.move(.7, 0, 1000, 0);
 		sketch5_5.setColor("red", 500, 1000);
 		sketch5_5.reflect(null, .8, 500, 1500);
-		sketch5_2.lite(eventDetails.selectKey)
 		setTimeout(function () {canclick5 = true;}, 2500);
 	}
 }
@@ -1024,7 +1042,6 @@ function handleClick5_2 (eventDetails)
 		sketch5_6.move(.7, 0, 1000, 0);
 		sketch5_6.setColor("red", 500, 1000);
 		sketch5_6.reflect(null, .8, 500, 1500);
-		sketch5_3.lite(eventDetails.selectKey)
 		setTimeout(function () {canclick5 = true;}, 2500);
 	}
 }
@@ -1047,13 +1064,11 @@ function handleClick5_3 ()
 		{
 			sketch5_5.reflect(null, .8, 0, 10);
 			sketch5_5.setColor("grey", 0, 20);
-			sketch5_2.lite("");
 		}
 		else if (carbon == 2)
 		{
 			sketch5_6.reflect(null, .8, 0, 10);
 			sketch5_6.setColor("grey", 0, 20);
-			sketch5_3.lite("");
 		}
 		selected = false;
 		carbon = 0;
@@ -1226,6 +1241,15 @@ var sketch7_1 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.15, .7], length: .05, angle: -Math.PI/2 }]},
 			{ shape: "line", data: [{ xyPos: [.235, .8], length: .05, angle: -Math.PI/6 }]},
 		]
+	});
+	
+var hotspot7_1 = new Sketch ({
+		id: "hotspot7_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [0, .85], width: .3, height: .2 }]},
+		]
 	}, eventManager);
 
 // middle molecule (clickable)
@@ -1245,6 +1269,15 @@ var sketch7_2 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.484, .75], length: .05, angle: -Math.PI/2 }]},
 			{ shape: "line", data: [{ xyPos: [.484, .7], length: .05, angle: -Math.PI/6 }]},
 		]
+	});
+	
+var hotspot7_2 = new Sketch ({
+		id: "hotspot7_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.35, .85], width: .2, height: .2 }]},
+		]
 	}, eventManager);
 
 // right molecule (clickable)
@@ -1263,6 +1296,15 @@ var sketch7_3 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.742, .75], length: .05, angle: Math.PI/6 }]},
 			{ shape: "line", data: [{ xyPos: [.784, .775], length: .05, angle: Math.PI/2 }]},
 			{ shape: "line", data: [{ xyPos: [.784, .825], length: .05, angle: Math.PI/6 }]},
+		]
+	});
+	
+var hotspot7_3 = new Sketch ({
+		id: "hotspot7_3",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.6, .85], width: .25, height: .2 }]},
 		]
 	}, eventManager);
 
@@ -1310,6 +1352,15 @@ var sketch7_7 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.22, .45], text: 'Et' }]},
 			{ shape: "textBit", data: [{ xyPos: [.165, .355], text: 'Pr' }]},
 		]
+	});
+	
+var hotspot7_4 = new Sketch ({
+		id: "hotspot7_4",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .55], width: .2, height: .2 }]},
+		]
 	}, eventManager);
 
 // simplified middle molecule (clickable)
@@ -1329,6 +1380,15 @@ var sketch7_8 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.435, .355], text: 'Et' }]},
 			{ shape: "textBit", data: [{ xyPos: [.535, .41], text: 'Pr' }]},
 		]
+	});
+	
+var hotspot7_5 = new Sketch ({
+		id: "hotspot7_5",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.35, .55], width: .2, height: .2 }]},
+		]
 	}, eventManager);
 
 // simplified right molecule (clickable)
@@ -1347,6 +1407,15 @@ var sketch7_9 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.655, .41], text: 'Pr' }]},
 			{ shape: "textBit", data: [{ xyPos: [.81, .45], text: 'Pr' }]},
 			{ shape: "textBit", data: [{ xyPos: [.755, .355], text: 'Et' }]},
+		]
+	});
+	
+var hotspot7_6 = new Sketch ({
+		id: "hotspot7_6",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.6, .55], width: .2, height: .2 }]},
 		]
 	}, eventManager);
 
@@ -1402,12 +1471,19 @@ svg7.append(sketch7_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg7.append(sketch7_10, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_11, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
-eventManager.subscribe(sketch7_1.selectedEventId, handleClick7_1);
-eventManager.subscribe(sketch7_2.selectedEventId, handleClick7_2);
-eventManager.subscribe(sketch7_3.selectedEventId, handleClick7_3);
-eventManager.subscribe(sketch7_7.selectedEventId, handleClick7_4);
-eventManager.subscribe(sketch7_8.selectedEventId, handleClick7_5);
-eventManager.subscribe(sketch7_9.selectedEventId, handleClick7_6);
+svg7.append(hotspot7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+eventManager.subscribe(hotspot7_1.selectedEventId, handleClick7_1);
+eventManager.subscribe(hotspot7_2.selectedEventId, handleClick7_2);
+eventManager.subscribe(hotspot7_3.selectedEventId, handleClick7_3);
+eventManager.subscribe(hotspot7_4.selectedEventId, handleClick7_4);
+eventManager.subscribe(hotspot7_5.selectedEventId, handleClick7_5);
+eventManager.subscribe(hotspot7_6.selectedEventId, handleClick7_6);
 eventManager.subscribe(button7.pressedEventId, handleClick7_7);
 
 // much of the exercise starts out invisible

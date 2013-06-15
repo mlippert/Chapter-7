@@ -86,6 +86,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Allow the student to select which two groups are switched. This discovery exercise is storyboarded below.]</p>
 				
+				<span id="button5"></span>
 				<div id="picture5"></div>
 				
 				<p style="color:blue;">End of interactive</p>
@@ -94,12 +95,14 @@
 				
 				<p>Identify all stereocenters in the following compounds. Distinguish those stereocenters that are asymmetric carbons.</p>
 				
+				<span id="button6"></span>
 				<div id="picture6"></div>
 				
 				<p><b>Exercise 7.1.3 Identify all stereocenters in the following compounds. Distinguish those stereocenters that are asymmetric carbons.</b></p>
 				
 				<p style="color:blue;">[INTERACTIVE: Hotspot activity. There will need to be a follow-up question that asks to identify if the atom(s) they have selected are asymmetric or not.]</p>
 				
+				<span id="button7"></span>
 				<div id="picture7"></div>
 				
 			</div>
@@ -223,12 +226,12 @@ svg0.append(sketch0_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 sketch0_4.setOpacity(0, 0, 0);
 sketch0_5.setOpacity(0, 0, 0);
 sketch0_6.setColor("blue", 0, 0);
-sketch0_6.setOpacity(0, 0, 0);
+sketch0_6.setOpacity(0, 0, 10);
 sketch0_7.setOpacity(0, 0, 0);
 sketch0_8.setColor("blue", 0, 0);
-sketch0_8.setOpacity(0, 0, 0);
+sketch0_8.setOpacity(0, 0, 10);
 sketch0_9.setColor("blue", 0, 0);
-sketch0_9.setOpacity(0, 0, 0);
+sketch0_9.setOpacity(0, 0, 10);
 
 var button0_1 = new Button ({
 		id: "b0_1",
@@ -675,73 +678,933 @@ svg4.ScalableImage(
 	
 ////////////////////////////////////////
 
-var svg5 = new MakeSVGContainer(
-	{node: d3.select("#picture5"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg5.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg5.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_21.png', caption: "Placeholder for interactive."}]
+var svg5 = new SVGContainer({
+		node: d3.select("#picture5"),
+		maxWid: 300,
+		maxHt: 300
 	});
+
+var sketch5_1 = new Sketch({
+		id: "sketch5_1",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.3, .5], length: .2, width: .05, angle: 2*Math.PI/3 }]},
+			{ shape: "wedge", data: [{ xyPos: [.3, .5], length: .2, width: .05, angle: Math.PI/3, type: "hash" }]},
+			{ shape: "line", data: [{ xyPos: [.3, .5], length: .2, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .5], length: .2, angle: 7*Math.PI/6 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.17, .7], text: "Br" }]},
+			{ shape: "textBit", data: [{ xyPos: [.42, .7], text: "H" }]},
+			{ shape: "textBit", data: [{ xyPos: [.09, .36], text: "F" }]},
+			{ shape: "textBit", data: [{ xyPos: [.51, .36], text: "Cl" }]},
+		]
+	});
+	
+var sketch5_2 = new Sketch({
+		id: "sketch5_2",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.3, .5], length: .2, width: .05, angle: 2*Math.PI/3 }]},
+			{ shape: "wedge", data: [{ xyPos: [.3, .5], length: .2, width: .05, angle: Math.PI/3, type: "hash" }]},
+			{ shape: "line", data: [{ xyPos: [.3, .5], length: .2, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .5], length: .2, angle: 7*Math.PI/6 }]},
+		]
+	});
+	
+var sketch5_3 = new Sketch({
+		id: "sketch5_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.17, .7], text: "Br" }]},
+		]
+	});
+	
+var hotspot5_1 = new Sketch({
+		id: "hotspot5_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.17, .73], radius: .05 }]},
+		]
+	}, eventManager);
+	
+var sketch5_4 = new Sketch({
+		id: "sketch5_4",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.42, .7], text: "H" }]},
+		]
+	});
+	
+var hotspot5_2 = new Sketch({
+		id: "hotspot5_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.42, .73], radius: .05 }]},
+		]
+	}, eventManager);
+	
+var sketch5_5 = new Sketch({
+		id: "sketch5_5",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.09, .36], text: "F" }]},
+		]
+	});
+	
+var hotspot5_3 = new Sketch({
+		id: "hotspot5_3",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.09, .39], radius: .05 }]},
+		]
+	}, eventManager);
+	
+var sketch5_6 = new Sketch({
+		id: "sketch5_6",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.51, .36], text: "Cl" }]},
+		]
+	});
+	
+var hotspot5_4 = new Sketch({
+		id: "hotspot5_4",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.51, .39], radius: .05 }]},
+		]
+	}, eventManager);
+	
+var button5 = new Button ({
+		id: "b5",
+		text: "Reset"
+	}, eventManager);
+
+$('#button5').append(button5.getRootEl());
+	
+svg5.append(sketch5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+svg5.append(hotspot5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(hotspot5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(hotspot5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(hotspot5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+eventManager.subscribe(hotspot5_1.selectedEventId, handleClick5_1);
+eventManager.subscribe(hotspot5_2.selectedEventId, handleClick5_2);
+eventManager.subscribe(hotspot5_3.selectedEventId, handleClick5_3);
+eventManager.subscribe(hotspot5_4.selectedEventId, handleClick5_4);
+eventManager.subscribe(button5.pressedEventId, handleClick5_5);
+
+var sub1 = null;
+var sub2 = null;
+
+var canreset = false;
+
+function handleClick5_1 ()
+{
+	chooseSubs5(sketch5_3);
+}
+function handleClick5_2 ()
+{
+	chooseSubs5(sketch5_4);
+}
+function handleClick5_3 ()
+{
+	chooseSubs5(sketch5_5);
+}
+function handleClick5_4 ()
+{
+	chooseSubs5(sketch5_6);
+}
+function chooseSubs5 (sketch)
+{
+	if (sub1 == null)
+	{
+		sub1 = sketch;
+		sub1.setColor("blue", 500, 0);
+	}
+	else if (sub2 == null)
+	{
+		sub2 = sketch;
+		sub2.setColor("red", 500, 0);
+		sketch5_2.move(.6, 0, 500, 500);
+		sketch5_3.move(.6, 0, 500, 500);
+		sketch5_4.move(.6, 0, 500, 500);
+		sketch5_5.move(.6, 0, 500, 500);
+		sketch5_6.move(.6, 0, 500, 500);
+		runAnimation5(500, 1000);
+	}
+}
+function runAnimation5 (dur, del)
+{	
+	if ((sub1 == sketch5_3 && sub2 == sketch5_4)||(sub1 == sketch5_4 && sub2 == sketch5_3))
+	{
+		sub1.reflect(.9, null, dur, del);
+		sub2.reflect(.9, null, dur, del);
+	}
+	if ((sub1 == sketch5_3 && sub2 == sketch5_5)||(sub1 == sketch5_5 && sub2 == sketch5_3))
+	{
+		sub1.reflect(.73, .53, dur, del);
+		sub2.reflect(.73, .53, dur, del);
+	}
+	if ((sub1 == sketch5_3 && sub2 == sketch5_6)||(sub1 == sketch5_6 && sub2 == sketch5_3))
+	{
+		sub1.reflect(.94, .53, dur, del);
+		sub2.reflect(.94, .53, dur, del);
+	}
+	if ((sub1 == sketch5_4 && sub2 == sketch5_5)||(sub1 == sketch5_5 && sub2 == sketch5_4))
+	{
+		sub1.reflect(.86, .53, dur, del);
+		sub2.reflect(.86, .53, dur, del);
+	}
+	if ((sub1 == sketch5_4 && sub2 == sketch5_6)||(sub1 == sketch5_6 && sub2 == sketch5_4))
+	{
+		sub1.reflect(1.07, .53, dur, del);
+		sub2.reflect(1.07, .53, dur, del);
+	}
+	if ((sub1 == sketch5_5 && sub2 == sketch5_6)||(sub1 == sketch5_6 && sub2 == sketch5_5))
+	{
+		sub1.reflect(.9, null, dur, del);
+		sub2.reflect(.9, null, dur, del);
+	}
+	setTimeout(function ()
+	{
+		canreset = true;
+	}, dur + del);
+}
+
+function handleClick5_5 ()
+{
+	if (canreset)
+	{
+		runAnimation5(0, 10);
+		
+		sketch5_2.move(-.6, 0, 0, 10);
+		sketch5_3.move(-.6, 0, 0, 10);
+		sketch5_4.move(-.6, 0, 0, 10);
+		sketch5_5.move(-.6, 0, 0, 10);
+		sketch5_6.move(-.6, 0, 0, 10);
+	
+		sub1.setColor("black", 0, 20);
+		sub2.setColor("black", 0, 20);
+	
+		setTimeout(function ()
+		{
+			sub1 = null;
+			sub2 = null;
+			canreset = false;	
+		}, 30);
+	}
+}
 	
 ////////////////////////////////////////
 
-var svg6 = new MakeSVGContainer(
-	{node: d3.select("#picture6"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg6.Axes({
-	xPosPerc: .25, yPosPerc: .25,
-	xPerc: .5, yPerc: .5,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg6.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_22.png', caption: ""}]
+var svg6 = new SVGContainer({
+		node: d3.select("#picture6"),
+		maxWid: 400,
+		maxHt: 400
 	});
+
+// part a
+var sketch6_1 = new Sketch({
+		id: "sketch6_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.05, .5], text: "a." }]},
+			
+			{ shape: "wedge", data: [{ xyPos: [.2, .5], length: .06, width: .02, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.2, .5], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .47], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.2, .5], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.25, .47], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .5], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.3, .5], length: .06, width: .02, angle: Math.PI/2, type: "hash" }]},
+			{ shape: "line", data: [{ xyPos: [.2, .56], length: .06, angle: Math.PI/6 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.32, .57], text: "OH" }]}
+		]
+	});
+	
+var hotspot6_1 = new Sketch({
+		id: "hotspot6_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.2, .5], radius: .03 }]}
+		]
+	}, eventManager);
+	
+var hotspot6_2 = new Sketch({
+		id: "hotspot6_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.3, .5], radius: .03 }]}
+		]
+	}, eventManager);
+	
+var message6_1 = new Sketch({
+		id: "message6_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.2, .4], length: .07, angle: Math.PI/2, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.2, .36], text: "Not a stereocenter. Two of" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .32], text: "the groups are identical." }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .28], text: "Don't be distracted by the" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .24], text: "wedge notation." }]},
+		]
+	});
+	
+var message6_2 = new Sketch({
+		id: "message6_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.41, .56], length: .1, angle: 7*Math.PI/6, type: "vector" }]},
+
+			{ shape: "textBit", data: [{ xyPos: [.5, .58], text: "asymmetric carbon" }]},
+			{ shape: "circle", data: [{ xyPos: [.3, .5], radius: .02 }]},
+		]
+	});
+	
+svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_1.setColor("blue", 0, 0);
+message6_1.setOpacity(0, 0, 10);
+message6_2.setColor("red", 0, 0);
+message6_2.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot6_1.selectedEventId, handleClick6_1);
+eventManager.subscribe(hotspot6_2.selectedEventId, handleClick6_2);
+
+function handleClick6_1 ()
+{
+	message6_1.setOpacity(1, 500, 0);
+}
+function handleClick6_2 ()
+{
+	message6_2.setOpacity(1, 500, 0);
+}
+
+	
+// part b	
+var sketch6_2 = new Sketch({
+		id: "sketch6_2",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.55, .5], text: "b." }]},
+
+			{ shape: "wedge", data: [{ xyPos: [.65, .5], length: .06, width: .02, angle: Math.PI }]},
+			{ shape: "line", data: [{ xyPos: [.65, .5], length: .06, angle: Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .5], length: .06, angle: -Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.735, .5], length: .06, angle: 3*Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.735, .5], length: .06, angle: -3*Math.PI/4 }]},
+			{ shape: "wedge", data: [{ xyPos: [.735, .5], length: .06, width: .02, angle: 0 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.835, .49], text: "OH" }]}
+		]
+	});
+	
+var hotspot6_3 = new Sketch({
+		id: "hotspot6_3",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.65, .5], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var hotspot6_4 = new Sketch({
+		id: "hotspot6_4",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.735, .5], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_3 = new Sketch({
+		id: "message6_3",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.65, .5], radius: .02 }]},
+		]
+	});
+
+var message6_4 = new Sketch({
+		id: "message6_4",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.735, .5], radius: .02 }]},
+		]
+	});
+	
+var message6_5 = new Sketch({
+		id: "message6_5",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.695, .68], text: "These are stereocenters, but" }]},
+			{ shape: "textBit", data: [{ xyPos: [.695, .64], text: "are not asymmetric carbons." }]},
+			
+			{ shape: "line", data: [{ xyPos: [.69, .63], length: .1, angle: -3*Math.PI/5, type: "vector" }]},
+			{ shape: "line", data: [{ xyPos: [.7, .63], length: .1, angle: -2*Math.PI/5, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.695, .4], text: "Traveling around the ring shows" }]},
+			{ shape: "textBit", data: [{ xyPos: [.695, .36], text: "that each stereocenter is connected" }]},
+			{ shape: "textBit", data: [{ xyPos: [.695, .32], text: "to two identical groups." }]},
+		]
+	});
+
+svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_3.setColor("red", 0, 0);
+message6_3.setOpacity(0, 0, 10);
+message6_4.setColor("red", 0, 0);
+message6_4.setOpacity(0, 0, 10);
+message6_5.setColor("blue", 0, 0);
+message6_5.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot6_3.selectedEventId, handleClick6_3);
+eventManager.subscribe(hotspot6_4.selectedEventId, handleClick6_4);
+
+var center6_1 = false;
+var center6_2 = false;
+function handleClick6_3 ()
+{
+	message6_3.setOpacity(1, 500, 0);
+	center6_1 = true;
+	if (center6_2)
+	{
+		message6_5.setOpacity(1, 500, 0);
+	}
+}
+function handleClick6_4 ()
+{
+	message6_4.setOpacity(1, 500, 0);
+	center6_2 = true;
+	if (center6_1)
+	{
+		message6_5.setOpacity(1, 500, 0);
+	}
+}
+
+	
+// part c
+var sketch6_3 = new Sketch({
+		id: "sketch6_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [1.05, .5], text: "c." }]},
+
+			{ shape: "line", data: [{ xyPos: [1.1, .47], length: .06, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [1.1, .53], length: .06, angle: Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [1.1, .47], length: .06, angle: -Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [1.19, .5], length: .06, angle: 7*Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [1.19, .5], length: .06, angle: -7*Math.PI/10 }]},
+			{ shape: "wedge", data: [{ xyPos: [1.155, .545], length: .06, width: .02, angle: 6*Math.PI/10 }]},
+			{ shape: "wedge", data: [{ xyPos: [1.155, .545], length: .06, width: .02, angle: Math.PI/5, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [1.155, .455], length: .06, width: .02, angle: -4*Math.PI/10, type: "hash" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [1.215, .365], text: "OCH3" }]}
+		]
+	});
+	
+var hotspot6_5 = new Sketch({
+		id: "hotspot6_5",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.155, .545], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var hotspot6_6 = new Sketch({
+		id: "hotspot6_6",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.155, .455], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_6 = new Sketch({
+		id: "message6_6",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [1.19, .645], length: .08, angle: -3*Math.PI/5, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [1.19, .78], text: "Not a stereocenter. Two of" }]},
+			{ shape: "textBit", data: [{ xyPos: [1.19, .74], text: "the groups are identical." }]},
+			{ shape: "textBit", data: [{ xyPos: [1.19, .7], text: "Don't be distracted by the" }]},
+			{ shape: "textBit", data: [{ xyPos: [1.19, .66], text: "wedge and hash notation." }]},
+		]
+	});
+	
+var message6_7 = new Sketch({
+		id: "message6_7",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [1.155, .455], radius: .02 }]},
+			
+			{ shape: "line", data: [{ xyPos: [1.1, .3], length: .12, angle: 2*Math.PI/5, type: "vector" }]},
+
+			{ shape: "textBit", data: [{ xyPos: [1.2, .27], text: "asymmetric carbon" }]},
+		]
+	});
+	
+svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_6.setColor("blue", 0, 0);
+message6_6.setOpacity(0, 0, 10);
+message6_7.setColor("red", 0, 0);
+message6_7.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot6_5.selectedEventId, handleClick6_5);
+eventManager.subscribe(hotspot6_6.selectedEventId, handleClick6_6);
+
+function handleClick6_5 ()
+{
+	message6_6.setOpacity(1, 500, 0);
+}
+function handleClick6_6 ()
+{
+	message6_7.setOpacity(1, 500, 0);
+}
+
+
+// reset
+var button6 = new Button ({
+		id: "b6",
+		text: "Reset"
+	}, eventManager);
+
+$('#button6').append(button6.getRootEl());
+
+eventManager.subscribe(button6.pressedEventId, handleClick6_7);
+
+function handleClick6_7 ()
+{
+	message6_1.setOpacity(0, 0, 0);
+	message6_2.setOpacity(0, 0, 0);
+	message6_3.setOpacity(0, 0, 0);
+	message6_4.setOpacity(0, 0, 0);
+	message6_5.setOpacity(0, 0, 0);
+	message6_6.setOpacity(0, 0, 0);
+	message6_7.setOpacity(0, 0, 0);
+	
+	center6_1 = false;
+	center6_2 = false;
+}
 	
 ///////////////////////////////////////
 
-var svg7 = new MakeSVGContainer(
-	{node: d3.select("#picture7"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
+var svg7 = new SVGContainer({
+		node: d3.select("#picture7"),
+		maxWid: 400,
+		maxHt: 400
+	});
 
-svg7.Axes({
-	xPosPerc: .25, yPosPerc: .25,
-	xPerc: .5, yPerc: .5,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg7.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_23.png', caption: ""}]
+// part a
+var sketch7_1 = new Sketch({
+		id: "sketch7_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.05, .75], text: "a."}]},
+			
+			{ shape: "hexagon", data: [{ xyPos: [.15, .72], side: .06 }]},
+			{ shape: "line", data: [{ xyPos: [.107, .695], length: .05, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .77], length: .05, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .67], length: .05, angle: Math.PI/6 }]},
+			
+			{ shape: "line", data: [{ xyPos: [.2, .75], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.25, .78], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .75], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.25, .78], length: .03, angle: Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.25, .825], text: "O" }]},
+			{ shape: "line", data: [{ xyPos: [.3, .87], length: .03, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .87], length: .06, angle: -Math.PI/6 }]},
+		]
 	});
 	
+var hotspot7_1 = new Sketch({
+		id: "hotspot7_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.25, .78], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message7_1 = new Sketch({
+		id: "message7_1",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.25, .78], radius: .02 }]},
+			{ shape: "line", data: [{ xyPos: [.25, .66], length: .08, angle: Math.PI/2, type: "vector" }]},
+			{ shape: "textBit", data: [{ xyPos: [.32, .63], text: "asymmetric carbon" }]},
+		]
+	});
+
+svg7.append(sketch7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message7_1.setColor("red", 0, 0);
+message7_1.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot7_1.selectedEventId, handleClick7_1);
+
+function handleClick7_1 ()
+{
+	message7_1.setOpacity(1, 500, 0);
+}
+
+
+// part b
+var sketch7_2 = new Sketch({
+		id: "sketch7_2",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.55, .75], text: "b."}]},
+			
+			{ shape: "hexagon", data: [{ xyPos: [.75, .75], side: .06 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .78], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .81], length: .06, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .81], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.8, .72], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.85, .69], length: .06, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.85, .69], length: .06, angle: Math.PI/6 }]},
+		]
+	});
+	
+var hotspot7_2 = new Sketch({
+		id: "hotspot7_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.7, .78], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message7_2 = new Sketch({
+		id: "message7_2",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.7, .78], radius: .02 }]},
+		]
+	});
+	
+var hotspot7_3 = new Sketch({
+		id: "hotspot7_3",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.8, .72], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message7_3 = new Sketch({
+		id: "message7_3",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.8, .72], radius: .02 }]},
+		]
+	});
+	
+var message7_4 = new Sketch({
+		id: "message7_4",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.775, .58], text: "These are stereocenters, but"}]},
+			{ shape: "textBit", data: [{ xyPos: [.775, .54], text: "are not asymmetric carbons."}]},
+		]
+	});
+	
+svg7.append(sketch7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+
+message7_2.setColor("red", 0, 0);
+message7_2.setOpacity(0, 0, 10);
+message7_3.setColor("red", 0, 0);
+message7_3.setOpacity(0, 0, 10);
+message7_4.setColor("blue", 0, 0);
+message7_4.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot7_2.selectedEventId, handleClick7_2);
+eventManager.subscribe(hotspot7_3.selectedEventId, handleClick7_3);
+
+var center7_1 = false;
+var center7_2 = false;
+function handleClick7_2 ()
+{
+	message7_2.setOpacity(1, 500, 0);
+	center7_1 = true;
+	if (center7_2)
+	{
+		message7_4.setOpacity(1, 500, 0);
+	}
+}
+function handleClick7_3 ()
+{
+	message7_3.setOpacity(1, 500, 0);
+	center7_2 = true;
+	if (center7_1)
+	{
+		message7_4.setOpacity(1, 500, 0);
+	}
+}
+
+// part c
+var sketch7_3 = new Sketch({
+		id: "sketch7_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [1.05, .75], text: "c."}]},
+			
+			{ shape: "wedge", data: [{ xyPos: [1.2, .76], length: .06, width: .02, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .76], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.15, .79], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .76], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.25, .79], length: .06, angle: -Math.PI/6 }]},
+		]
+	});
+	
+var hotspot7_4 = new Sketch({
+		id: "hotspot7_4",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.2, .76], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message7_5 = new Sketch({
+		id: "message7_5",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [1.26, .67], length: .08, angle: 2*Math.PI/3, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [1.23, .64], text: "Not a stereocenter." }]}
+		]
+	});
+
+svg7.append(sketch7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message7_5.setColor("blue", 0, 0);
+message7_5.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot7_4.selectedEventId, handleClick7_4);
+
+function handleClick7_4 ()
+{
+	message7_5.setOpacity(1, 500, 0);
+}
+	
+
+// part d
+var sketch7_4 = new Sketch({
+		id: "sketch7_4",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.05, .25], text: "d."}]},
+			
+			{ shape: "line", data: [{ xyPos: [.15, .26], length: .06, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .26], length: .03, angle: 2*Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.12, .29], text: "Cl" }]},
+			{ shape: "line", data: [{ xyPos: [.15, .26], length: .06, angle: -2*Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.21, .26], length: .03, angle: -Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.24, .21], text: "Cl" }]},
+			{ shape: "line", data: [{ xyPos: [.21, .26], length: .06, angle: Math.PI/3 }]},
+		]
+	});
+	
+var hotspot7_5 = new Sketch({
+		id: "hotspot7_5",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.15, .26], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message7_6 = new Sketch({
+		id: "message7_6",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.15, .26], radius: .02 }]},
+		]
+	});
+	
+var hotspot7_6 = new Sketch({
+		id: "hotspot7_6",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.21, .26], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message7_7 = new Sketch({
+		id: "message7_7",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.21, .26], radius: .02 }]},
+		]
+	});
+	
+var message7_8 = new Sketch({
+		id: "message7_8",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.17, .37], length: .08, angle: -7*Math.PI/12, type: "vector" }]},
+			{ shape: "line", data: [{ xyPos: [.19, .37], length: .08, angle: -5*Math.PI/12, type: "vector" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.18, .38], text: "asymmetric carbons" }]},
+		]
+	});
+
+svg7.append(sketch7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(hotspot7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg7.append(message7_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message7_6.setColor("red", 0, 0);
+message7_6.setOpacity(0, 0, 10);
+message7_7.setColor("red", 0, 0);
+message7_7.setOpacity(0, 0, 10);
+message7_8.setColor("red", 0, 0);
+message7_8.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot7_5.selectedEventId, handleClick7_5);
+eventManager.subscribe(hotspot7_6.selectedEventId, handleClick7_6);
+
+var center7_3 = false;
+var center7_4 = false;
+function handleClick7_5 ()
+{
+	message7_6.setOpacity(1, 500, 0);
+	center7_3 = true;
+	if (center7_4)
+	{
+		message7_8.setOpacity(1, 500, 0);
+	}
+}
+function handleClick7_6 ()
+{
+	message7_7.setOpacity(1, 500, 0);
+	center7_4 = true;
+	if (center7_3)
+	{
+		message7_8.setOpacity(1, 500, 0);
+	}
+}
+	
+
+// part e
+var sketch7_5 = new Sketch({
+		id: "sketch7_5",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.55, .25], text: "e."}]},
+			
+			{ shape: "line", data: [{ xyPos: [.65, .22], length: .04, angle: Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.65, .27], text: "Br" }]},
+			{ shape: "line", data: [{ xyPos: [.65, .22], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .22], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .19], length: .06, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .19], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.75, .22], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.8, .19], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.85, .22], length: .06, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.85, .22], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.9, .19], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.85, .28], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.9, .31], length: .06, angle: Math.PI/2 }]},
+		]
+	});
+	
+svg7.append(sketch7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+	
+
+// part f
+var sketch7_6 = new Sketch({
+		id: "sketch7_6",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [1.05, .25], text: "f."}]},
+			
+			{ shape: "line", data: [{ xyPos: [1.2, .22], length: .06, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .22], length: .06, angle: -Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .22], length: .06, angle: 6*Math.PI/5 }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .28], length: .06, angle: Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .28], length: .04, angle: 4*Math.PI/5 }]},
+			{ shape: "textBit", data: [{ xyPos: [1.15, .3], text: "Br" }]},
+			{ shape: "line", data: [{ xyPos: [1.295, .25], length: .06, angle: 7*Math.PI/10 }]},
+			{ shape: "line", data: [{ xyPos: [1.295, .25], length: .06, angle: -7*Math.PI/10 }]},
+		]
+	});
+	
+svg7.append(sketch7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+
+// reset
+var button7 = new Button ({
+		id: "b7",
+		text: "Reset"
+	}, eventManager);
+
+$('#button7').append(button7.getRootEl());
+
+eventManager.subscribe(button7.pressedEventId, handleClick7_12);
+
+function handleClick7_12 ()
+{
+	message7_1.setOpacity(0, 0, 0);
+	message7_2.setOpacity(0, 0, 0);
+	message7_3.setOpacity(0, 0, 0);
+	message7_4.setOpacity(0, 0, 0);
+	message7_5.setOpacity(0, 0, 0);
+	message7_6.setOpacity(0, 0, 0);
+	message7_7.setOpacity(0, 0, 0);
+	message7_8.setOpacity(0, 0, 0);
+	
+	center7_1 = false;
+	center7_2 = false;
+	center7_3 = false;
+	center7_4 = false;
+}
+
 
 </script>
 </body>
