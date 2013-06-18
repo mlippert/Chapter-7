@@ -144,6 +144,9 @@ var mole = new Sketch({
 				{ shape: "textBit", data: [{ xyPos: [.21, .72], text: "H" }]}
 			],
 		});
+
+// this part of the molecule needs to move separately, so
+// make it a separate sketch
 var mole2 = new Sketch({
 			id: "molecule2",
 			drawShape: 	
@@ -152,7 +155,8 @@ var mole2 = new Sketch({
 				{ shape: "wedge", data: [{ xyPos: [.17, .65], length: .06, width: .014, angle: 1/3*Math.PI, type: "hash" }]},
 			],
 		});
-		
+
+// the mirror plane doesn't move at all
 var mirror = new Sketch({
 			id: "mirror",
 			drawShape:
@@ -167,10 +171,10 @@ var mirror = new Sketch({
 // draw the molecule inside the svg container
 svg0.append(mole, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(mole2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-
+// draw the mirror
 svg0.append(mirror, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
-		
+// make and draw a button	
 var button = new Button ({
 		id: "b1",
 		text: "Click"
@@ -178,35 +182,43 @@ var button = new Button ({
 	
 button.draw(d3.select("#button"));
 
+// pressing the button activates a function
 eventManager.subscribe(button.pressedEventId, handleClick);
 
+// flag to keep track of which state the molecule is in
 var flipped = false;
-
+// function run by pressing the button
 function handleClick()
 {
 	if (!flipped)
 	{
+		// move and reflect the sketch appropriately
 		mole.move(.38, 0, 800, 0);
 		mole2.move(.38, 0, 800, 0);
 		mole.reflect(.5, null, 600, 800);
 		mole2.move(-.1, 0, 600, 800);
 		mole.move(.38, 0, 800, 1400);
 		mole2.move(.38, 0, 800, 1400);
+		// update the flag
 		flipped = true;
 	}
 	else
 	{
+		// move and reflect the sketch appropriately
 		mole.move(-.38, 0, 800, 0);
 		mole2.move(-.38, 0, 800, 0);
 		mole.reflect(.5, null, 600, 800);
 		mole2.move(.1, 0, 600, 800);
 		mole.move(-.38, 0, 800, 1400);
 		mole2.move(-.38, 0, 800, 1400);
+		// update the flag
 		flipped = false;
 	}
 }
 
 //////////////////////////////////////////
+
+// this section is a static image
 
 var svg1 = new MakeSVGContainer(
 	{node: d3.select("#picture1"),
@@ -244,6 +256,8 @@ svg1.ScalableImage(
 	});
 	
 /////////////////////////////////////////////
+
+// this section is a static image
 
 var svg2 = new MakeSVGContainer(
 	{node: d3.select("#picture2"),

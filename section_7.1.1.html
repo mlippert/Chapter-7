@@ -28,7 +28,7 @@
 				<p>The &pi; bond restricts rotation about the C2-C3 bond, preventing either of these from converting into the other. Despite their identical connectivity, they are not superposable structures and are, therefore, stereoisomers.</p>
 
 				<p style="color:blue;">NOTE: At temperatures &ge; 450 &deg;C there is sufficient energy that the &pi; bond may be broken and these two stereoisomers can interconvert at a reasonable rate. At ambient temperatures, however, this process is not energetically feasible and these structures are stereochemically stable.</p>
-                <span id="button0_1"></span><span id="button0_2"></span>
+                <span id="button0"></span>
 				
 				
 			</div>
@@ -189,6 +189,7 @@ var svg0 = new SVGContainer({
 		maxHt: 600
 	});
 
+// molecule 1
 var sketch0_1 = new Sketch ({
 		id: "sketch0_1",
 		drawShape:
@@ -205,7 +206,8 @@ var sketch0_1 = new Sketch ({
 		  	{ shape: "textBit", data: [{ xyPos: [.08, .69], text: 'H3C'}]},
 		]
 	});
-	
+
+// this part of molecule 1 needs to move separately
 var sketch0_2 = new Sketch ({
 		id: "sketch0_2",
 		drawShape:
@@ -217,7 +219,8 @@ var sketch0_2 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
-	
+
+// different model of same molecule	
 var sketch0_3 = new Sketch ({
 		id: "sketch0_3",
 		drawShape:
@@ -227,7 +230,8 @@ var sketch0_3 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.76, .8], length: .1, angle:  -4*Math.PI/5 }]},
 		]
 	});
-	
+
+// this hydrogen and its bond can change its opacity
 var sketch0_4 = new Sketch ({
 		id: "sketch0_4",
 		drawShape:
@@ -236,7 +240,8 @@ var sketch0_4 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.68, .88], text: 'H' }]},
 		]
 	});
-	
+
+// this line is able to reflect
 var sketch0_5 = new Sketch ({
 		id: "sketch0_5",
 		drawShape:
@@ -244,7 +249,8 @@ var sketch0_5 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.86, .8], length: .1, angle:  Math.PI/5 }]},
 		]
 	});
-	
+
+// this hydrogen and its bond can both reflect and change opacity
 var sketch0_6 = new Sketch ({
 		id: "sketch0_6",
 		drawShape:
@@ -253,7 +259,8 @@ var sketch0_6 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.96, .72], text: 'H' }]},
 		]
 	});
-	
+
+// draw all the sketches
 svg0.append(sketch0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .7, widthPercent: 1});
 svg0.append(sketch0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .7, widthPercent: 1});
 svg0.append(sketch0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .7, widthPercent: 1});
@@ -261,18 +268,13 @@ svg0.append(sketch0_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg0.append(sketch0_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .7, widthPercent: 1});
 svg0.append(sketch0_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .7, widthPercent: 1});
 
-var button0_1 = new Button ({
-		id: "b0_1",
-		text: "Swap Cis/Trans"
-	}, eventManager);
-	
-var button0_2 = new Button ({
-		id: "b0_2",
+// button to show and hide hydrogens
+var button0 = new Button ({
+		id: "b0",
 		text: "Show/Hide Hydrogens"
 	}, eventManager);
 	
-button0_1.draw(d3.select("#button0_1"));
-button0_2.draw(d3.select("#button0_2"));
+button0.draw(d3.select("#button0"));
 
 //////////////////////////////////////////////
 /* ball and stick models in a carousel		*/
@@ -293,19 +295,18 @@ var ballStick_imgs = new ImageViewer({
 				}),
 			],
 	}, eventManager);
-	
+
+// draw the image carousel
 svg0.append(ballStick_imgs,{topPercentOffset: 0.25, leftPercentOffset: 0, heightPercent: .6, widthPercent: 1});
 
-eventManager.subscribe(button0_1.pressedEventId, handleClick0_1);
-eventManager.subscribe(button0_2.pressedEventId, handleClick0_2);
-//TODO this next line is broken, the clicks on the image carousel are not
-// firing the eventManager, although they should.  The carousel buttons (images)
-// should be used in place of the swap button. -lb
+// the button and carousel images should trigger events
+eventManager.subscribe(button0.pressedEventId, handleClick0);
 eventManager.subscribe(ballStick_imgs.selectedEventId, handleSelect);
 
 //set the lite key so we can swap between carousel images
 var liteKey = "0";
 
+// handle image selection and molecule swapping
 function handleSelect(eventDetails)
 {
 	sketch0_2.reflect(null, .8, 500, 0);
@@ -314,24 +315,25 @@ function handleSelect(eventDetails)
 	liteKey = eventDetails.selectKey;
 	ballStick_imgs.lite(liteKey);
 }
-function handleClick0_1 (eventDetails)
-{
-	liteKey = (liteKey == "0") ? "1" : "0";
-	ballStick_imgs.lite(liteKey);
-}
+// flag to keep track of hydrogen state
 var opaque0 = true;
-function handleClick0_2 ()
+// handle button click to change hydrogen opacity
+function handleClick0 ()
 {
 	if (opaque0)
 	{
+		// change opacity
 		sketch0_4.setOpacity(0, 500, 0);
 		sketch0_6.setOpacity(0, 500, 0);
+		// update flag
 		opaque0 = false;
 	}
 	else
 	{
+		// change opacity
 		sketch0_4.setOpacity(1, 500, 0);
 		sketch0_6.setOpacity(1, 500, 0);
+		// udpate flag
 		opaque0 = true;
 	}
 	
@@ -409,7 +411,8 @@ var sketch1_4 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.85, .76], text: 'therefore stereoisomers.' }]},
 		]
 	});
-	
+
+// draw all the sketches
 svg1.append(sketch1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
 svg1.append(sketch1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
 svg1.append(sketch1_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: .5});
@@ -423,9 +426,10 @@ var button1 = new Button ({
 		id: "b1",
 		text: "Play step 1 / 3"
 	}, eventManager);
-	
+// draw the button
 button1.draw(d3.select("#button1"));
 
+// the button should trigger an event
 eventManager.subscribe(button1.pressedEventId, handleClick1);
 
 
@@ -579,12 +583,14 @@ var fullrot = new ImageViewer({
 				}),
 			],
 	}, eventManager);
-	
+
+// draw both image carousels
 svg3D.append(fullrot, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: .5, widthPercent: 1});
 svg3D.append(fullrot2, {topPercentOffset: 0.5, leftPercentOffset: 0, heightPercent: .5, widthPercent: 1});
 
 var buteneExtent = [1, 6];
 
+// slider to control image carousel 1
 var buteneSlide1 = new Slider ({
 		id: "b1Val",
 		startVal: 1,
@@ -597,6 +603,7 @@ var buteneSlide1 = new Slider ({
 	
 buteneSlide1.draw(d3.select("#buteneslider1"));
 
+// slider to control image carousel 2
 var buteneSlide2 = new Slider ({
 		id: "b2Val",
 		startVal: 1,
@@ -609,15 +616,17 @@ var buteneSlide2 = new Slider ({
 	
 buteneSlide2.draw(d3.select("#buteneslider2"));
 
+// changing the slider or clicking an image should trigger events
 eventManager.subscribe(buteneSlide1.changedValueEventId, buteneHandleChangedValue1);
 eventManager.subscribe(fullrot.selectedEventId, buteneHandleSelection1);
 
+// moving the slider should update the carousel
 function buteneHandleChangedValue1 (newValue)
 {
 	var newval = d3.round(buteneSlide1.getValue(), 1);
 	fullrot.selectItemAtIndex(newval - 1);
 }
-
+// clicking an image should update the carousel and the slider
 function buteneHandleSelection1 ()
 {
 	var newImage = fullrot.selectedItem();
@@ -625,15 +634,17 @@ function buteneHandleSelection1 ()
 	buteneSlide1.setValue(newval + 1);
 }
 
+// changing the slider or clicking an image should trigger events
 eventManager.subscribe(buteneSlide2.changedValueEventId, buteneHandleChangedValue2);
 eventManager.subscribe(fullrot2.selectedEventId, buteneHandleSelection2);
 
+// moving the slier should update the carousel
 function buteneHandleChangedValue2 (newValue)
 {
 	var newval = d3.round(buteneSlide2.getValue(), 1);
 	fullrot2.selectItemAtIndex(newval - 1);
 }
-
+// clicking an image should update the carousel and the slider
 function buteneHandleSelection2 ()
 {
 	var newImage = fullrot2.selectedItem();
@@ -643,6 +654,8 @@ function buteneHandleSelection2 ()
 
 	
 ///////////////////////////////////////////////
+
+// static image
 
 var svg2 = new MakeSVGContainer(
 	{node: d3.select("#picture2"),
@@ -666,6 +679,8 @@ svg2.ScalableImage(
 	});
 	
 ////////////////////////////////////////////////
+
+// statice image
 
 var svg3 = new MakeSVGContainer(
 	{node: d3.select("#picture3"),
@@ -767,7 +782,8 @@ var sketch4_5 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.85, .76], text: 'therefore homomers (identical)' }]},
 		]
 	});
-	
+
+// draw all the sketches
 svg4.append(sketch4_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg4.append(sketch4_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg4.append(sketch4_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -903,6 +919,8 @@ var sketch5_1 = new Sketch ({
 			{ shape: "line", 	data: [{ xyPos: [.5, .9], length: 0.1, angle: -4*Math.PI/5 }]},
 			{ shape: "line", 	data: [{ xyPos: [.5, .7], length: 0.1, angle: 4*Math.PI/5 }]},
 
+			{ shape: "textBit", data: [{ xyPos: [.23, .78], text: 'C'}]},
+			{ shape: "textBit", data: [{ xyPos: [.4, .78], text: 'C'}]},
 		 	{ shape: "textBit", data: [{ xyPos: [.12, .89], text: 'H'}]},
 		  	{ shape: "textBit", data: [{ xyPos: [.08, .69], text: 'H3C'}]},
 			{ shape: "textBit", data: [{ xyPos: [.56, .9], text: 'CH3' }]},
@@ -910,15 +928,7 @@ var sketch5_1 = new Sketch ({
 		]
 	});
 
-// left carbon is encircled and clickable
-var sketch5_2 = new Sketch ({
-		id: "sketch5_2",
-		drawShape:
-		[
-			{ shape: "textBit", data: [{ xyPos: [.23, .78], text: 'C'}]},
-		]
-	});
-	
+// hotspot makes left carbon clickable	
 var hotspot5_1 = new Sketch ({
 		id: "hotspot5_1",
 		type: "hot",
@@ -928,15 +938,7 @@ var hotspot5_1 = new Sketch ({
 		]
 	}, eventManager);
 
-// right carbon is encircled and clickable
-var sketch5_3 = new Sketch ({
-		id: "sketch5_3",
-		drawShape:
-		[
-			{ shape: "textBit", data: [{ xyPos: [.4, .78], text: 'C'}]},
-		]
-	});
-	
+// hotspot makes right carbon clickable	
 var hotspot5_2 = new Sketch ({
 		id: "hotspot5_2",
 		type: "hot",
@@ -947,8 +949,8 @@ var hotspot5_2 = new Sketch ({
 	}, eventManager);
 
 // duplicate sketch is divided into parts
-var sketch5_4 = new Sketch ({
-		id: "sketch5_4",
+var sketch5_2 = new Sketch ({
+		id: "sketch5_2",
 		drawShape:
 		[
 			{ shape: "line", 	data: [{ xyPos: [.26, .78], length: 0.1, angle: 0 }]},
@@ -960,8 +962,8 @@ var sketch5_4 = new Sketch ({
 	});
 
 // left side is able to be flipped
-var sketch5_5 = new Sketch ({
-		id: "sketch5_5",
+var sketch5_3 = new Sketch ({
+		id: "sketch5_3",
 		drawShape:
 		[
 			{ shape: "line", 	data: [{ xyPos: [.14, .9], length: 0.1, angle: -Math.PI/5 }]},
@@ -973,8 +975,8 @@ var sketch5_5 = new Sketch ({
 	});
 
 // right side is able to be flipped
-var sketch5_6 = new Sketch ({
-		id: "sketch5_6",
+var sketch5_4 = new Sketch ({
+		id: "sketch5_4",
 		drawShape:
 		[
 			{ shape: "line", 	data: [{ xyPos: [.5, .9], length: 0.1, angle: -4*Math.PI/5 }]},
@@ -984,14 +986,13 @@ var sketch5_6 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.56, .7], text: 'H' }]},
 		]
 	});
-	
+
+// draw all the sketches
 svg5.append(sketch5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-svg5.append(sketch5_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-
+// draw all the hotspots
 svg5.append(hotspot5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(hotspot5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
@@ -1003,13 +1004,14 @@ var button5 = new Button ({
 	
 button5.draw(d3.select("#button5"));
 
+// the hotspots and button should trigger events
 eventManager.subscribe(hotspot5_1.selectedEventId, handleClick5_1);
 eventManager.subscribe(hotspot5_2.selectedEventId, handleClick5_2);
 eventManager.subscribe(button5.pressedEventId, handleClick5_3);
 
-var carbon = 0;
-var selected = false;
-var canclick5 = true;
+var carbon = 0;	// which carbon is currently selected (0 means none selected)
+var selected = false;	// false if a carbon has not been selected yet
+var canclick5 = true;	// false if nothing is clickable
 
 // click the left carbon
 function handleClick5_1 (eventDetails)
@@ -1017,14 +1019,15 @@ function handleClick5_1 (eventDetails)
 	// move the duplicated sketch over and flip the left side
 	if (!selected && canclick5)
 	{
-		canclick5 = false;
-		carbon = 1;
-		selected = true;
+		canclick5 = false;	// can't click anything until animation is done
+		carbon = 1;	// left carbon is selected
+		selected = true;	// a carbon has been selected
+		sketch5_2.move(.7, 0, 1000, 0);
+		sketch5_3.move(.7, 0, 1000, 0);
 		sketch5_4.move(.7, 0, 1000, 0);
-		sketch5_5.move(.7, 0, 1000, 0);
-		sketch5_6.move(.7, 0, 1000, 0);
-		sketch5_5.setColor("red", 500, 1000);
-		sketch5_5.reflect(null, .8, 500, 1500);
+		sketch5_3.setColor("red", 500, 1000);
+		sketch5_3.reflect(null, .8, 500, 1500);
+		// animation is done
 		setTimeout(function () {canclick5 = true;}, 2500);
 	}
 }
@@ -1034,14 +1037,15 @@ function handleClick5_2 (eventDetails)
 	// move the duplicated sketch over and flip the right side
 	if (!selected && canclick5)
 	{
-		canclick5 = false;
-		carbon = 2;
-		selected = true;
+		canclick5 = false; // can't click anything until animation is done
+		carbon = 2;	// right carbon has been selected
+		selected = true;	// a carbon has been selected
+		sketch5_2.move(.7, 0, 1000, 0);
+		sketch5_3.move(.7, 0, 1000, 0);
 		sketch5_4.move(.7, 0, 1000, 0);
-		sketch5_5.move(.7, 0, 1000, 0);
-		sketch5_6.move(.7, 0, 1000, 0);
-		sketch5_6.setColor("red", 500, 1000);
-		sketch5_6.reflect(null, .8, 500, 1500);
+		sketch5_4.setColor("red", 500, 1000);
+		sketch5_4.reflect(null, .8, 500, 1500);
+		// animation is done
 		setTimeout(function () {canclick5 = true;}, 2500);
 	}
 }
@@ -1056,22 +1060,25 @@ function handleClick5_3 ()
 	// reset
 	else if (canclick5)
 	{
-		canclick5 = false;
+		canclick5 = false; // can't click anything until everything is reset
+		sketch5_2.move(-.7, 0, 0, 0);
+		sketch5_3.move(-.7, 0, 0, 0);
 		sketch5_4.move(-.7, 0, 0, 0);
-		sketch5_5.move(-.7, 0, 0, 0);
-		sketch5_6.move(-.7, 0, 0, 0);
+		// make sure to reflect correct side
 		if (carbon == 1)
 		{
-			sketch5_5.reflect(null, .8, 0, 10);
-			sketch5_5.setColor("grey", 0, 20);
+			sketch5_3.reflect(null, .8, 0, 10);
+			sketch5_3.setColor("grey", 0, 20);
 		}
 		else if (carbon == 2)
 		{
-			sketch5_6.reflect(null, .8, 0, 10);
-			sketch5_6.setColor("grey", 0, 20);
+			sketch5_4.reflect(null, .8, 0, 10);
+			sketch5_4.setColor("grey", 0, 20);
 		}
+		// a carbon is not longer selected
 		selected = false;
 		carbon = 0;
+		// reset is finished
 		setTimeout(function () {canclick5 = true;}, 15);
 	}
 }
@@ -1147,7 +1154,8 @@ var button6 = new Button ({
 	}, eventManager);
 
 button6.draw(d3.select("#button6"));
-	
+
+// draw all the sketches
 svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1156,6 +1164,7 @@ svg6.append(sketch6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 // message starts out invisible
 sketch6_4.setOpacity(0, 0, 0);
 
+// button triggers event
 eventManager.subscribe(button6.pressedEventId, handleClick6);
 
 // animation can be played once and reset using the button
@@ -1457,6 +1466,7 @@ var button7 = new Button ({
 
 button7.draw(d3.select("#button7"));
 
+// draw all the sketches
 svg7.append(sketch7_0, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_01, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1470,7 +1480,7 @@ svg7.append(sketch7_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg7.append(sketch7_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_10, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_11, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-
+// draw all the hotspots
 svg7.append(hotspot7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1478,6 +1488,7 @@ svg7.append(hotspot7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercen
 svg7.append(hotspot7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// hotspots and button trigger events
 eventManager.subscribe(hotspot7_1.selectedEventId, handleClick7_1);
 eventManager.subscribe(hotspot7_2.selectedEventId, handleClick7_2);
 eventManager.subscribe(hotspot7_3.selectedEventId, handleClick7_3);
@@ -1503,7 +1514,7 @@ var reveal7_3 = 0;	// flag for when simplified right molecule is revealed
 var click7 = 0;		// keeps track of how many simplified molecules have been clicked
 var first7 = 0;		// marks which simplified molecule was chosen first
 var second7 = 0;	// marks which simplified molecule was chosen second
-var canclick7 = true;
+var canclick7 = true;	// false if nothing can be clicked (animation running)
 
 // reveal left simplifed molecule
 function handleClick7_1 ()
@@ -1511,6 +1522,7 @@ function handleClick7_1 ()
 	sketch7_4.setOpacity(1, 500, 0);
 	sketch7_7.setOpacity(1, 500, 0);
 	reveal7_1 = 1;
+	// reveal message if all simplified molecules have been revealed
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
 // reveal middle simplified molecule
@@ -1519,6 +1531,7 @@ function handleClick7_2 ()
 	sketch7_5.setOpacity(1, 500, 0);
 	sketch7_8.setOpacity(1, 500, 0);
 	reveal7_2 = 1;
+	// reveal message if all simplified molecules have been revealed
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
 // reveal right simplified molecule
@@ -1527,11 +1540,13 @@ function handleClick7_3 ()
 	sketch7_6.setOpacity(1, 500, 0);
 	sketch7_9.setOpacity(1, 500, 0);
 	reveal7_3 = 1;
+	// reveal message if all simplified molecules have been revealed
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1) sketch7_01.setOpacity(1, 500, 0);
 }
 // click left simplified molecule
 function handleClick7_4 (eventDetails)
 {
+	// not clickable until all simplified molecules have been revealed
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
 	{
 		canclick7 = false;
@@ -1546,6 +1561,7 @@ function handleClick7_4 (eventDetails)
 // click middle simplified molecule
 function handleClick7_5 (eventDetails)
 {
+	// not clickable until all simplified molecules have been revealed
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
 	{
 		canclick7 = false;
@@ -1560,6 +1576,7 @@ function handleClick7_5 (eventDetails)
 // click right simplified molecule
 function handleClick7_6 (eventDetails)
 {
+	// not clickable until all simplified molecules have been revealed
 	if (reveal7_1 == 1 && reveal7_2 == 1 && reveal7_3 == 1)
 	{
 		canclick7 = false;
@@ -1602,12 +1619,15 @@ function handleClick7_7 ()
 // check for correct answer (middle and right simplified molecules)
 function checkAnswer7 ()
 {
+	// if two molecules have been selected
 	if (click7 >= 2)
 	{
+		// middle and right molecules are the correct answer
 		if ((first7 == 2 && second7 == 3) || (first7 == 3 && second7 == 2))
 		{
 			sketch7_11.setOpacity(1, 500, 0);
 		}
+		// otherwise answer is incorrect
 		else
 		{
 			sketch7_10.setOpacity(1, 500, 0);
@@ -1618,6 +1638,7 @@ function checkAnswer7 ()
 	
 /////////////////////////////////////////
 
+// molecule 1
 var sketch8_1 = new Sketch ({
 		id: "sketch8_1",
 		drawShape:
@@ -1641,7 +1662,8 @@ var sketch8_1 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.35, .325], length: .2, angle: 2*Math.PI/3 }]},
 		]
 	});
-	
+
+// molecule 2
 var sketch8_2 = new Sketch ({
 		id: "sketch8_2",
 		drawShape:
@@ -1706,8 +1728,10 @@ var reference8 = new Callouts ({
 		}]
 }, eventManager);
 
+// draw the callout
 reference8.draw(d3.select("#picture8"));
 
+// access id's inside callout
 var svg8_1 = new SVGContainer({
 		node: d3.select("#blah"),
 		maxWid: 150,
@@ -1718,7 +1742,8 @@ var svg8_2 = new SVGContainer({
 		maxWid: 150,
 		maxHt: 150
 	});
-	
+
+// append images inside the callout (currently only works in Chrome and Firefox)
 svg8_1.append(sketch8_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg8_2.append(sketch8_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 	
@@ -1730,6 +1755,7 @@ var svg9 = new SVGContainer({
 		maxHt: 200
 	});
 
+// molecule 1
 var sketch9_1 = new Sketch ({
 		id: "sketch9_1",
 		drawShape:
@@ -1741,9 +1767,12 @@ var sketch9_1 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.68, .4], length: .15, angle: Math.PI/6 }]},
 			{ shape: "textBit", data: [{ xyPos: [.85, .47], text: "Cl" }]},
 			
+			// label is part of molecule, since the molecule doesn't move
 			{ shape: "textBit", data: [{ xyPos: [.05, .85], text: "a." }]},
 		]
 	});
+	
+// this part of molecule 1 moves separately
 var sketch9_2 = new Sketch ({
 		id: "sketch9_2",
 		drawShape:
@@ -1754,6 +1783,8 @@ var sketch9_2 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.67, .77], text: "Cl" }]},
 		]
 	});
+	
+// the hydrogen can be reflected and have its opacity changed
 var sketch9_3 = new Sketch ({
 		id: "sketch9_3",
 		drawShape:
@@ -1762,7 +1793,8 @@ var sketch9_3 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.33, .77], text: "H" }]},
 		]
 	});
-	
+
+// molecule 2
 var sketch9_4 = new Sketch ({
 		id: "sketch9_4",
 		drawShape:
@@ -1775,6 +1807,8 @@ var sketch9_4 = new Sketch ({
 			
 		]
 	});
+	
+// this part of molecule 2 moves separately
 var sketch9_5 = new Sketch ({
 		id: "sketch9_5",
 		drawShape:
@@ -1783,7 +1817,9 @@ var sketch9_5 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.425, .57], length: .17, angle: 0 }]},
 			{ shape: "line", data: [{ xyPos: [.61, .6], length: .2, angle: -Math.PI/3 }]},
 		]
-	});
+	})
+	
+// the hydrogen can be reflected and have its opacity changed
 var sketch9_6 = new Sketch ({
 		id: "sketch9_6",
 		drawShape:
@@ -1791,7 +1827,10 @@ var sketch9_6 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.61, .6], length: .15, angle: Math.PI/3 }]},
 			{ shape: "textBit", data: [{ xyPos: [.72, .76], text: "H" }]}
 		]
-	});
+	}
+	
+// the label is a separate sketch because the entire molecule can move
+// the labe should not move with it
 var sketch9_7 = new Sketch ({
 		id: "sketch9_7",
 		drawShape:
@@ -1799,19 +1838,21 @@ var sketch9_7 = new Sketch ({
 			{ shape: "textBit", data: [{ xyPos: [.05, .85], text: "b." }]},
 		]
 	});
-	
+
+// draw all the sketches
 svg9.append(sketch9_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: .5});
 svg9.append(sketch9_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: .5});
 svg9.append(sketch9_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: .5});
-
 svg9.append(sketch9_4, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
 svg9.append(sketch9_5, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
 svg9.append(sketch9_6, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
 svg9.append(sketch9_7, {topPercentOffset: 0, leftPercentOffset: .5, heightPercent: 1, widthPercent: .5});
 
+// hydrogens should be blue
 sketch9_3.setColor("blue");
 sketch9_6.setColor("blue");
 
+// the button the show and hide hydrogens
 var button9_1 = new Button ({
 		id: "b9_1",
 		text: "Hide H"
@@ -1819,6 +1860,7 @@ var button9_1 = new Button ({
 
 button9_1.draw(d3.select("#button9_1"));
 
+// the button to switch the molecule parts
 var button9_2 = new Button ({
 		id: "b9_2",
 		text: "Click to switch"
@@ -1826,6 +1868,7 @@ var button9_2 = new Button ({
 
 button9_2.draw(d3.select("#button9_2"));
 
+// button to reflect all of molecule 2
 var button9_3 = new Button ({
 		id: "b9_3",
 		text: "Click to rotate (b only)"
@@ -1833,10 +1876,12 @@ var button9_3 = new Button ({
 
 button9_3.draw(d3.select("#button9_3"));
 
+// buttons should trigger events
 eventManager.subscribe(button9_1.pressedEventId, handleClick9_1);
 eventManager.subscribe(button9_2.pressedEventId, handleClick9_2);
 eventManager.subscribe(button9_3.pressedEventId, handleClick9_3);
 
+// flag to keep track the hydrogen state
 var opaque9 = true;
 function handleClick9_1 ()
 {
@@ -1861,7 +1906,7 @@ function handleClick9_1 ()
 			}, 500);
 	}
 }
-
+// reflect molecule parts
 function handleClick9_2 ()
 {
 	sketch9_2.reflect(.5, null, 1000, 0);
@@ -1869,7 +1914,7 @@ function handleClick9_2 ()
 	sketch9_5.reflect(null, .6, 1000, 0);
 	sketch9_6.reflect(null, .6, 1000, 0);
 }
-
+// reflect all of molecule 2
 function handleClick9_3 ()
 {
 	sketch9_4.reflect(null, .6, 1000, 0);
@@ -1878,6 +1923,9 @@ function handleClick9_3 ()
 }
 	
 ///////////////////////////////////////
+
+// static image for now
+// will require drawing program in future
 
 var svg10 = new MakeSVGContainer(
 	{node: d3.select("#picture10"),
@@ -1901,6 +1949,9 @@ svg10.ScalableImage(
 	});
 	
 /////////////////////////////////////////
+
+// static image for now
+// will require drawing program in future
 
 var svg11 = new MakeSVGContainer(
 	{node: d3.select("#picture11"),

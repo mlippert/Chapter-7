@@ -134,7 +134,10 @@ var svg0 = new SVGContainer({
 		maxWid: 400,
 		maxHt: 400
 	});
-	
+
+// this molecule is divided into lots of parts
+
+// the hexagon is static
 var sketch0_1 = new Sketch({
 		id: "sketch0_1",
 		drawShape:
@@ -147,7 +150,8 @@ var sketch0_1 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.35, .33], length: .2, angle: 2*Math.PI/3 }]},
 		]
 	});
-	
+
+// all of these pieces move and/or have their opacity changed separately
 var sketch0_2 = new Sketch({
 		id: "sketch0_2",
 		drawShape:
@@ -212,7 +216,8 @@ var sketch0_9 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.84, .62], text: "H" }]}
 		]
 	});
-	
+
+// draw all the sketches
 svg0.append(sketch0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -223,6 +228,8 @@ svg0.append(sketch0_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg0.append(sketch0_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// parts of the molecule are blue
+// parts of the molecule start off invisible
 sketch0_4.setOpacity(0, 0, 0);
 sketch0_5.setOpacity(0, 0, 0);
 sketch0_6.setColor("blue", 0, 0);
@@ -233,11 +240,13 @@ sketch0_8.setOpacity(0, 0, 10);
 sketch0_9.setColor("blue", 0, 0);
 sketch0_9.setOpacity(0, 0, 10);
 
+// button to control molecule swapping
 var button0_1 = new Button ({
 		id: "b0_1",
 		text: "Swap Cis/Trans"
 	}, eventManager);
-	
+
+// button to show and hide hydrogens
 var button0_2 = new Button ({
 		id: "b0_2",
 		text: "Show/Hide Hydrogens"
@@ -246,11 +255,13 @@ var button0_2 = new Button ({
 button0_1.draw(d3.select("#button0_1"));
 button0_2.draw(d3.select("#button0_2"));
 
+// buttons trigger events
 eventManager.subscribe(button0_1.pressedEventId, handleClick0_1);
 eventManager.subscribe(button0_2.pressedEventId, handleClick0_2);
 
-var hydro0 = false;
-var swap0 = false;
+// flags to keep track of state
+var hydro0 = false;	// false if hydrogens are invisible
+var swap0 = false;	// keep track of swapping
 
 // swap function
 function handleClick0_1 ()
@@ -334,6 +345,8 @@ function handleClick0_2 ()
 	
 ////////////////////////////////////////////
 
+// static image
+
 var svg1 = new MakeSVGContainer(
 	{node: d3.select("#picture1"),
 	maxWid: 800,
@@ -362,7 +375,8 @@ var svg2 = new SVGContainer({
 		maxWid: 400,
 		maxHt: 400
 	});
-	
+
+// molecule
 var sketch2_1 = new Sketch({
 		id: "sketch2_1",
 		drawShape:
@@ -376,6 +390,7 @@ var sketch2_1 = new Sketch({
 		]
 	});
 	
+// different parts move and/or change color separately	
 var sketch2_2 = new Sketch({
 		id: "sketch2_2",
 		drawShape:
@@ -421,6 +436,7 @@ var sketch2_6 = new Sketch({
 		]
 	});
 
+// draw all the sketches
 svg2.append(sketch2_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg2.append(sketch2_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg2.append(sketch2_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -428,19 +444,22 @@ svg2.append(sketch2_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg2.append(sketch2_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg2.append(sketch2_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// parts of the molecule start off blue
 sketch2_3.setColor("blue", 0, 0);
 sketch2_5.setColor("blue", 0, 0);
+sketch2_6.setColor("blue", 0, 0);
 
+// parts of the molecule start off invisible
 sketch2_4.setOpacity(0, 0, 0);
 sketch2_5.setOpacity(0, 0, 20);
 
-sketch2_6.setColor("blue", 0, 0);
-
+// button to flip the hydrogens
 var button2_1 = new Button ({
 		id: "b2_1",
 		text: "Flip hydrogens"
 	}, eventManager);
 	
+// button to flip the entire molecule
 var button2_2 = new Button ({
 		id: "b2_2",
 		text: "Flip molecule"
@@ -449,6 +468,7 @@ var button2_2 = new Button ({
 button2_1.draw(d3.select("#button2_1"));
 button2_2.draw(d3.select("#button2_2"));
 
+// buttons trigger events
 eventManager.subscribe(button2_1.pressedEventId, handleClick2_1);
 eventManager.subscribe(button2_2.pressedEventId, handleClick2_2);
 
@@ -497,6 +517,7 @@ var svg3 = new SVGContainer({
 		maxHt: 300
 	});
 
+// molecule 1 moves
 var sketch3_1 = new Sketch ({
 		id: "sketch3_1",
 		drawShape:
@@ -506,7 +527,8 @@ var sketch3_1 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.22, .6], length: .1, angle: Math.PI/6 }]},
 		]
 	});
-
+	
+// molecule 2 does not move
 var sketch3_2 = new Sketch ({
 		id: "sketch3_2",
 		drawShape:
@@ -516,7 +538,8 @@ var sketch3_2 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.72, .6], length: .1, angle: Math.PI/6 }]},
 		]
 	});
-	
+
+// different parts can change opacity and color separately	
 var sketch3_3 = new Sketch ({
 		id: "sketch3_3",
 		drawShape:
@@ -571,6 +594,7 @@ var sketch3_8 = new Sketch ({
 		]
 	});
 	
+// draw all sketches
 svg3.append(sketch3_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(sketch3_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(sketch3_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -580,6 +604,7 @@ svg3.append(sketch3_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg3.append(sketch3_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(sketch3_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// set initial color and opacity
 sketch3_6.setColor("blue", 0, 0);
 sketch3_7.setColor("blue", 0, 0);
 
@@ -588,11 +613,13 @@ sketch3_6.setOpacity(0, 0, 10);
 sketch3_7.setOpacity(0, 0, 10);
 sketch3_8.setOpacity(0, 0, 0);
 
+// button to superimpose molecule 1 on molecule 2
 var button3_1 = new Button ({
 		id: "b3_1",
 		text: "Superpose"
 	}, eventManager);
 
+// button to show and hide hydrogens
 var button3_2 = new Button ({
 		id: "b3_2",
 		text: "Show H's"
@@ -601,10 +628,13 @@ var button3_2 = new Button ({
 button3_1.draw(d3.select("#button3_1"));
 button3_2.draw(d3.select("#button3_2"));
 
+// buttons trigger events
 eventManager.subscribe(button3_1.pressedEventId, handleClick3_1);
 eventManager.subscribe(button3_2.pressedEventId, handleClick3_2);
 
+// flag keeps track of whether the molecules are superposed or not
 var superposed3 = false;
+// move molecule
 function handleClick3_1 ()
 {
 	if(superposed3)
@@ -624,7 +654,9 @@ function handleClick3_1 ()
 		superposed3 = true;
 	}
 }
+// flag keeps track of hydrogen visibility
 var hydro3 = false;
+// show/hide hydrogens
 function handleClick3_2 ()
 {
 	if(hydro3)
@@ -655,6 +687,8 @@ function handleClick3_2 ()
 	
 /////////////////////////////////////////
 
+// static image
+
 var svg4 = new MakeSVGContainer(
 	{node: d3.select("#picture4"),
 	maxWid: 800,
@@ -684,6 +718,7 @@ var svg5 = new SVGContainer({
 		maxHt: 300
 	});
 
+// molecule 1 is static
 var sketch5_1 = new Sketch({
 		id: "sketch5_1",
 		drawShape:
@@ -699,7 +734,9 @@ var sketch5_1 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.51, .36], text: "Cl" }]},
 		]
 	});
-	
+
+// molecule 2 is identical to molecule 1, except that it's divided into parts
+// that will move separately
 var sketch5_2 = new Sketch({
 		id: "sketch5_2",
 		drawShape:
@@ -710,7 +747,8 @@ var sketch5_2 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.3, .5], length: .2, angle: 7*Math.PI/6 }]},
 		]
 	});
-	
+
+// individual elements can move separately, and have hotspots that are clickable
 var sketch5_3 = new Sketch({
 		id: "sketch5_3",
 		drawShape:
@@ -785,97 +823,117 @@ var button5 = new Button ({
 	}, eventManager);
 
 button5.draw(d3.select("#button5"));
-	
+
+// draw all the sketches
 svg5.append(sketch5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
-
+// draw all the hotspots
 svg5.append(hotspot5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(hotspot5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(hotspot5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg5.append(hotspot5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// hotspots and the button trigger events
 eventManager.subscribe(hotspot5_1.selectedEventId, handleClick5_1);
 eventManager.subscribe(hotspot5_2.selectedEventId, handleClick5_2);
 eventManager.subscribe(hotspot5_3.selectedEventId, handleClick5_3);
 eventManager.subscribe(hotspot5_4.selectedEventId, handleClick5_4);
 eventManager.subscribe(button5.pressedEventId, handleClick5_5);
 
+// keeps track of which elements have been selected
 var sub1 = null;
 var sub2 = null;
 
+// false if reset cannot be done yet
 var canreset = false;
 
+// select the Br
 function handleClick5_1 ()
 {
 	chooseSubs5(sketch5_3);
 }
+// selecte the H
 function handleClick5_2 ()
 {
 	chooseSubs5(sketch5_4);
 }
+// select the F
 function handleClick5_3 ()
 {
 	chooseSubs5(sketch5_5);
 }
+// select the Cl
 function handleClick5_4 ()
 {
 	chooseSubs5(sketch5_6);
 }
+// selects the chosen element
 function chooseSubs5 (sketch)
 {
+	// if first choice
 	if (sub1 == null)
 	{
 		sub1 = sketch;
 		sub1.setColor("blue", 500, 0);
 	}
+	// if second choice
 	else if (sub2 == null)
 	{
 		sub2 = sketch;
 		sub2.setColor("red", 500, 0);
+		// move the entire duplicate sketch to the side
 		sketch5_2.move(.6, 0, 500, 500);
 		sketch5_3.move(.6, 0, 500, 500);
 		sketch5_4.move(.6, 0, 500, 500);
 		sketch5_5.move(.6, 0, 500, 500);
 		sketch5_6.move(.6, 0, 500, 500);
+		// run the flipping animation
 		runAnimation5(500, 1000);
 	}
 }
 function runAnimation5 (dur, del)
 {	
+	// Br and H
 	if ((sub1 == sketch5_3 && sub2 == sketch5_4)||(sub1 == sketch5_4 && sub2 == sketch5_3))
 	{
 		sub1.reflect(.9, null, dur, del);
 		sub2.reflect(.9, null, dur, del);
 	}
+	// Br and F
 	if ((sub1 == sketch5_3 && sub2 == sketch5_5)||(sub1 == sketch5_5 && sub2 == sketch5_3))
 	{
 		sub1.reflect(.73, .53, dur, del);
 		sub2.reflect(.73, .53, dur, del);
 	}
+	// Br and Cl
 	if ((sub1 == sketch5_3 && sub2 == sketch5_6)||(sub1 == sketch5_6 && sub2 == sketch5_3))
 	{
 		sub1.reflect(.94, .53, dur, del);
 		sub2.reflect(.94, .53, dur, del);
 	}
+	// H and F
 	if ((sub1 == sketch5_4 && sub2 == sketch5_5)||(sub1 == sketch5_5 && sub2 == sketch5_4))
 	{
 		sub1.reflect(.86, .53, dur, del);
 		sub2.reflect(.86, .53, dur, del);
 	}
+	// H and Cl
 	if ((sub1 == sketch5_4 && sub2 == sketch5_6)||(sub1 == sketch5_6 && sub2 == sketch5_4))
 	{
 		sub1.reflect(1.07, .53, dur, del);
 		sub2.reflect(1.07, .53, dur, del);
 	}
+	// F and Cl
 	if ((sub1 == sketch5_5 && sub2 == sketch5_6)||(sub1 == sketch5_6 && sub2 == sketch5_5))
 	{
 		sub1.reflect(.9, null, dur, del);
 		sub2.reflect(.9, null, dur, del);
 	}
+	// make reset button clickable
 	if (!canreset)
 	{
 		setTimeout(function ()
@@ -884,22 +942,26 @@ function runAnimation5 (dur, del)
 		}, dur + del);
 	}
 }
-
+// reset function
 function handleClick5_5 ()
 {
 	if (canreset)
 	{
+		// undo element swapping
 		runAnimation5(0, 10);
 		
+		// move the duplicate sketch back
 		sketch5_2.move(-.6, 0, 0, 10);
 		sketch5_3.move(-.6, 0, 0, 10);
 		sketch5_4.move(-.6, 0, 0, 10);
 		sketch5_5.move(-.6, 0, 0, 10);
 		sketch5_6.move(-.6, 0, 0, 10);
-	
+		
+		// reset colors
 		sub1.setColor("black", 0, 20);
 		sub2.setColor("black", 0, 20);
 	
+		// undo selections
 		setTimeout(function ()
 		{
 			sub1 = null;
@@ -936,7 +998,8 @@ var sketch6_1 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.32, .57], text: "OH" }]}
 		]
 	});
-	
+
+// hotspots and messages	
 var hotspot6_1 = new Sketch({
 		id: "hotspot6_1",
 		type: "hot",
@@ -978,7 +1041,8 @@ var message6_2 = new Sketch({
 			{ shape: "circle", data: [{ xyPos: [.3, .5], radius: .02 }]},
 		]
 	});
-	
+
+// draw everything for part a
 svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(hotspot6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(hotspot6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -993,6 +1057,7 @@ message6_2.setOpacity(0, 0, 10);
 eventManager.subscribe(hotspot6_1.selectedEventId, handleClick6_1);
 eventManager.subscribe(hotspot6_2.selectedEventId, handleClick6_2);
 
+// clicking hotspot reveals message
 function handleClick6_1 ()
 {
 	message6_1.setOpacity(1, 500, 0);
@@ -1094,6 +1159,7 @@ function handleClick6_3 ()
 {
 	message6_3.setOpacity(1, 500, 0);
 	center6_1 = true;
+	// reveal extra message after both hotspots have been clicked
 	if (center6_2)
 	{
 		message6_5.setOpacity(1, 500, 0);
@@ -1103,6 +1169,7 @@ function handleClick6_4 ()
 {
 	message6_4.setOpacity(1, 500, 0);
 	center6_2 = true;
+	// reveal extra message after both hotspots have been clicked
 	if (center6_1)
 	{
 		message6_5.setOpacity(1, 500, 0);

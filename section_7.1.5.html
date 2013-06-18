@@ -39,6 +39,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Direct the student to touch each of the black structures on the left and then have the corresponding blue stereoisomer appear next to it.]</p>
 				
+				<span id="button0"></span>
 				<div id="picture0"></div>
 				
 			</div>
@@ -53,6 +54,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Direct the student to touch each of the black structures on the left and then have the corresponding blue stereoisomer appear next to it.]</p>
 				
+				<span id="button1"></span>
 				<div id="picture1"></div>
 				
 			</div>
@@ -67,6 +69,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Direct the student to touch each of the black structures on the left and then have the corresponding blue stereoisomer appear next to it.]</p>
 				
+				<span id="button2"></span>
 				<div id="picture2"></div>
 				
 			</div>
@@ -76,6 +79,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Allow students to tap-advance through the steps.]</p>
 				
+				<span id="button3"></div>
 				<div id="picture3"></div>
 				
 			</div>
@@ -123,103 +127,621 @@
 	<script src="js/d3.v3.min.js"></script>
 
 	<script src="js/widget-base.js"></script>
+	<script src="js/widget-sketch.js"></script>
+	<script src="js/widget-button.js"></script>
 	<script src="js/widgets.js"></script>
 	
 	<script src="js/eventmanager.js"></script>
 	
 <script>
 
+var eventManager = new EventManager ();
+
 //////////////////////////////////////////////
 
-var svg0 = new MakeSVGContainer(
-	{node: d3.select("#picture0"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg0.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg0.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_39.png', caption: "Figure 7.1.19 sp2-Hybridized Nitrogen as a Stereocenter"}]
+var svg0 = new SVGContainer({
+		node: d3.select("#picture0"),
+		maxWid: 300,
+		maxHt: 300
 	});
+
+var sketch0_1 = new Sketch({
+		id: "sketch0_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.22, .94], length: .04, angle: Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.3, .96], text: "OH" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .9], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.19, .89], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.21, .89], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.19, .84], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.19, .84], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.24, .81], length: .06, angle: Math.PI/6 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.2, .76], text: "oximes" }]},
+		]
+	});
+	
+var hotspot0_1 = new Sketch({
+		id: "hotspot0_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.15, 1], width: .15, height: .2 }]},
+		]
+	}, eventManager);
+	
+var sketch0_2 = new Sketch({
+		id: "sketch0_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.78, .94], length: .04, angle: 5*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.7, .96], text: "HO" }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .9], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.79, .89], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.81, .89], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.79, .84], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.79, .84], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.84, .81], length: .06, angle: Math.PI/6 }]},
+		]
+	});
+	
+var sketch0_3 = new Sketch({
+		id: "sketch0_3",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.22, .64], length: .04, angle: Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.28, .66], text: "R" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .6], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.19, .59], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.21, .59], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.19, .54], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.19, .54], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.24, .51], length: .06, angle: Math.PI/6 }]},
+
+			{ shape: "textBit", data: [{ xyPos: [.2, .46], text: "imines" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .41], text: "R = H, alkyl, aryl" }]},
+		]
+	});
+	
+var hotspot0_2 = new Sketch({
+		id: "hotspot0_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.15, .7], width: .15, height: .2 }]},
+		]
+	}, eventManager);
+
+var sketch0_4 = new Sketch({
+		id: "sketch0_4",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.78, .64], length: .04, angle: 5*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.72, .66], text: "R" }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .6], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.79, .59], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.81, .59], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.79, .54], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.79, .54], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.84, .51], length: .06, angle: Math.PI/6 }]},
+		]
+	});
+	
+var sketch0_5 = new Sketch({
+		id: "sketch0_5",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.22, .29], length: .04, angle: Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.28, .31], text: "R" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .25], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.19, .24], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.21, .24], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .15], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.22, .15], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.28, .11], text: "R" }]},
+
+			{ shape: "textBit", data: [{ xyPos: [.2, .06], text: "azo compounds" }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .01], text: "R = H, alkyl, aryl" }]},
+		]
+	});
+	
+var hotspot0_3 = new Sketch({
+		id: "hotspot0_3",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.15, .325], width: .15, height: .2 }]},
+		]
+	}, eventManager);
+
+var sketch0_6 = new Sketch({
+		id: "sketch0_6",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.78, .29], length: .04, angle: 5*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.72, .31], text: "R" }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .25], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.79, .24], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.81, .24], length: .05, angle: -Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .15], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.82, .15], length: .04, angle: -Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.88, .11], text: "R" }]},
+		]
+	});
+	
+var button0 = new Button ({
+		id: "b0",
+		text: "Reset"
+	}, eventManager);
+
+button0.draw(d3.select("#button0"));
+	
+svg0.append(sketch0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(sketch0_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(hotspot0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(hotspot0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg0.append(hotspot0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch0_2.setColor("blue", 0, 0);
+sketch0_2.setOpacity(0, 0, 10);
+sketch0_4.setColor("blue", 0, 0);
+sketch0_4.setOpacity(0, 0, 10);
+sketch0_6.setColor("blue", 0, 0);
+sketch0_6.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot0_1.selectedEventId, handleClick0_1);
+eventManager.subscribe(hotspot0_2.selectedEventId, handleClick0_2);
+eventManager.subscribe(hotspot0_3.selectedEventId, handleClick0_3);
+eventManager.subscribe(button0.pressedEventId, handleClick0_4);
+
+function handleClick0_1 ()
+{
+	sketch0_2.setOpacity(1, 500, 0);
+}
+function handleClick0_2 ()
+{
+	sketch0_4.setOpacity(1, 500, 0);
+}
+function handleClick0_3 ()
+{
+	sketch0_6.setOpacity(1, 500, 0);
+}
+function handleClick0_4 ()
+{
+	sketch0_2.setOpacity(0, 0, 0);
+	sketch0_4.setOpacity(0, 0, 0);
+	sketch0_6.setOpacity(0, 0, 0);
+}
 	
 ///////////////////////////////////////////
 
-var svg1 = new MakeSVGContainer(
-	{node: d3.select("#picture1"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg1.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg1.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_40.png', caption: "Figure 7.1.20 sp3-Hybridized Nitrogen as a Stereocenter"}]
+var svg1 = new SVGContainer({
+		node: d3.select("#picture1"),
+		maxWid: 300,
+		maxHt: 300
 	});
+
+var sketch1_1 = new Sketch({
+		id: "sketch1_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.2, .8], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.18, .79], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.15, .77], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.1, .8], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.22, .8], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.21, .78], length: .06, width: .02, angle: -Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.255, .74], length: .06, angle: -2*Math.PI/3 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.16, .64], text: "amines" }]},
+		]
+	});
+	
+var hotspot1_1 = new Sketch({
+		id: "hotspot1_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .9], width: .2, height: .2 }]},
+		]
+	}, eventManager);
+	
+var sketch1_2 = new Sketch({
+		id: "sketch1_2",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.8, .8], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.78, .79], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.75, .77], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .8], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.82, .8], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "line", data: [{ xyPos: [.88, .78], length: .06, angle: -5*Math.PI/12 }]},
+			{ shape: "wedge", data: [{ xyPos: [.81, .78], length: .06, width: .02, angle: -Math.PI/4 }]},
+		]
+	});
+	
+var sketch1_3 = new Sketch({
+		id: "sketch1_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.15, .3], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.15, .34], length: .03, angle: Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.22, .38], text: "CH2CH3" }]},
+			{ shape: "line", data: [{ xyPos: [.13, .29], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.06, .25], text: "Ph" }]},
+			{ shape: "wedge", data: [{ xyPos: [.17, .3], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.28, .26], text: "CH3" }]},
+			{ shape: "wedge", data: [{ xyPos: [.16, .28], length: .06, width: .02, angle: -Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.2, .18], text: "H" }]},
+			
+			{ shape: "circle", data: [{ xyPos: [.1, .35], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.1025, .34], text: "+" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.35, .32], text: "X" }]},
+			{ shape: "circle", data: [{ xyPos: [.4, .37], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.4025, .36], text: "-" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.16, .12], text:"ammonium salts" }]},
+		]
+	});
+	
+var hotspot1_2 = new Sketch({
+		id: "hotspot1_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .4], width: .25, height: .2 }]},
+		]
+	}, eventManager);
+	
+var sketch1_4 = new Sketch({
+		id: "sketch1_4",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.7, .3], text: "N" }]},
+			{ shape: "line", data: [{ xyPos: [.7, .34], length: .03, angle: Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.77, .38], text: "CH2CH3" }]},
+			{ shape: "line", data: [{ xyPos: [.68, .29], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.61, .25], text: "Ph" }]},
+			{ shape: "wedge", data: [{ xyPos: [.72, .3], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.81, .26], text: "H" }]},
+			{ shape: "wedge", data: [{ xyPos: [.71, .28], length: .06, width: .02, angle: -Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.77, .18], text: "CH3" }]},
+
+			{ shape: "circle", data: [{ xyPos: [.65, .35], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.6525, .34], text: "+" }]},
+
+			{ shape: "textBit", data: [{ xyPos: [.9, .32], text: "X" }]},
+			{ shape: "circle", data: [{ xyPos: [.95, .37], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.9525, .36], text: "-" }]},
+		]
+	});
+	
+var button1 = new Button ({
+		id: "b1",
+		text: "Reset"
+	}, eventManager);
+
+button1.draw(d3.select("#button1"));
+	
+svg1.append(sketch1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg1.append(sketch1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg1.append(sketch1_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg1.append(sketch1_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg1.append(hotspot1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg1.append(hotspot1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch1_2.setColor("blue", 0, 0);
+sketch1_2.setOpacity(0, 0, 10);
+sketch1_4.setColor("blue", 0, 0);
+sketch1_4.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot1_1.selectedEventId, handleclick3_1);
+eventManager.subscribe(hotspot1_2.selectedEventId, handleclick3_2);
+eventManager.subscribe(button1.pressedEventId, handleclick3_3);
+
+function handleclick3_1 ()
+{
+	sketch1_2.setOpacity(1, 500, 0);
+}
+function handleclick3_2 ()
+{
+	sketch1_4.setOpacity(1, 500, 0);
+}
+function handleclick3_3 ()
+{
+	sketch1_2.setOpacity(0, 0, 0);
+	sketch1_4.setOpacity(0, 0, 0);
+}
 	
 ////////////////////////////////////////
 
-var svg2 = new MakeSVGContainer(
-	{node: d3.select("#picture2"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg2.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg2.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_41.png', caption: "Figure 7.1.21 Phosphorous and Sulfur as Stereocenters"}]
+var svg2 = new SVGContainer({
+		node: d3.select("#picture2"),
+		maxWid: 300,
+		maxHt: 300
 	});
+
+var sketch2_1 = new Sketch({
+		id: "sketch2_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.15, .8], text: "P" }]},
+			{ shape: "line", data: [{ xyPos: [.13, .79], length: .03, angle: 7*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.07, .75], text: "Ph" }]},
+			{ shape: "wedge", data: [{ xyPos: [.17, .8], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.16, .79], length: .06, width: .02, angle: -Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.24, .71], text: "Me" }]},
+			{ shape: "line", data: [{ xyPos: [.23, .78], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.28, .81], length: .06, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.28, .81], length: .06, angle: -Math.PI/6 }]},
+		]
+	});
+	
+var hotspot2_1 = new Sketch({
+		id: "hotspot2_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.1, .85], width: .2, height: .15 }]},
+		]
+	}, eventManager);
+	
+var sketch2_2 = new Sketch({
+		id: "sketch2_2",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.75, .8], text: "P" }]},
+			{ shape: "line", data: [{ xyPos: [.73, .79], length: .03, angle: 7*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.67, .75], text: "Me" }]},
+			{ shape: "wedge", data: [{ xyPos: [.77, .8], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.76, .79], length: .06, width: .02, angle: -Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.84, .71], text: "Ph" }]},
+			{ shape: "line", data: [{ xyPos: [.83, .78], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.88, .81], length: .06, angle: Math.PI/2 }]},
+			{ shape: "line", data: [{ xyPos: [.88, .81], length: .06, angle: -Math.PI/6 }]},
+		]
+	});
+	
+var sketch2_3 = new Sketch({
+		id: "sketch2_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.15, .3], text: "S" }]},
+			{ shape: "line", data: [{ xyPos: [.13, .29], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.1, .27], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.05, .3], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.17, .3], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.16, .29], length: .06, width: .02, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.19, .24], length: .06, angle: -2*Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.23, .28], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.28, .31], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.33, .28], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.33, .3], length: .05, angle: Math.PI/6 }]},
+			
+			{ shape: "circle", data: [{ xyPos: [.1, .35], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.1025, .34], text: "+" }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.02, .38], text: "X" }]},
+			{ shape: "circle", data: [{ xyPos: [.07, .43], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.0725, .42], text: "-" }]},
+		]
+	});
+	
+var hotspot2_2 = new Sketch({
+		id: "hotspot2_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .35], width: .3, height: .15 }]},
+		]
+	}, eventManager);
+	
+var sketch2_4 = new Sketch({
+		id: "sketch2_4",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.75, .3], text: "S" }]},
+			{ shape: "line", data: [{ xyPos: [.73, .29], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .27], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.65, .3], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.77, .3], length: .06, width: .02, angle: -Math.PI/12, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.76, .29], length: .06, width: .02, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.79, .24], length: .06, angle: -2*Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.76, .19], length: .06, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.78, .19], length: .05, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.83, .28], length: .06, angle: Math.PI/6 }]},
+
+			{ shape: "circle", data: [{ xyPos: [.7, .35], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.7025, .34], text: "+" }]},
+
+			{ shape: "textBit", data: [{ xyPos: [.62, .38], text: "X" }]},
+			{ shape: "circle", data: [{ xyPos: [.67, .43], radius: .02 }]},
+			{ shape: "textBit", data: [{ xyPos: [.6725, .42], text: "-" }]},
+		]
+	});
+	
+var button2 = new Button ({
+		id: "b2",
+		text: "Reset"
+	}, eventManager);
+
+button2.draw(d3.select("#button2"));
+	
+svg2.append(sketch2_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(sketch2_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(hotspot2_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg2.append(hotspot2_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+sketch2_2.setColor("blue", 0, 0);
+sketch2_2.setOpacity(0, 0, 10);
+sketch2_4.setColor("blue", 0, 0);
+sketch2_4.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot2_1.selectedEventId, handleClick2_1);
+eventManager.subscribe(hotspot2_2.selectedEventId, handleClick2_2);
+eventManager.subscribe(button2.pressedEventId, handleClick2_3);
+
+function handleClick2_1 ()
+{
+	sketch2_2.setOpacity(1, 500, 0);
+}
+function handleClick2_2 ()
+{
+	sketch2_4.setOpacity(1, 500, 0);
+}
+function handleClick2_3 ()
+{
+	sketch2_2.setOpacity(0, 0, 0);
+	sketch2_4.setOpacity(0, 0, 0);
+}
 	
 /////////////////////////////////////////
 
-var svg3 = new MakeSVGContainer(
-	{node: d3.select("#picture3"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg3.Axes({
-	xPosPerc: 0, yPosPerc: 0,
-	xPerc: 1, yPerc: 1,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg3.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_42.png', caption: "Figure 7.1.22 Stereoisomerism with Square Planar Geometry"}]
+var svg3 = new SVGContainer({
+		node: d3.select("#picture3"),
+		maxWid: 400,
+		maxHt: 400
 	});
+
+var sketch3_1 = new Sketch({
+		id: "sketch3_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.2, .8], text: "Pt" }]},
+			{ shape: "line", data: [{ xyPos: [.18, .83], length: .04, angle: 3*Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.12, .86], text: "H3N" }]},
+			{ shape: "line", data: [{ xyPos: [.18, .79], length: .04, angle: -3*Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.12, .74], text: "Cl" }]},
+			{ shape: "line", data: [{ xyPos: [.22, .83], length: .04, angle: Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.28, .86], text: "NH3" }]},
+			{ shape: "line", data: [{ xyPos: [.22, .79], length: .04, angle: -Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.28, .74], text: "Cl" }]},
+		]
+	});
+	
+var sketch3_2 = new Sketch({
+		id: "sketch3_2",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.8, .8], text: "Pt" }]},
+			{ shape: "line", data: [{ xyPos: [.78, .83], length: .04, angle: 3*Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.72, .86], text: "H3N" }]},
+			{ shape: "line", data: [{ xyPos: [.78, .79], length: .04, angle: -3*Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.72, .74], text: "Cl" }]},
+		]
+	});
+	
+var sketch3_3 = new Sketch({
+		id: "sketch3_3",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.82, .83], length: .04, angle: Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.88, .86], text: "Cl" }]},
+		]
+	});
+	
+var sketch3_4 = new Sketch({
+		id: "sketch3_4",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.82, .79], length: .04, angle: -Math.PI/4 }]},
+			{ shape: "textBit", data: [{ xyPos: [.88, .74], text: "NH3" }]},
+		]
+	});
+	
+var message3_1 = new Sketch({
+		id: "message3_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.8, .84], text: "These structures are" }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .8], text: "superposable and are" }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .76], text: "therefore homomers" }]},
+			{ shape: "textBit", data: [{ xyPos: [.8, .72], text: "(identical)." }]},
+		]
+	});
+	
+var button3 = new Button ({
+		id: "b3",
+		text: "Play step 1 / 2"
+	}, eventManager);
+
+button3.draw(d3.select("#button3"));
+	
+svg3.append(sketch3_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(sketch3_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg3.append(message3_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message3_1.setOpacity(0, 0, 0);
+
+eventManager.subscribe(button3.pressedEventId, handleClick3);
+
+
+// animation is advanced by clicking a button
+var click3 = 0;
+var canclick3 = true;
+function handleClick3 ()
+{
+	// change colors and switch
+	if (click3 == 0 && canclick3)
+	{
+		canclick3 = false
+		sketch3_3.setColor("blue", 500, 0);
+		sketch3_4.setColor("red", 500, 0);
+		sketch3_3.reflect(null, .81, 500, 500);
+		sketch3_4.reflect(null, .81, 500, 500);
+		click3 ++;
+		setTimeout(function ()
+						{
+							canclick3 = true;
+							button3.setText("Play step 2 / 2");
+						}, 1000);
+	}
+	// superimpose and display message
+	else if (click3 == 1 && canclick3)
+	{
+		canclick3 = false;
+		sketch3_2.move(-.575, -.05, 1000, 0);
+		sketch3_3.move(-.575, -.05, 1000, 0);
+		sketch3_4.move(-.575, -.05, 1000, 0);
+		message3_1.setOpacity(1, 500, 1000);
+		click3 ++;
+		setTimeout(function ()
+						{
+							canclick3 = true;
+							button3.setText("Reset");
+						}, 1500);
+	}
+	// reset
+	else if (click3 == 2 && canclick3)
+	{
+		canclick3 = false;
+		sketch3_2.move(.575, .05, 0, 0);
+		sketch3_3.move(.575, .05, 0, 0);
+		sketch3_4.move(.575, .05, 0, 0);
+		message3_1.setOpacity(0, 0, 0);
+		sketch3_3.setColor("grey", 0, 10);
+		sketch3_4.setColor("grey", 0, 10);
+		sketch3_3.reflect(null, .81, 0, 20);
+		sketch3_4.reflect(null, .81, 0, 20);
+		click3 = 0;
+		setTimeout(function ()
+						{
+							canclick3 = true;
+							button3.setText("Play step 1 / 2");
+						}, 30);
+	}
+	
+}
 	
 ////////////////////////////////////////
 
