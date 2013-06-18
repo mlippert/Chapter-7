@@ -876,10 +876,13 @@ function runAnimation5 (dur, del)
 		sub1.reflect(.9, null, dur, del);
 		sub2.reflect(.9, null, dur, del);
 	}
-	setTimeout(function ()
+	if (!canreset)
 	{
-		canreset = true;
-	}, dur + del);
+		setTimeout(function ()
+		{
+			canreset = true;
+		}, dur + del);
+	}
 }
 
 function handleClick5_5 ()
