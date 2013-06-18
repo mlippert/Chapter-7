@@ -176,7 +176,7 @@ var button = new Button ({
 		text: "Click"
 	}, eventManager);
 	
-$('#button').append(button.getRootEl());
+button.draw(d3.select("#button"));
 
 eventManager.subscribe(button.pressedEventId, handleClick);
 

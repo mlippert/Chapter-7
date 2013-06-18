@@ -271,8 +271,8 @@ var button0_2 = new Button ({
 		text: "Show/Hide Hydrogens"
 	}, eventManager);
 	
-$('#button0_1').append(button0_1.getRootEl());
-$('#button0_2').append(button0_2.getRootEl());
+button0_1.draw(d3.select("#button0_1"));
+button0_2.draw(d3.select("#button0_2"));
 
 //////////////////////////////////////////////
 /* ball and stick models in a carousel		*/
@@ -424,7 +424,7 @@ var button1 = new Button ({
 		text: "Play step 1 / 3"
 	}, eventManager);
 	
-$('#button1').append(button1.getRootEl());
+button1.draw(d3.select("#button1"));
 
 eventManager.subscribe(button1.pressedEventId, handleClick1);
 
@@ -783,7 +783,7 @@ var button4 = new Button ({
 		text: "Play step 1 / 5"
 	}, eventManager);
 	
-$('#button4').append(button4.getRootEl());
+button4.draw(d3.select("#button4"));
 
 eventManager.subscribe(button4.pressedEventId, handleClick4);
 
@@ -1001,7 +1001,7 @@ var button5 = new Button ({
 		text: "Restart"
 	}, eventManager);
 	
-$('#button5').append(button5.getRootEl());
+button5.draw(d3.select("#button5"));
 
 eventManager.subscribe(hotspot5_1.selectedEventId, handleClick5_1);
 eventManager.subscribe(hotspot5_2.selectedEventId, handleClick5_2);
@@ -1146,7 +1146,7 @@ var button6 = new Button ({
 		text: "Play animation"
 	}, eventManager);
 
-$('#button6').append(button6.getRootEl());
+button6.draw(d3.select("#button6"));
 	
 svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1455,7 +1455,7 @@ var button7 = new Button ({
 		text: "Click to reset"
 	}, eventManager);
 
-$('#button7').append(button7.getRootEl());
+button7.draw(d3.select("#button7"));
 
 svg7.append(sketch7_0, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(sketch7_01, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1817,21 +1817,21 @@ var button9_1 = new Button ({
 		text: "Hide H"
 	}, eventManager);
 
-$('#button9_1').append(button9_1.getRootEl());
+button9_1.draw(d3.select("#button9_1"));
 
 var button9_2 = new Button ({
 		id: "b9_2",
 		text: "Click to switch"
 	}, eventManager);
 
-$('#button9_2').append(button9_2.getRootEl());
+button9_2.draw(d3.select("#button9_2"));
 
 var button9_3 = new Button ({
 		id: "b9_3",
 		text: "Click to rotate (b only)"
 	}, eventManager);
 
-$('#button9_3').append(button9_3.getRootEl());
+button9_3.draw(d3.select("#button9_3"));
 
 eventManager.subscribe(button9_1.pressedEventId, handleClick9_1);
 eventManager.subscribe(button9_2.pressedEventId, handleClick9_2);
