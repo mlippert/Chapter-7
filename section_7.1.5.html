@@ -79,7 +79,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: Allow students to tap-advance through the steps.]</p>
 				
-				<span id="button3"></div>
+				<span id="button3"></span>
 				<div id="picture3"></div>
 				
 			</div>
@@ -745,26 +745,38 @@ function handleClick3 ()
 	
 ////////////////////////////////////////
 
-var svg4 = new MakeSVGContainer(
-	{node: d3.select("#picture4"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg4.Axes({
-	xPosPerc: .25, yPosPerc: .25,
-	xPerc: .5, yPerc: .5,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg4.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_43.png', caption: ""}]
+var svg4 = new SVGContainer({
+		node: d3.select("#picture4"),
+		maxWid: 400,
+		maxHt: 400
 	});
+
+var sketch4_1 = new Sketch({
+		id: "sketch4_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.1, .7], length: .06, angle: Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.1, .7], length: .06, angle: -Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.185, .7], length: .06, angle: 3*Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.185, .7], length: .06, angle: -3*Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.185, .7], length: .06, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.19, .71], length: .05, angle: 0 }]},
+			
+			{ shape: "textBit", data: [{ xyPos: [.04, .63], text: "H" }]},
+		]
+	});
+	
+var sketch4_2 = new Sketch({
+		id: "sketch4_2",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.1, .7], length: .06, width: .02, angle: 3*Math.PI/4 }]},
+			{ shape: "wedge", data: [{ xyPos: [.1, .7], length: .06, width: .02, angle: -3*Math.PI/4, type: "hash" }]},
+		]
+	});
+	
+svg4.append(sketch4_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg4.append(sketch4_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 	
 //////////////////////////////////////
 
