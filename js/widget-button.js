@@ -20,24 +20,31 @@
 {
 	var button1Config = {
 			id: "button1",
-			text: "Hello World"
+			text: "Hello World",
+			enabled: true
 		};
 });
 	
 /* **************************************************************************
  * Button                                                               *//**
  *
+ * The Button widget creates a clickable html button that publishes events.
+ *
  * @constructor
+ * @implements {IHtmlWidget}
  *
- * The button widget creates a clickable button that publishes events.
+ * @param {!Object}		config			-The settings to configure this button
+ * @param {string|undefined}
+ * 						config.id		-String to uniquely identify this button
+ * 										 if undefined a unique id will be assigned.
+ * @param {string}		config.text		-The text to be displayed on the button
+ * @param {bool}		config.enabled	-The initial enabled state of the button.
+ * 										 Optional, defaults to true.
+ * @param {!EventManager}
+ * 						eventManager	-The event manager to use for publishing events
+ * 										 and subscribing to them.
  *
- * @param {Object}		config		-The settings to configure this button
- * @param {string}		config.id	-String to uniquely identify this button
- * @param {string}		config.text	-The text to be displayed on the button
- *
- * @param {Object}		eventManager
- *
- * NOTES: firefox doesn't support HTML5 buttons, they degrade to numeric input
+ * @todo: firefox doesn't support HTML5 buttons, they degrade to numeric input
  * fields.
  **************************************************************************/
 function Button(config, eventManager)
@@ -46,8 +53,23 @@ function Button(config, eventManager)
 	 * A unique id for this instance of the button widget
 	 * @type {string}
 	 */
-	this.id = config.id;
+	this.id = getIdFromConfigOrAuto(config, Button);
+
+	/**
+	 * The text displayed on the button. May be accessed using
+	 * the methods getText and setText.
+	 * @type {string}
+	 * @private
+	 */
+	this.text_ = config.text || "";
 	
+	/**
+	 * Determines whether the button should be enabled or disabled.
+	 * May be accessed using the methods getEnabled, setEnabled.
+	 * @type {bool}
+	 */
+	this.enabled_ = config.enabled === false ? false : true;
+
 	/**
 	 * The event manager to use to publish (and subscribe to) events for this widget
 	 * @type {EventManager}
@@ -61,26 +83,68 @@ function Button(config, eventManager)
 	 */
 	this.pressedEventId = this.id + '_Pressed';
 	
-	var text = config.text !== undefined ? config.text : "Default text";
-	
 	/**
-	 * The root element of the element tree for this button. It should
-	 * be appended into the document where it is expected to be displayed.
-	 * @type {Element}
-	 * @private
-	 *
+	 * Information about the last drawn instance of this button (from the draw method)
+	 * @type {Object}
 	 */
-	this.rootEl_ = $('<div><button type="button">' + text + '</button></div>');
-	
-	// publish events when clicked
-	var that = this;
-	$("button", this.rootEl_).click(
-		function()
+	this.lastdrawn =
 		{
-			that.eventManager.publish(that.pressedEventId);
-		});
-	
+			container: null,
+			widgetGroup: null,
+		};
+
 } // end of button constructor
+
+/* **************************************************************************
+ * Button.draw                                                          *//**
+ *
+ * Draw this Button in the given container.
+ *
+ * @param {!d3.selection}
+ *					container	-The container html element to append the button
+ *								 element tree to.
+ *
+ ****************************************************************************/
+Button.prototype.draw = function (container)
+{
+	this.lastdrawn.container = container;
+
+	var that = this;
+	
+	// make a div to hold the radio group
+	var widgetGroup = container.append("div")
+		.attr("class", "widgetButton")
+		.attr("id", this.id);
+
+	var button = widgetGroup.append("button")
+		.attr("type", "button")
+		.attr("disabled", this.enabled_ ? null : "disabled")
+		.text(this.text_);
+
+	// publish pressed event when clicked
+	button.on("click", function ()
+						{
+							that.eventManager.publish(that.pressedEventId);
+						});
+
+	this.lastdrawn.widgetGroup = widgetGroup;
+};
+
+/* **************************************************************************
+ * Button.redraw                                                        *//**
+ *
+ * Redraw the button using the current property values (such as text,
+ * and enabled).
+ *
+ ****************************************************************************/
+Button.prototype.redraw = function ()
+{
+	var button = this.lastdrawn.container.select("button");
+
+	button
+		.attr("disabled", this.enabled_ ? null : "disabled")
+		.text(this.text_);
+};
 
 /* **************************************************************************
  * Button.setText                                                       *//**
@@ -90,13 +154,16 @@ function Button(config, eventManager)
  * @param {string}		text	- the text to be displayed on the button
  *
  **************************************************************************/
-Button.prototype.setText = function(text)
-{	
-	// Update the DOM in getRootEl
-	var b = $("button", this.rootEl_);
-	var t = b.text();
-	$("button", this.rootEl_).text(text);
-}
+Button.prototype.setText = function (text)
+{
+	var textChanged = this.text_ !== text;
+	this.text_ = text;
+
+	if (textChanged && this.lastdrawn.widgetGroup)
+	{
+		this.redraw();
+	}
+};
 
 /* **************************************************************************
  * Button.getText                                                       *//**
@@ -104,19 +171,40 @@ Button.prototype.setText = function(text)
  * This method retrieves the text currently displayed on the button,
  *
  **************************************************************************/
-Button.prototype.getText = function()
+Button.prototype.getText = function ()
 {
-	return $("button", this.rootEl_).text();
-}
+	return this.text_;
+};
 
 /* **************************************************************************
- * Button.getRootEl                                                     *//**
+ * Button.setEnabled                                                    *//**
  *
- * Get the root element of this button widget.
+ * This method sets the current enable state of the button.
+ *
+ * @param {bool}	newEnableState	- true to enable the button, false to disable it.
  *
  **************************************************************************/
-Button.prototype.getRootEl = function()
+Button.prototype.setEnabled = function (newEnableState)
 {
-	return this.rootEl_;
-}
+	// coerce newEnableState to be a bool
+	newEnableState = newEnableState === true;
+	var stateChanged = this.enabled_ !== newEnableState;
+	this.enabled_ = newEnableState;
+
+	if (stateChanged && this.lastdrawn.widgetGroup)
+	{
+		this.redraw();
+	}
+};
+
+/* **************************************************************************
+ * Button.getEnabled                                                    *//**
+ *
+ * This method retrieves the current enable state of the button.
+ *
+ **************************************************************************/
+Button.prototype.getEnabled = function ()
+{
+	return this.enabled_;
+};
 

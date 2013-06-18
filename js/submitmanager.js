@@ -14,10 +14,6 @@
  * **************************************************************************/
 
 /* **************************************************************************
- * Constants
- ****************************************************************************/
-
-/* **************************************************************************
  * Page variables
  ****************************************************************************/
 
@@ -25,7 +21,10 @@
 (function()
 {
 	var submit1Config = {
-			id: "sm1"
+			id: "sm1",
+			//sequenceNodeID is used to tell the PAF engine where in the assignment 
+			//(sequence of activities) this particular activity lives
+			sequenceNodeID: 'http://hub.paf.pearson.com/resources/sequences/3314583736548363/nodes/1'
 		};
 });
 
@@ -54,6 +53,13 @@ function SubmitManager(config, eventManager)
 	 * @type {string}
 	 */
 	this.id = getIdFromConfigOrAuto(config, SubmitManager);
+	
+	/**
+	 * pointer to the submission div so responses can be written
+	 * @type {d3 selection object}
+	 */
+	this.container = config.container;
+
 
 	/**
 	 * The PAF SequenceNodeID, uniquely identifying the item
@@ -102,15 +108,15 @@ SubmitManager.autoIdPrefix = "sm_auto_";
  ****************************************************************************/
 SubmitManager.prototype.submit = function (submission)
 {
-	// Is this necessary?
-	var that = this;
-
 	// pass the submission on to the answer engine.  This will probably be
 	// via the ActivityManager I'd think
-	var submissionResponse = fancyAnswerEngine(this.sequenceNodeID, submission);
+	var submissionResponse = answerMan(
+			{	sequenceNode: this.sequenceNodeID,
+				container: this.container,
+			}, submission);
 
 	// publish the result of the submission
-	this.eventManager.publish(that.submittedEventId, submissionResponse);
+	this.eventManager.publish(this.submittedEventId, submissionResponse);
 };
 
 /* **************************************************************************

@@ -203,7 +203,7 @@ SelectGroup.prototype.draw = function(container)
 }; // end of SelectGroup.draw()
 
 /* **************************************************************************
- * SelectGroup.selectedItem                                              *//**
+ * SelectGroup.getselectedIndex                                           *//**
  *
  * Return the selected item in the select group.
  *
@@ -213,5 +213,17 @@ SelectGroup.prototype.draw = function(container)
 SelectGroup.prototype.getSelectedIndex = function ()
 {
 	return document.getElementById(this.id).selectedIndex;
+};
+/* **************************************************************************
+ * SelectGroup.selectedItem                                              *//**
+ *
+ * Return the selected item in the select group.
+ *
+ * @return {Object} the select group item which is currently selected.
+ *
+ ****************************************************************************/
+SelectGroup.prototype.setSelectedIndex = function (newIndex)
+{
+	document.getElementsByName(this.id)[0].selectedIndex = newIndex;
 };
 

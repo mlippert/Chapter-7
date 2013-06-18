@@ -117,6 +117,33 @@ function getIdFromConfigOrAuto(config, autoIdClass)
 	return autoIdClass.autoIdPrefix + (++autoIdClass.autoIdCount);
 }
 
+/* **************************************************************************
+ * randomizeArray                                                       *//**
+ *
+ * Randomize the order of the elements of the given array.
+ *
+ * @param {Array}	a		-The array whose elements are to be randomized
+ *
+ ****************************************************************************/
+randomizeArray = function(a)
+{
+	// We'll do this by assigning each element of the given array a random number
+	// then sort by that number.
+	var rndArray = [];
+
+	for (var i = a.length - 1; i >= 0; --i)
+	{
+		rndArray[i] = { r: Math.random(), element: a[i] };
+	}
+
+	rndArray.sort(function (a, b) { return a.r - b.r; });
+
+	for (var i = a.length - 1; i >= 0; --i)
+	{
+		a[i] = rndArray[i].element;
+	};
+};
+
 /**
  * Count of class autoIdPrefix properties that have been set by getIdFromConfigOrAuto.
  */
