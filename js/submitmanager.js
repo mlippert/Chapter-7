@@ -95,7 +95,7 @@ SubmitManager.autoIdPrefix = "sm_auto_";
  *
  * Submit the student's submission to the answer engine.  Publish the result.
  *
- * CURRENT FAKEY STUB...  We send the submission to the fancyAnswerEngine()
+ * CURRENT FAKEY STUB...  We send the submission to the answerman()
  * function in which we can put whatever fakery we want for the short term.
  *
  * IN THE FUTURE...  We likely end up passing the submission to the 
