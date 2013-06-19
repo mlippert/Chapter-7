@@ -54,6 +54,7 @@
 	var rbqConfig =
 	{
 		id: "Q1",
+		questionId: "SanVan003",
 		question: "Why?",
 		choices: Q1Choices,
 		type: "randomized", //default, even if not specified
@@ -93,6 +94,10 @@
  * @param {string|undefined}
  * 						config.id		-String to uniquely identify this SelectOneQuestion.
  * 										 if undefined a unique id will be assigned.
+ * @param {string}		config.questionId
+ * 										-Scoring engine Id of this question
+ * @param {string}		config.question	-The question being posed to the user which should
+ * 										 be answered by choosing one of the presented choices.
  * @param {Array.<Answer>}
  *						config.choices	-The list of choices (answers) to be presented by the SelectOneQuestion.
  * @param {string|undefined}
@@ -110,6 +115,12 @@ function SelectOneQuestion(config, eventManager)
 	 * @type {string}
 	 */
 	this.id = getIdFromConfigOrAuto(config, SelectOneQuestion);
+
+	/**
+	 * The scoring engine id of this question.
+	 * @type {string}
+	 */
+	this.questionId = config.questionId;
 
 	/**
 	 * The question text.
@@ -146,7 +157,7 @@ function SelectOneQuestion(config, eventManager)
 	var submitBtnConfig =
 	{
 		id: this.id + "_sbmtBtn",
-		text: "Submit answer",
+		text: "Select an answer above",
 		enabled: false
 	};
 
@@ -156,6 +167,13 @@ function SelectOneQuestion(config, eventManager)
 	 * @type {IWidget}
 	 */
 	this.submitButton = new Button(submitBtnConfig, eventManager);
+
+	/**
+	 * List of responses that have been received for all submitted
+	 * scoring requests.
+	 * @type {Array.<Object>}
+	 */
+	this.responses = [];
 
 	/**
 	 * The event manager to use to publish (and subscribe to) events for this widget
@@ -181,12 +199,13 @@ function SelectOneQuestion(config, eventManager)
 	 * @const
 	 * @type {string}
 	 */
-	this.submitAnswerRequestEventId = this.id + "_submitAnswerRequest";
+	this.submitScoreRequestEventId = this.id + "_submitAnswerRequest";
 
 	/**
-	 * The event details for this.submitAnswerRequestEventId events
+	 * The event details for this.submitScoreRequestEventId events
 	 * @typedef {Object} SubmitAnswerRequest
 	 * @property {SelecOneQuestion} question	-This question widget
+	 * @property {string} 			questionId	-The id which identifies this question to the scoring engine.
 	 * @property {string} 			answerKey	-The answerKey associated with the selected answer.
 	 */
 
@@ -223,13 +242,16 @@ SelectOneQuestion.autoIdPrefix = "s1Q_auto_";
  ****************************************************************************/
 SelectOneQuestion.prototype.handleSubmitRequested_ = function()
 {
+	var that = this;
 	var submitAnsDetails =
 		{
 			question: this,
-			answerKey: this.choiceWidget.selectedItem().answerKey
+			questionId: this.questionId,
+			answerKey: this.choiceWidget.selectedItem().answerKey,
+			responseCallback: function (responseDetails) { that.handleSubmitResponse_(responseDetails); }
 		};
 
-	this.eventManager.publish(this.submitAnswerRequestEventId, submitAnsDetails);
+	this.eventManager.publish(this.submitScoreRequestEventId, submitAnsDetails);
 };
 
 /* **************************************************************************
@@ -242,7 +264,28 @@ SelectOneQuestion.prototype.handleSubmitRequested_ = function()
  ****************************************************************************/
 SelectOneQuestion.prototype.handleAnswerSelected_ = function()
 {
+	this.submitButton.setText("Submit Answer");
 	this.submitButton.setEnabled(true);
+};
+
+/* **************************************************************************
+ * SelectOneQuestion.handleSubmitResponse_                              *//**
+ *
+ * Handle the response to submitting an answer.
+ *
+ * @param {Object}	responseDetails	-An object containing details about how
+ * 									 the submitted answer was scored.
+ * @private
+ *
+ ****************************************************************************/
+SelectOneQuestion.prototype.handleSubmitResponse_ = function(responseDetails)
+{
+	this.responses.push(responseDetails);
+
+	var responseDiv = this.lastdrawn.widgetGroup.select("div.responses");
+
+	// For now just use the helper function to write the response.
+	SubmitManager.appendResponseWithDefaultFormatting(responseDiv, responseDetails);
 };
 
 /* **************************************************************************
@@ -279,6 +322,9 @@ SelectOneQuestion.prototype.draw = function(container)
 		.attr("class", "submit");
 
 	this.submitButton.draw(submitButtonCntr);
+
+	widgetGroup.append("div")
+		.attr("class", "responses");
 
 	this.lastdrawn.widgetGroup = widgetGroup;
 

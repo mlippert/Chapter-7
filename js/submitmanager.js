@@ -68,6 +68,13 @@ function SubmitManager(config, eventManager)
 	this.sequenceNodeID = config.sequenceNodeID;
 
 	/**
+	 * map of all submitted answers awaiting a response from
+	 * the scoring engine.
+	 * @type {Object}
+	 */
+	this.requestsAwaitingResponse = {};
+
+	/**
 	 * The event manager to use to publish (and subscribe to) events for this widget
 	 * @type {EventManager}
 	 */
@@ -89,6 +96,78 @@ function SubmitManager(config, eventManager)
  */
 SubmitManager.autoIdPrefix = "sm_auto_";
 
+/* **************************************************************************
+ * SubmitManager.handleRequestsFrom                                                                *//**
+ *
+ * [Description of handleRequestsFrom]
+ *
+ * @param {Object}	questionWidget		-[Description of questionWidget]
+ *
+ ****************************************************************************/
+SubmitManager.prototype.handleRequestsFrom = function(questionWidget)
+{
+	var that = this;
+	this.eventManager.subscribe(questionWidget.submitScoreRequestEventId,
+								function (eventDetails) {that.handleScoreRequest_(eventDetails);});
+};
+
+/* **************************************************************************
+ * SubmitManager.handleScoreRequest_                                                                *//**
+ *
+ * [Description of handleScoreRequest_]
+ *
+ * @param {Object}	eventDetails		-[Description of eventDetails]
+ *
+ ****************************************************************************/
+SubmitManager.prototype.handleScoreRequest_ = function(eventDetails)
+{
+	var pendingDetails =
+		{
+			sequenceNodeId: eventDetails.questionId,
+			answer: eventDetails.answerKey,
+			responseCallback: eventDetails.responseCallback,
+			requestDetails: eventDetails,
+		};
+
+	if (this.requestsAwaitingResponse[eventDetails.questionId] !== undefined)
+	{
+		alert("there's already an outstanding submission request for the sequenceNode: " + eventDetails.questionId);
+	}
+
+	this.requestsAwaitingResponse[eventDetails.questionId] = pendingDetails;
+
+	this.submitForScoring(pendingDetails);
+};
+
+/* **************************************************************************
+ * SubmitManager.submitForScoring                                       *//**
+ *
+ * [Description of submitForScoring]
+ *
+ * @param {Object}	submitDetails		-[Description of submitDetails]
+ *
+ ****************************************************************************/
+SubmitManager.prototype.submitForScoring = function(submitDetails)
+{
+	// pass the submission on to the scoring engine. This will probably be
+	// via the ActivityManager I'd think
+	// todo: Although we're getting a synchronous response here, we should
+	// enhance this to have the "answerMan" give us an asynchronous
+	// response, probably via an eventManager event. -mjl
+	var submissionResponse = answerMan({sequenceNode: submitDetails.sequenceNodeId},
+										submitDetails.answer);
+
+	// We handle the reply from the scoring engine (in the event handler eventually)
+	// by removing the request from the list of pending request
+	// and calling the given callback if it exists
+	var pendingDetails = this.requestsAwaitingResponse[submitDetails.sequenceNodeId];
+	delete this.requestsAwaitingResponse[submitDetails.sequenceNodeId];
+	if (typeof pendingDetails.responseCallback === "function")
+	{
+		submissionResponse.submitDetails = pendingDetails.requestDetails;
+		pendingDetails.responseCallback(submissionResponse);
+	}
+};
 
 /* **************************************************************************
  * SubmitManager.submit                                                 *//**
@@ -117,6 +196,68 @@ SubmitManager.prototype.submit = function (submission)
 
 	// publish the result of the submission
 	this.eventManager.publish(this.submittedEventId, submissionResponse);
+};
+
+/* **************************************************************************
+ * SubmitManager.appendResponseWithDefaultFormatting                    *//**
+ *
+ * This is a temporary helper method to format the responses to submitted
+ * answers.
+ *
+ * @param {!d3.selection}
+ * 					container		-The html element to write the formatted
+ * 									 response into.
+ * @param {Object}	responseDetails	-The response details returned by the
+ * 									 scoring engine.
+ *                               grade: 0..1
+ *                               response: string response
+ ****************************************************************************/
+SubmitManager.appendResponseWithDefaultFormatting = function (container, responseDetails)
+{
+	var responseFormat = {
+			correct: {
+				icon: "icon-ok-sign",
+				answerPrefix: "Congratulations, Your answer, ",
+				answerSuffix:  ", is correct. ",
+				responseClass: "alert-success"
+			},
+			incorrect: {
+				icon: "icon-remove",
+				answerPrefix: "Sorry, Your answer, ",
+				answerSuffix:  ", is not correct. ",
+				responseClass: "alert-error"
+			},
+			partial: {
+				icon: "icon-adjust",
+				answerPrefix: "Your answer, ",
+				answerSuffix:  ", is partially correct. ",
+				responseClass: "alert-info"
+			},
+			unknown: {
+				icon: "icon-adjust",
+				answerPrefix: "something has gone horribly awry - we can't score this answer.",
+				responseClass: ""
+			}
+		};
+
+	var scoreAnsType = ["unknown", "incorrect", "correct"];
+
+	var ansType = "unknown";
+	if (typeof responseDetails.score === "number")
+	{
+		ansType = scoreAnsType[responseDetails.score + 1];
+	}
+
+	var responseHtml = "<i class='" + responseFormat[ansType].icon + "'></i> " +
+				responseFormat[ansType].answerPrefix +
+				(responseDetails.submission || "") +
+				(responseFormat[ansType].answerSuffix || "") + " " +
+				(responseDetails.response || "");
+
+	// display the results of the submission in the given container
+	container.append("div")
+		.attr("class", ["alert", responseFormat.responseClass].join(" "))
+		.html(responseHtml);
 };
 
 /* **************************************************************************

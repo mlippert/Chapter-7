@@ -50,5 +50,29 @@ var activities = {
 				score: 1,
 				response:  "It's one louder.",
 				}
-		}
+		},
+
+	"SanVan004": { 
+		question: "How do you *know* she's a witch?",
+		"newt": {
+				content: "Because she turned me into a newt.",
+				score: 0,
+				response: "You're not a newt now."
+				},
+		"nose": {
+				content: "Because she has a long nose.",
+				score: 0,
+				response:  "Do not judge a witch by the length of their nose!",
+				},
+		"floats": {
+				content: "Because she floats on water.",
+				score: 1,
+				response:  "Witches are lighter than water.",
+				},
+		"daylight": {
+				content: "Because she's afraid of daylight.",
+				score: 0,
+				response:  "I believe you are thinking of vampires.",
+				},
+		},
 	};
