@@ -271,9 +271,11 @@ function handleClick0_1 ()
 	
 	if (swap0)
 	{
+		// make sure hydrogen bond is blue
 		sketch0_7.setColor("grey", 500, 500);
 		sketch0_8.setColor("blue", 500, 500);
 		
+		// if hydrogens are invisible, show correct bond
 		if(!hydro0)
 		{
 			sketch0_3.setOpacity(1, 500, 0);
@@ -284,9 +286,11 @@ function handleClick0_1 ()
 	}
 	else
 	{
+		// make sure hydrogen bond is blue
 		sketch0_7.setColor("blue", 500, 500);
 		sketch0_8.setColor("grey", 500, 500);
 		
+		// if hydrogens are invisible, show correct bond
 		if(!hydro0)
 		{
 			sketch0_3.setOpacity(0, 500, 0);
@@ -299,14 +303,17 @@ function handleClick0_1 ()
 // show / hide hydrogens function
 function handleClick0_2 ()
 {
+	// if hydrogens are visible
 	if(hydro0)
 	{
+		// hide them
 		sketch0_5.setOpacity(0, 500, 0);
 		sketch0_6.setOpacity(0, 500, 0);
 		sketch0_7.setOpacity(0, 500, 0);
 		sketch0_8.setOpacity(0, 500, 0);
 		sketch0_9.setOpacity(0, 500, 0);
 		
+		// reveal correct bond
 		sketch0_2.setOpacity(1, 500, 0);
 		
 		if(swap0)
@@ -320,8 +327,10 @@ function handleClick0_2 ()
 		
 		hydro0 = false;
 	}
+	// if hydrogens are invisible
 	else
 	{
+		// reveal them
 		sketch0_5.setOpacity(1, 500, 0);
 		sketch0_6.setOpacity(1, 500, 0);
 		sketch0_7.setOpacity(1, 500, 0);
@@ -472,7 +481,9 @@ button2_2.draw(d3.select("#button2_2"));
 eventManager.subscribe(button2_1.pressedEventId, handleClick2_1);
 eventManager.subscribe(button2_2.pressedEventId, handleClick2_2);
 
+// flag to keep track of state
 var swap2_1 = false;
+// flip bonds
 function handleClick2_1 ()
 {
 	sketch2_2.reflect(null, .5, 500, 0);
@@ -502,10 +513,12 @@ function handleClick2_1 ()
 		swap2_1 = true;
 	}
 }
+// flip entire molecule
 function handleClick2_2 ()
 {
+	// flip molecule
 	sketch2_1.reflect(null, .5, 500, 0);
-	
+	// then flip bonds as well
 	handleClick2_1();
 }
 	
@@ -637,16 +650,20 @@ var superposed3 = false;
 // move molecule
 function handleClick3_1 ()
 {
+	// if already superimposed
 	if(superposed3)
 	{
+		// un-superimpose
 		sketch3_1.move(-.4, .05, 500, 0);
 		sketch3_3.move(-.4, .05, 500, 0);
 		sketch3_5.move(-.4, .05, 500, 0);
 		sketch3_7.move(-.4, .05, 500, 0);
 		superposed3 = false;
 	}
+	// if not superimposed
 	else
 	{
+		// superimpose
 		sketch3_1.move(.4, -.05, 500, 0);
 		sketch3_3.move(.4, -.05, 500, 0);
 		sketch3_5.move(.4, -.05, 500, 0);
@@ -659,11 +676,14 @@ var hydro3 = false;
 // show/hide hydrogens
 function handleClick3_2 ()
 {
+	// if hydrogens are visible
 	if(hydro3)
 	{
+		// reveal correct bonds
 		sketch3_3.setOpacity(1, 500, 0);
 		sketch3_4.setOpacity(1, 500, 0);
 		
+		// hide hydrogens
 		sketch3_5.setOpacity(0, 500, 0);
 		sketch3_6.setOpacity(0, 500, 0);
 		sketch3_7.setOpacity(0, 500, 0);
@@ -671,11 +691,14 @@ function handleClick3_2 ()
 		
 		hydro3 = false;
 	}
+	// if hydrogens are not visible
 	else
 	{
+		// hide bonds
 		sketch3_3.setOpacity(0, 500, 0);
 		sketch3_4.setOpacity(0, 500, 0);
 		
+		// reveal hydrogens
 		sketch3_5.setOpacity(1, 500, 0);
 		sketch3_6.setOpacity(1, 500, 0);
 		sketch3_7.setOpacity(1, 500, 0);
@@ -851,22 +874,22 @@ var sub2 = null;
 // false if reset cannot be done yet
 var canreset = false;
 
-// select the Br
+// choose the Br
 function handleClick5_1 ()
 {
 	chooseSubs5(sketch5_3);
 }
-// selecte the H
+// choose the H
 function handleClick5_2 ()
 {
 	chooseSubs5(sketch5_4);
 }
-// select the F
+// choose the F
 function handleClick5_3 ()
 {
 	chooseSubs5(sketch5_5);
 }
-// select the Cl
+// choose the Cl
 function handleClick5_4 ()
 {
 	chooseSubs5(sketch5_6);
@@ -895,6 +918,7 @@ function chooseSubs5 (sketch)
 		runAnimation5(500, 1000);
 	}
 }
+// swap elements
 function runAnimation5 (dur, del)
 {	
 	// Br and H
@@ -945,6 +969,7 @@ function runAnimation5 (dur, del)
 // reset function
 function handleClick5_5 ()
 {
+	// if animation is done
 	if (canreset)
 	{
 		// undo element swapping
@@ -979,7 +1004,10 @@ var svg6 = new SVGContainer({
 		maxHt: 400
 	});
 
-// part a
+
+///////////// Part A
+
+// molecule
 var sketch6_1 = new Sketch({
 		id: "sketch6_1",
 		drawShape:
@@ -1068,7 +1096,9 @@ function handleClick6_2 ()
 }
 
 	
-// part b	
+///////////////// Part B
+
+// molecule
 var sketch6_2 = new Sketch({
 		id: "sketch6_2",
 		drawShape:
@@ -1085,7 +1115,8 @@ var sketch6_2 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.835, .49], text: "OH" }]}
 		]
 	});
-	
+
+// hotspots and messages	
 var hotspot6_3 = new Sketch({
 		id: "hotspot6_3",
 		type: "hot",
@@ -1136,6 +1167,7 @@ var message6_5 = new Sketch({
 		]
 	});
 
+// draw everything for part b
 svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(hotspot6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(hotspot6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1153,8 +1185,9 @@ message6_5.setOpacity(0, 0, 10);
 eventManager.subscribe(hotspot6_3.selectedEventId, handleClick6_3);
 eventManager.subscribe(hotspot6_4.selectedEventId, handleClick6_4);
 
-var center6_1 = false;
-var center6_2 = false;
+// false if hotspots haven't been clicked
+var center6_1 = false;	// first hotspot
+var center6_2 = false;	// second hotspot
 function handleClick6_3 ()
 {
 	message6_3.setOpacity(1, 500, 0);
@@ -1177,7 +1210,9 @@ function handleClick6_4 ()
 }
 
 	
-// part c
+//////////////// Part C
+
+// molecule
 var sketch6_3 = new Sketch({
 		id: "sketch6_3",
 		drawShape:
@@ -1196,7 +1231,8 @@ var sketch6_3 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [1.215, .365], text: "OCH3" }]}
 		]
 	});
-	
+
+// hotspots and messages	
 var hotspot6_5 = new Sketch({
 		id: "hotspot6_5",
 		type: "hot",
@@ -1239,7 +1275,8 @@ var message6_7 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [1.2, .27], text: "asymmetric carbon" }]},
 		]
 	});
-	
+
+// draw everything for part c	
 svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(hotspot6_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg6.append(hotspot6_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1254,6 +1291,7 @@ message6_7.setOpacity(0, 0, 10);
 eventManager.subscribe(hotspot6_5.selectedEventId, handleClick6_5);
 eventManager.subscribe(hotspot6_6.selectedEventId, handleClick6_6);
 
+// reveal messag when hotspot is clicked
 function handleClick6_5 ()
 {
 	message6_6.setOpacity(1, 500, 0);
@@ -1264,7 +1302,9 @@ function handleClick6_6 ()
 }
 
 
-// reset
+///////////////// Reset activity
+
+// reset button
 var button6 = new Button ({
 		id: "b6",
 		text: "Reset"
@@ -1274,6 +1314,7 @@ button6.draw(d3.select("#button6"));
 
 eventManager.subscribe(button6.pressedEventId, handleClick6_7);
 
+// hide all messages
 function handleClick6_7 ()
 {
 	message6_1.setOpacity(0, 0, 0);
@@ -1284,6 +1325,7 @@ function handleClick6_7 ()
 	message6_6.setOpacity(0, 0, 0);
 	message6_7.setOpacity(0, 0, 0);
 	
+	// reset flags
 	center6_1 = false;
 	center6_2 = false;
 }
@@ -1296,7 +1338,8 @@ var svg7 = new SVGContainer({
 		maxHt: 400
 	});
 
-// part a
+
+/////////////////// Part A
 var sketch7_1 = new Sketch({
 		id: "sketch7_1",
 		drawShape:
@@ -1317,7 +1360,8 @@ var sketch7_1 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.3, .87], length: .06, angle: -Math.PI/6 }]},
 		]
 	});
-	
+
+// hotspots and messages	
 var hotspot7_1 = new Sketch({
 		id: "hotspot7_1",
 		type: "hot",
@@ -1337,6 +1381,7 @@ var message7_1 = new Sketch({
 		]
 	});
 
+// draw everything for part a
 svg7.append(sketch7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(message7_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1346,13 +1391,16 @@ message7_1.setOpacity(0, 0, 10);
 
 eventManager.subscribe(hotspot7_1.selectedEventId, handleClick7_1);
 
+// reveal message when hotspot is clicked
 function handleClick7_1 ()
 {
 	message7_1.setOpacity(1, 500, 0);
 }
 
 
-// part b
+/////////////////// Part B
+
+// molecule
 var sketch7_2 = new Sketch({
 		id: "sketch7_2",
 		drawShape:
@@ -1368,7 +1416,8 @@ var sketch7_2 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.85, .69], length: .06, angle: Math.PI/6 }]},
 		]
 	});
-	
+
+// hotspots and messages
 var hotspot7_2 = new Sketch({
 		id: "hotspot7_2",
 		type: "hot",
@@ -1411,7 +1460,8 @@ var message7_4 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.775, .54], text: "are not asymmetric carbons."}]},
 		]
 	});
-	
+
+// draw everything for part b
 svg7.append(sketch7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(message7_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1430,12 +1480,15 @@ message7_4.setOpacity(0, 0, 10);
 eventManager.subscribe(hotspot7_2.selectedEventId, handleClick7_2);
 eventManager.subscribe(hotspot7_3.selectedEventId, handleClick7_3);
 
+// flags to keep track of which hotspots have been clicked
 var center7_1 = false;
 var center7_2 = false;
+// reveal messages when hotspots are clicked
 function handleClick7_2 ()
 {
 	message7_2.setOpacity(1, 500, 0);
 	center7_1 = true;
+	// reveal extra message when both hotspots have been clicked
 	if (center7_2)
 	{
 		message7_4.setOpacity(1, 500, 0);
@@ -1445,13 +1498,17 @@ function handleClick7_3 ()
 {
 	message7_3.setOpacity(1, 500, 0);
 	center7_2 = true;
+	// reveal extra message when both hotspots have been clicked
 	if (center7_1)
 	{
 		message7_4.setOpacity(1, 500, 0);
 	}
 }
 
-// part c
+
+/////////////////// Part C
+
+// molecule
 var sketch7_3 = new Sketch({
 		id: "sketch7_3",
 		drawShape:
@@ -1465,7 +1522,8 @@ var sketch7_3 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [1.25, .79], length: .06, angle: -Math.PI/6 }]},
 		]
 	});
-	
+
+// hotspots and messages
 var hotspot7_4 = new Sketch({
 		id: "hotspot7_4",
 		type: "hot",
@@ -1485,6 +1543,7 @@ var message7_5 = new Sketch({
 		]
 	});
 
+// draw everything for part c
 svg7.append(sketch7_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(message7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1494,13 +1553,16 @@ message7_5.setOpacity(0, 0, 10);
 
 eventManager.subscribe(hotspot7_4.selectedEventId, handleClick7_4);
 
+// reveal message when hotspot is clicked
 function handleClick7_4 ()
 {
 	message7_5.setOpacity(1, 500, 0);
 }
 	
 
-// part d
+//////////////////// Part D
+
+// molecule
 var sketch7_4 = new Sketch({
 		id: "sketch7_4",
 		drawShape:
@@ -1516,7 +1578,8 @@ var sketch7_4 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.21, .26], length: .06, angle: Math.PI/3 }]},
 		]
 	});
-	
+
+// hotspots and messages
 var hotspot7_5 = new Sketch({
 		id: "hotspot7_5",
 		type: "hot",
@@ -1562,6 +1625,7 @@ var message7_8 = new Sketch({
 		]
 	});
 
+// draw everything for part d
 svg7.append(sketch7_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(message7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1579,12 +1643,15 @@ message7_8.setOpacity(0, 0, 10);
 eventManager.subscribe(hotspot7_5.selectedEventId, handleClick7_5);
 eventManager.subscribe(hotspot7_6.selectedEventId, handleClick7_6);
 
+// flags to keep track of which hotspots have been clicked
 var center7_3 = false;
 var center7_4 = false;
+// reveal messages when hotspots are clicked
 function handleClick7_5 ()
 {
 	message7_6.setOpacity(1, 500, 0);
 	center7_3 = true;
+	// reveal extra message when both hotspots have been clicked
 	if (center7_4)
 	{
 		message7_8.setOpacity(1, 500, 0);
@@ -1594,6 +1661,7 @@ function handleClick7_6 ()
 {
 	message7_7.setOpacity(1, 500, 0);
 	center7_4 = true;
+	// reveal extra message when both hotspots have been clicked
 	if (center7_3)
 	{
 		message7_8.setOpacity(1, 500, 0);
@@ -1601,7 +1669,9 @@ function handleClick7_6 ()
 }
 	
 
-// part e
+///////////////////// Part E
+
+// molecule
 var sketch7_5 = new Sketch({
 		id: "sketch7_5",
 		drawShape:
@@ -1623,7 +1693,8 @@ var sketch7_5 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.9, .31], length: .06, angle: Math.PI/2 }]},
 		]
 	});
-	
+
+// hotspots and messages	
 var hotspot7_7 = new Sketch({
 		id: "hotspot7_7",
 		type: "hot",
@@ -1676,7 +1747,8 @@ var message7_11 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.85, .06], text: "of the groups are identical." }]},
 		]
 	});
-	
+
+// draw everything for part e
 svg7.append(sketch7_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1696,6 +1768,7 @@ eventManager.subscribe(hotspot7_7.selectedEventId, handleClick7_7);
 eventManager.subscribe(hotspot7_8.selectedEventId, handleClick7_8);
 eventManager.subscribe(hotspot7_9.selectedEventId, handleClick7_9);
 
+// reveal messages when hotspots are clicked
 function handleClick7_7 ()
 {
 	message7_9.setOpacity(1, 500, 0);
@@ -1710,7 +1783,9 @@ function handleClick7_9 ()
 }
 
 
-// part f
+////////////////// Part F
+
+// molecule
 var sketch7_6 = new Sketch({
 		id: "sketch7_6",
 		drawShape:
@@ -1727,7 +1802,8 @@ var sketch7_6 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [1.295, .25], length: .06, angle: -7*Math.PI/10 }]},
 		]
 	});
-	
+
+// hotspots and messages
 var hotspot7_10 = new Sketch({
 		id: "hotspot7_10",
 		type: "hot",
@@ -1765,7 +1841,9 @@ var message7_13 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [1.3, .09], text: "asymmetric carbon" }]},
 		]
 	});
-	
+
+
+// draw everything for part f
 svg7.append(sketch7_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_10, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg7.append(hotspot7_11, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -1780,6 +1858,7 @@ message7_13.setOpacity(0, 0, 10);
 eventManager.subscribe(hotspot7_10.selectedEventId, handleClick7_10);
 eventManager.subscribe(hotspot7_11.selectedEventId, handleClick7_11);
 
+// reveal messages when hotspots are clicked
 function handleClick7_10 ()
 {
 	message7_12.setOpacity(1, 500, 0);
@@ -1790,7 +1869,9 @@ function handleClick7_11 ()
 }
 
 
-// reset
+///////////////////// Reset Activity
+
+// reset button
 var button7 = new Button ({
 		id: "b7",
 		text: "Reset"
@@ -1800,6 +1881,7 @@ button7.draw(d3.select("#button7"));
 
 eventManager.subscribe(button7.pressedEventId, handleClick7_12);
 
+// hide all messages
 function handleClick7_12 ()
 {
 	message7_1.setOpacity(0, 0, 0);
@@ -1816,6 +1898,7 @@ function handleClick7_12 ()
 	message7_12.setOpacity(0, 0, 0);
 	message7_13.setOpacity(0, 0, 0);
 	
+	// reset all flags
 	center7_1 = false;
 	center7_2 = false;
 	center7_3 = false;

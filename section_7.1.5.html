@@ -98,12 +98,15 @@
 				
 				<p>Identify all stereocenters in the following molecules.</p>
 				
+				<span id="button4_1"></span><span id="button4_2"></span>
 				<div id="picture4"></div>
 				
 				<p>The chlorine-bearing carbon is the next position to inspect. Switching two groups results in a stereoisomer. It does not matter which two groups are selected. Here, the hydrogen and chlorine were swapped, but the same result would occur if it were the methyl and vinyl, the methyl and hydrogen, or the hydrogen and vinyl.</p>
 
 				<p style="color:blue;">[INTERACTIVE: TOGGLE (adjusts the visual display of info): Provide the option to toggle on/off the hydrogen on the carbon with the Cl.]</p>
 				
+				<span id="button5_1"></span><span id="button5_2"></span>
+				<span id="button5_3"></span>
 				<div id="picture5"></div>
 				
 				<p><b>Exercise 7.1.6</b></p>
@@ -112,6 +115,7 @@
 				
 				<p style="color:blue;">[INTERACTIVE: This is a hotspot interactive.]</p>
 				
+				<span id="button6"></span>
 				<div id="picture6"></div>
 				
 				
@@ -144,7 +148,8 @@ var svg0 = new SVGContainer({
 		maxWid: 300,
 		maxHt: 300
 	});
-
+	
+// molecule 1
 var sketch0_1 = new Sketch({
 		id: "sketch0_1",
 		drawShape:
@@ -161,7 +166,8 @@ var sketch0_1 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.2, .76], text: "oximes" }]},
 		]
 	});
-	
+
+// molecule 1 is clickable
 var hotspot0_1 = new Sketch({
 		id: "hotspot0_1",
 		type: "hot",
@@ -170,7 +176,8 @@ var hotspot0_1 = new Sketch({
 			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.15, 1], width: .15, height: .2 }]},
 		]
 	}, eventManager);
-	
+
+// molecule 1 stereoisomer (revealed when molecule 1 is clicked)	
 var sketch0_2 = new Sketch({
 		id: "sketch0_2",
 		drawShape:
@@ -185,7 +192,8 @@ var sketch0_2 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.84, .81], length: .06, angle: Math.PI/6 }]},
 		]
 	});
-	
+
+// molecule 2
 var sketch0_3 = new Sketch({
 		id: "sketch0_3",
 		drawShape:
@@ -203,7 +211,8 @@ var sketch0_3 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.2, .41], text: "R = H, alkyl, aryl" }]},
 		]
 	});
-	
+
+// molecule 2 is clickable
 var hotspot0_2 = new Sketch({
 		id: "hotspot0_2",
 		type: "hot",
@@ -213,6 +222,7 @@ var hotspot0_2 = new Sketch({
 		]
 	}, eventManager);
 
+// molecule 2 stereoisomer (revealed when molecule 2 is clicked)
 var sketch0_4 = new Sketch({
 		id: "sketch0_4",
 		drawShape:
@@ -227,7 +237,8 @@ var sketch0_4 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.84, .51], length: .06, angle: Math.PI/6 }]},
 		]
 	});
-	
+
+// molecule 3	
 var sketch0_5 = new Sketch({
 		id: "sketch0_5",
 		drawShape:
@@ -245,7 +256,8 @@ var sketch0_5 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.2, .01], text: "R = H, alkyl, aryl" }]},
 		]
 	});
-	
+
+// molecule 3 is clickable	
 var hotspot0_3 = new Sketch({
 		id: "hotspot0_3",
 		type: "hot",
@@ -255,6 +267,7 @@ var hotspot0_3 = new Sketch({
 		]
 	}, eventManager);
 
+// molecule 3 stereoisomer (revealed when molecule 3 is clicked)
 var sketch0_6 = new Sketch({
 		id: "sketch0_6",
 		drawShape:
@@ -269,14 +282,16 @@ var sketch0_6 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.88, .11], text: "R" }]},
 		]
 	});
-	
+
+// button to reset activity (hide stereoisomers)	
 var button0 = new Button ({
 		id: "b0",
 		text: "Reset"
 	}, eventManager);
 
 button0.draw(d3.select("#button0"));
-	
+
+// draw all sketches
 svg0.append(sketch0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(sketch0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -287,6 +302,7 @@ svg0.append(hotspot0_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercen
 svg0.append(hotspot0_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg0.append(hotspot0_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// stereoisomers are blue and start off invisible
 sketch0_2.setColor("blue", 0, 0);
 sketch0_2.setOpacity(0, 0, 10);
 sketch0_4.setColor("blue", 0, 0);
@@ -294,23 +310,28 @@ sketch0_4.setOpacity(0, 0, 10);
 sketch0_6.setColor("blue", 0, 0);
 sketch0_6.setOpacity(0, 0, 10);
 
+// hotspots and button trigger events
 eventManager.subscribe(hotspot0_1.selectedEventId, handleClick0_1);
 eventManager.subscribe(hotspot0_2.selectedEventId, handleClick0_2);
 eventManager.subscribe(hotspot0_3.selectedEventId, handleClick0_3);
 eventManager.subscribe(button0.pressedEventId, handleClick0_4);
 
+// reveal stereoisomer 1
 function handleClick0_1 ()
 {
 	sketch0_2.setOpacity(1, 500, 0);
 }
+// reveal stereoisomer 2
 function handleClick0_2 ()
 {
 	sketch0_4.setOpacity(1, 500, 0);
 }
+// reveal stereoisomer 3
 function handleClick0_3 ()
 {
 	sketch0_6.setOpacity(1, 500, 0);
 }
+// reset activity
 function handleClick0_4 ()
 {
 	sketch0_2.setOpacity(0, 0, 0);
@@ -326,6 +347,7 @@ var svg1 = new SVGContainer({
 		maxHt: 300
 	});
 
+// molecule 1
 var sketch1_1 = new Sketch({
 		id: "sketch1_1",
 		drawShape:
@@ -341,7 +363,8 @@ var sketch1_1 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.16, .64], text: "amines" }]},
 		]
 	});
-	
+
+// molecule 1 is clickable
 var hotspot1_1 = new Sketch({
 		id: "hotspot1_1",
 		type: "hot",
@@ -350,7 +373,8 @@ var hotspot1_1 = new Sketch({
 			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .9], width: .2, height: .2 }]},
 		]
 	}, eventManager);
-	
+
+// molecule 1 stereoisomer (revealed when molecule 1 is clicked)	
 var sketch1_2 = new Sketch({
 		id: "sketch1_2",
 		drawShape:
@@ -364,7 +388,8 @@ var sketch1_2 = new Sketch({
 			{ shape: "wedge", data: [{ xyPos: [.81, .78], length: .06, width: .02, angle: -Math.PI/4 }]},
 		]
 	});
-	
+
+// molecule 2
 var sketch1_3 = new Sketch({
 		id: "sketch1_3",
 		drawShape:
@@ -389,7 +414,8 @@ var sketch1_3 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.16, .12], text:"ammonium salts" }]},
 		]
 	});
-	
+
+// molecule 2 is clickable
 var hotspot1_2 = new Sketch({
 		id: "hotspot1_2",
 		type: "hot",
@@ -398,7 +424,8 @@ var hotspot1_2 = new Sketch({
 			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .4], width: .25, height: .2 }]},
 		]
 	}, eventManager);
-	
+
+// molecule 2 stereoisomer (revealed when molecule 2 is clicked)	
 var sketch1_4 = new Sketch({
 		id: "sketch1_4",
 		drawShape:
@@ -421,14 +448,16 @@ var sketch1_4 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.9525, .36], text: "-" }]},
 		]
 	});
-	
+
+// reset button
 var button1 = new Button ({
 		id: "b1",
 		text: "Reset"
 	}, eventManager);
 
 button1.draw(d3.select("#button1"));
-	
+
+// draw all the sketches
 svg1.append(sketch1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg1.append(sketch1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg1.append(sketch1_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -436,23 +465,28 @@ svg1.append(sketch1_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg1.append(hotspot1_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg1.append(hotspot1_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// stereoisomers are blue and start off invisible
 sketch1_2.setColor("blue", 0, 0);
 sketch1_2.setOpacity(0, 0, 10);
 sketch1_4.setColor("blue", 0, 0);
 sketch1_4.setOpacity(0, 0, 10);
 
+// hotspots and button trigger events
 eventManager.subscribe(hotspot1_1.selectedEventId, handleclick3_1);
 eventManager.subscribe(hotspot1_2.selectedEventId, handleclick3_2);
 eventManager.subscribe(button1.pressedEventId, handleclick3_3);
 
+// reveal stereoisomer 1
 function handleclick3_1 ()
 {
 	sketch1_2.setOpacity(1, 500, 0);
 }
+// reveal stereoisomer 2
 function handleclick3_2 ()
 {
 	sketch1_4.setOpacity(1, 500, 0);
 }
+// reset activity
 function handleclick3_3 ()
 {
 	sketch1_2.setOpacity(0, 0, 0);
@@ -467,6 +501,7 @@ var svg2 = new SVGContainer({
 		maxHt: 300
 	});
 
+// molecule 1
 var sketch2_1 = new Sketch({
 		id: "sketch2_1",
 		drawShape:
@@ -483,6 +518,7 @@ var sketch2_1 = new Sketch({
 		]
 	});
 	
+// molecule 1 is clickable
 var hotspot2_1 = new Sketch({
 		id: "hotspot2_1",
 		type: "hot",
@@ -491,7 +527,8 @@ var hotspot2_1 = new Sketch({
 			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.1, .85], width: .2, height: .15 }]},
 		]
 	}, eventManager);
-	
+
+// molecule 1 stereoisomer (revealed when molecule 1 is clicked)
 var sketch2_2 = new Sketch({
 		id: "sketch2_2",
 		drawShape:
@@ -507,7 +544,8 @@ var sketch2_2 = new Sketch({
 			{ shape: "line", data: [{ xyPos: [.88, .81], length: .06, angle: -Math.PI/6 }]},
 		]
 	});
-	
+
+// molecule 2
 var sketch2_3 = new Sketch({
 		id: "sketch2_3",
 		drawShape:
@@ -532,7 +570,8 @@ var sketch2_3 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.0725, .42], text: "-" }]},
 		]
 	});
-	
+
+// molecule 2 is clickable	
 var hotspot2_2 = new Sketch({
 		id: "hotspot2_2",
 		type: "hot",
@@ -541,7 +580,8 @@ var hotspot2_2 = new Sketch({
 			{ shape: "rectangle", fill: "Black", data: [{ xyPos: [.05, .35], width: .3, height: .15 }]},
 		]
 	}, eventManager);
-	
+
+// molecule 2 stereoisomer (revealed when molecule 2 is clicked)	
 var sketch2_4 = new Sketch({
 		id: "sketch2_4",
 		drawShape:
@@ -565,14 +605,16 @@ var sketch2_4 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.6725, .42], text: "-" }]},
 		]
 	});
-	
+
+// reset button
 var button2 = new Button ({
 		id: "b2",
 		text: "Reset"
 	}, eventManager);
 
 button2.draw(d3.select("#button2"));
-	
+
+// draw all the sketches	
 svg2.append(sketch2_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg2.append(sketch2_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg2.append(sketch2_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
@@ -580,23 +622,28 @@ svg2.append(sketch2_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent
 svg2.append(hotspot2_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg2.append(hotspot2_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// stereoisomers are blue and start off invisible
 sketch2_2.setColor("blue", 0, 0);
 sketch2_2.setOpacity(0, 0, 10);
 sketch2_4.setColor("blue", 0, 0);
 sketch2_4.setOpacity(0, 0, 10);
 
+// hotspots and button trigger events
 eventManager.subscribe(hotspot2_1.selectedEventId, handleClick2_1);
 eventManager.subscribe(hotspot2_2.selectedEventId, handleClick2_2);
 eventManager.subscribe(button2.pressedEventId, handleClick2_3);
 
+// reveal stereoisomer 1
 function handleClick2_1 ()
 {
 	sketch2_2.setOpacity(1, 500, 0);
 }
+// reveal stereoisomer 2
 function handleClick2_2 ()
 {
 	sketch2_4.setOpacity(1, 500, 0);
 }
+// reset activity
 function handleClick2_3 ()
 {
 	sketch2_2.setOpacity(0, 0, 0);
@@ -611,6 +658,7 @@ var svg3 = new SVGContainer({
 		maxHt: 400
 	});
 
+// static molecule
 var sketch3_1 = new Sketch({
 		id: "sketch3_1",
 		drawShape:
@@ -626,7 +674,9 @@ var sketch3_1 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.28, .74], text: "Cl" }]},
 		]
 	});
-	
+
+// second molecule is identical to first, but divided into parts that will
+// move separately
 var sketch3_2 = new Sketch({
 		id: "sketch3_2",
 		drawShape:
@@ -638,7 +688,7 @@ var sketch3_2 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.72, .74], text: "Cl" }]},
 		]
 	});
-	
+
 var sketch3_3 = new Sketch({
 		id: "sketch3_3",
 		drawShape:
@@ -656,7 +706,8 @@ var sketch3_4 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.88, .74], text: "NH3" }]},
 		]
 	});
-	
+
+// message to be revealed after animation is finished
 var message3_1 = new Sketch({
 		id: "message3_1",
 		drawShape:
@@ -667,22 +718,26 @@ var message3_1 = new Sketch({
 			{ shape: "textBit", data: [{ xyPos: [.8, .72], text: "(identical)." }]},
 		]
 	});
-	
+
+// button to play stepped animation	
 var button3 = new Button ({
 		id: "b3",
 		text: "Play step 1 / 2"
 	}, eventManager);
 
 button3.draw(d3.select("#button3"));
-	
+
+// draw all the sketches
 svg3.append(sketch3_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(sketch3_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(sketch3_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(sketch3_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg3.append(message3_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 
+// message starts off invisible
 message3_1.setOpacity(0, 0, 0);
 
+// button triggers events
 eventManager.subscribe(button3.pressedEventId, handleClick3);
 
 
@@ -750,79 +805,811 @@ var svg4 = new SVGContainer({
 		maxWid: 400,
 		maxHt: 400
 	});
-
+	
+// molecule is divided into separately moving parts
 var sketch4_1 = new Sketch({
 		id: "sketch4_1",
 		drawShape:
 		[
-			{ shape: "line", data: [{ xyPos: [.1, .7], length: .06, angle: Math.PI/4 }]},
-			{ shape: "line", data: [{ xyPos: [.1, .7], length: .06, angle: -Math.PI/4 }]},
-			{ shape: "line", data: [{ xyPos: [.185, .7], length: .06, angle: 3*Math.PI/4 }]},
-			{ shape: "line", data: [{ xyPos: [.185, .7], length: .06, angle: -3*Math.PI/4 }]},
-			{ shape: "line", data: [{ xyPos: [.185, .7], length: .06, angle: 0 }]},
-			{ shape: "line", data: [{ xyPos: [.19, .71], length: .05, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .7], length: .06, angle: Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .7], length: .06, angle: -Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.385, .7], length: .06, angle: 3*Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.385, .7], length: .06, angle: -3*Math.PI/4 }]},
+			{ shape: "line", data: [{ xyPos: [.385, .7], length: .06, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.39, .71], length: .05, angle: 0 }]},
 			
-			{ shape: "textBit", data: [{ xyPos: [.04, .63], text: "H" }]},
+			{ shape: "textBit", data: [{ xyPos: [.24, .63], text: "H" }]},
 		]
 	});
-	
+
+// left group	
 var sketch4_2 = new Sketch({
 		id: "sketch4_2",
 		drawShape:
 		[
-			{ shape: "wedge", data: [{ xyPos: [.1, .7], length: .06, width: .02, angle: 3*Math.PI/4 }]},
-			{ shape: "wedge", data: [{ xyPos: [.1, .7], length: .06, width: .02, angle: -3*Math.PI/4, type: "hash" }]},
+			{ shape: "wedge", data: [{ xyPos: [.3, .7], length: .06, width: .02, angle: 3*Math.PI/4 }]},
+			{ shape: "wedge", data: [{ xyPos: [.3, .7], length: .06, width: .02, angle: -3*Math.PI/4, type: "hash" }]},
 		]
 	});
+
+// right group	
+var sketch4_3 = new Sketch({
+		id: "sketch4_3",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.445, .7], length: .06, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.445, .7], length: .05, angle: -Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.48, .63], text: "H" }]},
+		]
+	});
+
+// button to flip left group	
+var button4_1 = new Button ({
+		id: "b4_1",
+		text: "Switch left group"
+	}, eventManager);
+
+button4_1.draw(d3.select("#button4_1"));
+
+// button to flip right group
+var button4_2 = new Button ({
+		id: "b4_2",
+		text: "Switch right group"
+	}, eventManager);
+
+button4_2.draw(d3.select("#button4_2"));
 	
+// draw all the sketches
 svg4.append(sketch4_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg4.append(sketch4_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg4.append(sketch4_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+// both buttons trigger events
+eventManager.subscribe(button4_1.pressedEventId, handleClick4_1);
+eventManager.subscribe(button4_2.pressedEventId, handleClick4_2);
+
+// flip left group
+function handleClick4_1 ()
+{
+	sketch4_2.reflect(null, .7, 500, 0);
+}
+// flip right group
+function handleClick4_2 ()
+{
+	sketch4_3.reflect(null, .7, 500, 0);
+}
 	
 //////////////////////////////////////
 
-var svg5 = new MakeSVGContainer(
-	{node: d3.select("#picture5"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg5.Axes({
-	xPosPerc: .25, yPosPerc: .25,
-	xPerc: .5, yPerc: .5,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg5.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_44.png', caption: ""}]
+var svg5 = new SVGContainer({
+		node: d3.select("#picture5"),
+		maxWid: 400,
+		maxHt: 400
 	});
+	
+// molecule is divided into many different parts
+var sketch5_1 = new Sketch({
+		id: "sketch5_1",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.3, .7], length: .06, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .71], length: .05, angle: 5*Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.3, .7], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.35, .73], length: .06, angle: -Math.PI/6 }]},
+		]
+	});
+
+// left hydrogen group
+var sketch5_2 = new Sketch({
+		id: "sketch5_2",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.25, .73], length: .04, angle: Math.PI/2 }]},
+			{ shape: "textBit", data: [{ xyPos: [.25, .78], text: "H" }]},
+			{ shape: "line", data: [{ xyPos: [.25, .73], length: .04, angle: 7*Math.PI/6 }]},
+			{ shape: "textBit", data: [{ xyPos: [.19, .69], text: "H" }]},
+		]
+	});
+
+var sketch5_3 = new Sketch({
+		id: "sketch5_3",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.35, .73], length: .04, width: .02, angle: Math.PI/2, type: "hash" }]},
+		]
+	});
+	
+var sketch5_4 = new Sketch({
+		id: "sketch5_4",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.35, .73], length: .04, width: .02, angle: Math.PI/2 }]},
+		]
+	});
+	
+var sketch5_5 = new Sketch({
+		id: "sketch5_5",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.35, .78], text: "Cl" }]},
+		]
+	});
+	
+var sketch5_6 = new Sketch({
+		id: "sketch5_6",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.35, .73], length: .04, width: .02, angle: 2*Math.PI/3, type: "hash" }]},
+		]
+	});
+	
+var sketch5_7 = new Sketch({
+		id: "sketch5_7",
+		drawShape:
+		[
+			{ shape: "wedge", data: [{ xyPos: [.35, .73], length: .04, width: .02, angle: Math.PI/3 }]},
+		]
+	});
+	
+var sketch5_8 = new Sketch({
+		id: "sketch5_8",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.31, .78], text: "Cl" }]},
+		]
+	});
+	
+var sketch5_9 = new Sketch({
+		id: "sketch5_9",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.39, .78], text: "H" }]},
+		]
+	});
+
+// button to show and hide hydrogens	
+var button5_1 = new Button ({
+		id: "b5_1",
+		text: "Show/Hide H"
+	}, eventManager);
+
+button5_1.draw(d3.select("#button5_1"));
+
+// buttons to flip middle group
+var button5_2 = new Button ({
+		id: "b5_2",
+		text: "Switch group"
+	}, eventManager);
+
+button5_2.draw(d3.select("#button5_2"));
+
+// button to flip entire molecule
+var button5_3 = new Button ({
+		id: "b5_3",
+		text: "Flip molecule"
+	}, eventManager);
+
+button5_3.draw(d3.select("#button5_2"));
+
+// draw all sketches
+svg5.append(sketch5_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg5.append(sketch5_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+// part of middle group starts off invisible
+sketch5_3.setOpacity(0, 0, 0);
+sketch5_4.setOpacity(0, 0, 0);
+sketch5_5.setOpacity(0, 0, 0);
+
+// hydrogens are blue
+sketch5_2.setColor("blue", 0, 0);
+sketch5_7.setColor("blue", 0, 0);
+sketch5_9.setColor("blue", 0, 0);
+
+// buttons trigger events
+eventManager.subscribe(button5_1.pressedEventId, handleClick5_1);
+eventManager.subscribe(button5_2.pressedEventId, handleClick5_2);
+eventManager.subscribe(button5_3.pressedEventId, handleClick5_3);
+
+// flag is true if hydrogens are visible
+var hydro5 = true;
+// flag keeps track of which way the middle group is flipped
+var flipped5 = false;
+// show and hide hydrogens
+function handleClick5_1 ()
+{
+	// if hydrogens are visible
+	if(hydro5)
+	{
+		// make them invisible
+		sketch5_2.setOpacity(0, 500, 0);
+		sketch5_6.setOpacity(0, 500, 0);
+		sketch5_7.setOpacity(0, 500, 0);
+		sketch5_8.setOpacity(0, 500, 0);
+		sketch5_9.setOpacity(0, 500, 0);
+		
+		// reveal hidden part of middle group
+		sketch5_5.setOpacity(1, 500, 0);
+		// which one depends on which way it is flipped
+		if(flipped5)
+		{
+			sketch5_4.setOpacity(1, 500, 0);
+		}
+		else
+		{
+			sketch5_3.setOpacity(1, 500, 0);
+		}
+		
+		hydro5 = false;
+	}
+	// if hydrogens are invisible
+	else
+	{
+		// reveal them
+		sketch5_2.setOpacity(1, 500, 0);
+		sketch5_6.setOpacity(1, 500, 0);
+		sketch5_7.setOpacity(1, 500, 0);
+		sketch5_8.setOpacity(1, 500, 0);
+		sketch5_9.setOpacity(1, 500, 0);
+		
+		// hide part of middle group
+		sketch5_3.setOpacity(0, 500, 0);
+		sketch5_4.setOpacity(0, 500, 0);
+		sketch5_5.setOpacity(0, 500, 0);
+		
+		hydro5 = true;
+	}
+}
+// flip middle group
+function handleClick5_2 ()
+{
+	// flip Cl and H
+	sketch5_8.reflect(.35, null, 500, 0);
+	sketch5_9.reflect(.35, null, 500, 0);
+	if(flipped5)
+	{
+		// make sure hydrogen bond is blue
+		sketch5_6.setColor("grey", 500, 0);
+		sketch5_7.setColor("blue", 500, 0);
+		// if hydrogens are currently invisible
+		if(!hydro5)
+		{
+			// show correct part of middle group
+			sketch5_3.setOpacity(1, 500, 0);
+			sketch5_4.setOpacity(0, 500, 0);
+		}
+		flipped5 = false;
+	}
+	else
+	{
+		// make sure hydrogen bond is blue
+		sketch5_6.setColor("blue", 500, 0);
+		sketch5_7.setColor("grey", 500, 0);
+		if(!hydro5)
+		{
+			// who correct part of middle group
+			sketch5_3.setOpacity(0, 500, 0);
+			sketch5_4.setOpacity(1, 500, 0);
+		}
+		flipped5 = true;
+	}
+}
+// flip entire molecule
+function handleClick5_3 ()
+{
+	sketch5_1.reflect(.35, null, 500, 0);
+	sketch5_2.reflect(.35, null, 500, 0);
+	handleClick5_2();
+}
 	
 ////////////////////////////////////////
 
-var svg6 = new MakeSVGContainer(
-	{node: d3.select("#picture6"),
-	maxWid: 800,
-	maxHt: 600
-	}
-);
-
-svg6.Axes({
-	xPosPerc: .125, yPosPerc: .125,
-	xPerc: .75, yPerc: .75,
-	xaxisType: "linear", yaxisType: "ordinal",
-	xOrient: "bottom",
-	yOrient: "left",
-	xLabel: "population"
-});
-
-svg6.ScalableImage(
-	{images: [
-			{URI:'img/ch7_1_45.png', caption: ""}]
+var svg6 = new SVGContainer({
+		node: d3.select("#picture6"),
+		maxWid: 400,
+		maxHt: 400
 	});
+
+
+////////////// Part A
+
+// molecule
+var sketch6_1 = new Sketch({
+		id: "sketch6_1",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.05, .75], text: "a." }]},
+		
+			{ shape: "line", data: [{ xyPos: [.2, .7], length: .04, angle: Math.PI }]},
+			{ shape: "textBit", data: [{ xyPos: [.14, .69], text: "Cl" }]},
+			{ shape: "line", data: [{ xyPos: [.2, .7], length: .06, angle: Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.2, .7], length: .06, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.21, .7], length: .05, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.23, .65], length: .06, angle: -2*Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.23, .65], length: .06, angle: 0 }]},
+			{ shape: "line", data: [{ xyPos: [.29, .65], length: .06, angle: -Math.PI/3 }]},
+			{ shape: "line", data: [{ xyPos: [.23, .75], length: .06, angle: 0 }]},
+		]
+	});
+
+// hotspots and messages
+var hotspot6_1 = new Sketch({
+		id: "hotspot6_1",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.2, .7], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_1 = new Sketch({
+		id: "message6_1",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.2, .7], radius: .02 }]},
+		]
+	});
+	
+var hotspot6_2 = new Sketch({
+		id: "hotspot6_2",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.23, .65], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_2 = new Sketch({
+		id: "message6_2",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.23, .65], radius: .02 }]},
+		]
+	});
+
+// draw everything for part a
+svg6.append(sketch6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_1.setColor("red", 0, 0);
+message6_1.setOpacity(0, 0, 10);
+message6_2.setColor("red", 0, 0);
+message6_2.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot6_1.selectedEventId, handleClick6_1);
+eventManager.subscribe(hotspot6_2.selectedEventId, handleClick6_2);
+
+// reveal messages when hotspots are clicked
+function handleClick6_1 ()
+{
+	message6_1.setOpacity(1, 500, 0);
+}
+function handleClick6_2 ()
+{
+	message6_2.setOpacity(1, 500, 0);
+}
+
+
+/////////////// Part B
+
+// molecule
+var sketch6_2 = new Sketch({
+		id: "sketch6_2",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.55, .75], text: "b." }]},
+		
+			{ shape: "line", data: [{ xyPos: [.7, .65], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.7, .65], length: .06, angle: -Math.PI/2 }]},
+			{ shape: "wedge", data: [{ xyPos: [.7, .65], length: .06, width: .02, angle: 5*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.75, .68], length: .06, width: .02, angle: 2*Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.71, .74], text: "F" }]},
+			{ shape: "wedge", data: [{ xyPos: [.75, .68], length: .06, width: .02, angle: Math.PI/3, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.82, .74], text: "OCH3" }]},
+			{ shape: "line", data: [{ xyPos: [.75, .68], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.8, .65], length: .06, angle: Math.PI/6 }]},
+		]
+	});
+
+// hotspots and messages
+var hotspot6_3 = new Sketch({
+		id: "hotspot6_3",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.75, .68], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_3 = new Sketch({
+		id: "message6_3",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.75, .68], radius: .02 }]},
+		]
+	});
+
+var hotspot6_4 = new Sketch({
+		id: "hotspot6_4",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.7, .65], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_4 = new Sketch({
+		id: "message6_4",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.75, .58], length: .06, angle: 2*Math.PI/3, type: "vector" }]},
+			{ shape: "textBit", data: [{ xyPos: [.75, .54], text: "Not a stereocenter. This carbon" }]},
+			{ shape: "textBit", data: [{ xyPos: [.75, .5], text: "have two identical groups" }]},
+		]
+	});
+
+// draw everything for part b	
+svg6.append(sketch6_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_3.setColor("red", 0, 0);
+message6_3.setOpacity(0, 0, 10);
+message6_4.setColor("blue", 0, 0);
+message6_4.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot6_3.selectedEventId, handleClick6_3);
+eventManager.subscribe(hotspot6_4.selectedEventId, handleClick6_4);
+
+// reveal messages when hotspots are clicked
+function handleClick6_3 ()
+{
+	message6_3.setOpacity(1, 500, 0);
+}
+function handleClick6_4 ()
+{
+	message6_4.setOpacity(1, 500, 0);
+}
+
+
+////////////// Part C
+
+// molecule
+var sketch6_3 = new Sketch({
+		id: "sketch6_3",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [1.05, .75], text: "c." }]},
+			
+			{ shape: "line", data: [{ xyPos: [1.2, .7], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [1.2, .7], length: .06, width: .02, angle: Math.PI/2, type: "hash" }]},
+			{ shape: "line", data: [{ xyPos: [1.2, .7], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.25, .67], length: .06, angle: Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [1.3, .7], length: .06, width: .02, angle: Math.PI/2, type: "hash" }]},
+			{ shape: "line", data: [{ xyPos: [1.3, .7], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.35, .67], length: .06, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.35, .68], length: .05, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [1.4, .7], length: .06, angle: -Math.PI/6 }]},
+		]
+	});
+
+// hotspots and messages	
+var hotspot6_5 = new Sketch({
+		id: "hotspot6_5",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.2, .7], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_5 = new Sketch({
+		id: "message6_5",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [1.2, .64], length: .04, angle: Math.PI/2, type: "vector" }]},
+			{ shape: "textBit", data: [{ xyPos: [1.2, .6], text: "Not a stereocenter. This carbon" }]},
+			{ shape: "textBit", data: [{ xyPos: [1.2, .56], text: "have two identical groups" }]},
+		]
+	});
+
+var hotspot6_6 = new Sketch({
+		id: "hotspot6_6",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.3, .7], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_6 = new Sketch({
+		id: "message6_6",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [1.3, .7], radius: .02 }]},
+		]
+	});
+	
+var hotspot6_7 = new Sketch({
+		id: "hotspot6_7",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.35, .67], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_7 = new Sketch({
+		id: "message6_7",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [1.35, .67], radius: .02 }]},
+		]
+	});
+	
+var hotspot6_8 = new Sketch({
+		id: "hotspot6_8",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [1.4, .7], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_8 = new Sketch({
+		id: "message6_8",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [1.4, .7], radius: .02 }]},
+		]
+	});
+
+// draw everything for part c
+svg6.append(sketch6_3, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_6, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_7, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_8, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_5.setColor("blue", 0, 0);
+message6_5.setOpacity(0, 0, 10);
+message6_6.setColor("red", 0, 0);
+message6_6.setOpacity(0, 0, 10);
+message6_7.setColor("red", 0, 0);
+message6_7.setOpacity(0, 0, 10);
+message6_8.setColor("red", 0, 0);
+message6_8.setOpacity(0, 0, 10);
+
+eventManager.subscribe(hotspot6_5.selectedEventId, handleClick6_5);
+eventManager.subscribe(hotspot6_6.selectedEventId, handleClick6_6);
+eventManager.subscribe(hotspot6_7.selectedEventId, handleClick6_7);
+eventManager.subscribe(hotspot6_8.selectedEventId, handleClick6_8);
+
+// reveal messages when hotspots are clicked
+function handleClick6_5 ()
+{
+	message6_5.setOpacity(1, 500, 0);
+}
+function handleClick6_6 ()
+{
+	message6_6.setOpacity(1, 500, 0);
+}
+function handleClick6_7 ()
+{
+	message6_7.setOpacity(1, 500, 0);
+}
+function handleClick6_8 ()
+{
+	message6_8.setOpacity(1, 500, 0);
+}
+
+
+//////////////// Part D
+
+// molecule
+var sketch6_4 = new Sketch({
+		id: "sketch6_4",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.05, .35], text: "d." }]},
+			
+			{ shape: "line", data: [{ xyPos: [.2, .3], length: .06, angle: 7*Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.2, .3], length: .06, width: .02, angle: 2*Math.PI/3 }]},
+			{ shape: "textBit", data: [{ xyPos: [.16, .36], text: "H" }]},
+			{ shape: "wedge", data: [{ xyPos: [.2, .3], length: .06, width: .02, angle: Math.PI/3, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.25, .36], text: "OH" }]},
+			{ shape: "line", data: [{ xyPos: [.2, .3], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.25, .27], length: .06, angle: Math.PI/6 }]},
+			{ shape: "wedge", data: [{ xyPos: [.25, .27], length: .06, width: .02, angle: -2*Math.PI/3 }]},
+			{ shape: "wedge", data: [{ xyPos: [.25, .27], length: .06, width: .02, angle: -Math.PI/3, type: "hash" }]},
+		]
+	});
+
+// hotspots and messages	
+var hotspot6_9 = new Sketch({
+		id: "hotspot6_9",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.2, .3], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_9 = new Sketch({
+		id: "message6_9",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.2, .3], radius: .02 }]},
+		]
+	});
+
+var hotspot6_10 = new Sketch({
+		id: "hotspot6_10",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.25, .27], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_10 = new Sketch({
+		id: "message6_10",
+		drawShape:
+		[
+			{ shape: "line", data: [{ xyPos: [.25, .18], length: .06, angle: Math.PI/2, type: "vector" }]},
+			{ shape: "textBit", data: [{ xyPos: [.3, .14], text: "Not a stereocenter. This carbon" }]},
+			{ shape: "textBit", data: [{ xyPos: [.3, .1], text: "have two identical groups" }]},
+		]
+	});
+
+// draw everything for part d
+svg6.append(sketch6_4, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_10, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_9, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_10, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_9.setColor("red", 0, 0);
+message6_9.setOpacity(0, 0, 0);
+message6_10.setColor("blue", 0, 0);
+message6_10.setOpacity(0, 0, 0);
+
+eventManager.subscribe(hotspot6_9.selectedEventId, handleClick6_9);
+eventManager.subscribe(hotspot6_10.selectedEventId, handleClick6_10);
+
+// reveal messages when hotspots are clicked
+function handleClick6_9 ()
+{
+	message6_9.setOpacity(1, 500, 0);
+}
+function handleClick6_10 ()
+{
+	message6_10.setOpacity(1, 500, 0);
+}
+
+
+///////////////// Part E
+
+// molecule
+var sketch6_5 = new Sketch({
+		id: "sketch6_5",
+		drawShape:
+		[
+			{ shape: "textBit", data: [{ xyPos: [.55, .35], text: "e." }]},
+			
+			{ shape: "hexagon", data: [{ xyPos: [.8, .3], side: .06 }]},
+			{ shape: "wedge", data: [{ xyPos: [.75, .33], length: .06, width: .02, angle: 5*Math.PI/6, type: "hash" }]},
+			{ shape: "textBit", data: [{ xyPos: [.67, .36], text: "HO" }]},
+			{ shape: "wedge", data: [{ xyPos: [.85, .33], length: .06, width: .02, angle: Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.9, .36], length: .06, angle: -Math.PI/6 }]},
+			{ shape: "line", data: [{ xyPos: [.91, .34], length: .04, angle: -Math.PI/6 }]},
+		]
+	});
+
+// hotspots and messages
+var hotspot6_11 = new Sketch({
+		id: "hotspot6_11",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.75, .33], radius: .03 }]},
+		]
+	}, eventManager);
+	
+var message6_11 = new Sketch({
+		id: "message6_11",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.75, .33], radius: .02 }]},
+		]
+	});
+	
+var hotspot6_12 = new Sketch({
+		id: "hotspot6_12",
+		type: "hot",
+		drawShape:
+		[
+			{ shape: "circle", fill: "Black", data: [{ xyPos: [.85, .33], radius: .03 }]},
+		]
+	}, eventManager);
+
+var message6_12 = new Sketch({
+		id: "message6_12",
+		drawShape:
+		[
+			{ shape: "circle", data: [{ xyPos: [.85, .33], radius: .02 }]},
+		]
+	});
+
+// draw everything for part e	
+svg6.append(sketch6_5, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_11, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(hotspot6_12, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_11, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+svg6.append(message6_12, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
+
+message6_11.setColor("red", 0, 0);
+message6_11.setOpacity(0, 0, 0);
+message6_12.setColor("red", 0, 0);
+message6_12.setOpacity(0, 0, 0);
+
+eventManager.subscribe(hotspot6_11.selectedEventId, handleClick6_11);
+eventManager.subscribe(hotspot6_12.selectedEventId, handleClick6_12);
+
+// reveal messages when hotspots are clicked
+function handleClick6_11 ()
+{
+	message6_11.setOpacity(1, 500, 0);
+}
+function handleClick6_12 ()
+{
+	message6_12.setOpacity(1, 500, 0);
+}
+
+
+////////////// Reset all parts
+
+// reset button
+var button6 = new Button ({
+		id: "b6",
+		text: "Reset"
+	}, eventManager);
+
+button6.draw(d3.select("#button6"));
+
+eventManager.subscribe(button6.pressedEventId, handleReset6);
+
+// make all messages invisible again
+function handleReset6 ()
+{
+	message6_1.setOpacity(0, 0, 0);
+	message6_2.setOpacity(0, 0, 0);
+	message6_3.setOpacity(0, 0, 0);
+	message6_4.setOpacity(0, 0, 0);
+	message6_5.setOpacity(0, 0, 0);
+	message6_6.setOpacity(0, 0, 0);
+	message6_7.setOpacity(0, 0, 0);
+	message6_8.setOpacity(0, 0, 0);
+	message6_9.setOpacity(0, 0, 0);
+	message6_10.setOpacity(0, 0, 0);
+	message6_11.setOpacity(0, 0, 0);
+	message6_12.setOpacity(0, 0, 0);
+}
 	
 
 </script>

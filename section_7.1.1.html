@@ -680,7 +680,7 @@ svg2.ScalableImage(
 	
 ////////////////////////////////////////////////
 
-// statice image
+// static image
 
 var svg3 = new MakeSVGContainer(
 	{node: d3.select("#picture3"),
@@ -1743,7 +1743,8 @@ var svg8_2 = new SVGContainer({
 		maxHt: 150
 	});
 
-// append images inside the callout (currently only works in Chrome and Firefox)
+// append images inside the callout
+// (Verified to work in Firefox and Chrome, verified to not work in Safari)
 svg8_1.append(sketch8_1, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 svg8_2.append(sketch8_2, {topPercentOffset: 0, leftPercentOffset: 0, heightPercent: 1, widthPercent: 1});
 	
@@ -1827,7 +1828,7 @@ var sketch9_6 = new Sketch ({
 			{ shape: "line", data: [{ xyPos: [.61, .6], length: .15, angle: Math.PI/3 }]},
 			{ shape: "textBit", data: [{ xyPos: [.72, .76], text: "H" }]}
 		]
-	}
+	});
 	
 // the label is a separate sketch because the entire molecule can move
 // the labe should not move with it
@@ -1881,12 +1882,14 @@ eventManager.subscribe(button9_1.pressedEventId, handleClick9_1);
 eventManager.subscribe(button9_2.pressedEventId, handleClick9_2);
 eventManager.subscribe(button9_3.pressedEventId, handleClick9_3);
 
-// flag to keep track the hydrogen state
+// flag to keep track of the hydrogen state
 var opaque9 = true;
 function handleClick9_1 ()
 {
+	// if hydrogens are visible
 	if (opaque9)
 	{
+		// hide them
 		sketch9_3.setOpacity(0, 500, 0);
 		sketch9_6.setOpacity(0, 500, 0);
 		setTimeout(function ()
@@ -1895,8 +1898,10 @@ function handleClick9_1 ()
 				opaque9 = false;
 			}, 500);
 	}
+	// if hydrogens are not visible
 	else
 	{
+		// reveal them
 		sketch9_3.setOpacity(1, 500, 0);
 		sketch9_6.setOpacity(1, 500, 0);
 		setTimeout(function ()
