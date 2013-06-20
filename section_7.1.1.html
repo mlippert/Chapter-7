@@ -1019,6 +1019,7 @@ function handleClick5_1 (eventDetails)
 	if (!selected && canclick5)
 	{
 		canclick5 = false;	// can't click anything until animation is done
+		button5.setEnabled(false);
 		carbon = 1;	// left carbon is selected
 		selected = true;	// a carbon has been selected
 		sketch5_2.move(.7, 0, 1000, 0);
@@ -1027,7 +1028,11 @@ function handleClick5_1 (eventDetails)
 		sketch5_3.setColor("red", 500, 1000);
 		sketch5_3.reflect(null, .8, 500, 1500);
 		// animation is done
-		setTimeout(function () {canclick5 = true;}, 2500);
+		setTimeout(function ()
+			{
+				canclick5 = true;
+				button5.setEnabled(true);
+			}, 2500);
 	}
 }
 // click the right carbon
@@ -1037,6 +1042,7 @@ function handleClick5_2 (eventDetails)
 	if (!selected && canclick5)
 	{
 		canclick5 = false; // can't click anything until animation is done
+		button5.setEnabled(false);
 		carbon = 2;	// right carbon has been selected
 		selected = true;	// a carbon has been selected
 		sketch5_2.move(.7, 0, 1000, 0);
@@ -1045,7 +1051,11 @@ function handleClick5_2 (eventDetails)
 		sketch5_4.setColor("red", 500, 1000);
 		sketch5_4.reflect(null, .8, 500, 1500);
 		// animation is done
-		setTimeout(function () {canclick5 = true;}, 2500);
+		setTimeout(function ()
+			{
+				canclick5 = true;
+				button5.setEnabled(true);
+			}, 2500);
 	}
 }
 // click the reset button
@@ -1060,6 +1070,7 @@ function handleClick5_3 ()
 	else if (canclick5)
 	{
 		canclick5 = false; // can't click anything until everything is reset
+		button5.setEnabled(false);
 		sketch5_2.move(-.7, 0, 0, 0);
 		sketch5_3.move(-.7, 0, 0, 0);
 		sketch5_4.move(-.7, 0, 0, 0);
@@ -1078,7 +1089,11 @@ function handleClick5_3 ()
 		selected = false;
 		carbon = 0;
 		// reset is finished
-		setTimeout(function () {canclick5 = true;}, 15);
+		setTimeout(function ()
+			{
+				canclick5 = true;
+				button5.setEnabled(true);
+			}, 15);
 	}
 }
 	
