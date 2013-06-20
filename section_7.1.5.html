@@ -740,16 +740,14 @@ message3_1.setOpacity(0, 0, 0);
 // button triggers events
 eventManager.subscribe(button3.pressedEventId, handleClick3);
 
-
 // animation is advanced by clicking a button
 var click3 = 0;
-var canclick3 = true;
 function handleClick3 ()
 {
 	// change colors and switch
-	if (click3 == 0 && canclick3)
+	if (click3 == 0)
 	{
-		canclick3 = false
+		button3.setEnabled(false);
 		sketch3_3.setColor("blue", 500, 0);
 		sketch3_4.setColor("red", 500, 0);
 		sketch3_3.reflect(null, .81, 500, 500);
@@ -757,14 +755,14 @@ function handleClick3 ()
 		click3 ++;
 		setTimeout(function ()
 						{
-							canclick3 = true;
+							button3.setEnabled(true);
 							button3.setText("Play step 2 / 2");
 						}, 1000);
 	}
 	// superimpose and display message
-	else if (click3 == 1 && canclick3)
+	else if (click3 == 1)
 	{
-		canclick3 = false;
+		button3.setEnabled(false);
 		sketch3_2.move(-.575, -.05, 1000, 0);
 		sketch3_3.move(-.575, -.05, 1000, 0);
 		sketch3_4.move(-.575, -.05, 1000, 0);
@@ -772,14 +770,14 @@ function handleClick3 ()
 		click3 ++;
 		setTimeout(function ()
 						{
-							canclick3 = true;
+							button3.setEnabled(true);
 							button3.setText("Reset");
 						}, 1500);
 	}
 	// reset
-	else if (click3 == 2 && canclick3)
+	else if (click3 == 2)
 	{
-		canclick3 = false;
+		button3.setEnabled(false);
 		sketch3_2.move(.575, .05, 0, 0);
 		sketch3_3.move(.575, .05, 0, 0);
 		sketch3_4.move(.575, .05, 0, 0);
@@ -791,7 +789,7 @@ function handleClick3 ()
 		click3 = 0;
 		setTimeout(function ()
 						{
-							canclick3 = true;
+							button3.setEnabled(true);
 							button3.setText("Play step 1 / 2");
 						}, 30);
 	}

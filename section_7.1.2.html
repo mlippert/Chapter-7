@@ -871,8 +871,7 @@ eventManager.subscribe(button5.pressedEventId, handleClick5_5);
 var sub1 = null;
 var sub2 = null;
 
-// false if reset cannot be done yet
-var canreset = false;
+button5.setEnabled(false);
 
 // choose the Br
 function handleClick5_1 ()
@@ -958,42 +957,35 @@ function runAnimation5 (dur, del)
 		sub2.reflect(.9, null, dur, del);
 	}
 	// make reset button clickable
-	if (!canreset)
+	setTimeout(function ()
 	{
-		setTimeout(function ()
-		{
-			canreset = true;
-		}, dur + del);
-	}
+		button5.setEnabled(true);
+	}, dur + del);
 }
 // reset function
 function handleClick5_5 ()
 {
-	// if animation is done
-	if (canreset)
-	{
-		// undo element swapping
-		runAnimation5(0, 10);
-		
-		// move the duplicate sketch back
-		sketch5_2.move(-.6, 0, 0, 10);
-		sketch5_3.move(-.6, 0, 0, 10);
-		sketch5_4.move(-.6, 0, 0, 10);
-		sketch5_5.move(-.6, 0, 0, 10);
-		sketch5_6.move(-.6, 0, 0, 10);
-		
-		// reset colors
-		sub1.setColor("black", 0, 20);
-		sub2.setColor("black", 0, 20);
+	// undo element swapping
+	runAnimation5(0, 10);
 	
-		// undo selections
-		setTimeout(function ()
-		{
-			sub1 = null;
-			sub2 = null;
-			canreset = false;	
-		}, 30);
-	}
+	// move the duplicate sketch back
+	sketch5_2.move(-.6, 0, 0, 10);
+	sketch5_3.move(-.6, 0, 0, 10);
+	sketch5_4.move(-.6, 0, 0, 10);
+	sketch5_5.move(-.6, 0, 0, 10);
+	sketch5_6.move(-.6, 0, 0, 10);
+	
+	// reset colors
+	sub1.setColor("black", 0, 20);
+	sub2.setColor("black", 0, 20);
+
+	// undo selections
+	setTimeout(function ()
+	{
+		sub1 = null;
+		sub2 = null;
+		button5.setEnabled(false);	
+	}, 30);
 }
 	
 ////////////////////////////////////////

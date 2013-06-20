@@ -435,13 +435,12 @@ eventManager.subscribe(button1.pressedEventId, handleClick1);
 
 // animation is advanced by clicking a button
 var click1 = 0;
-var canclick1 = true;
 function handleClick1 ()
 {
 	// move duplicate sketch to the side
-	if (click1 == 0 && canclick1)
+	if (click1 == 0)
 	{
-		canclick1 = false
+		button1.setEnabled(false);
 		sketch1_2.setColor("red", 500, 0);
 		sketch1_3.setColor("red", 500, 0);
 		sketch1_2.move(.7, 0, 1000, 500);
@@ -449,40 +448,40 @@ function handleClick1 ()
 		click1 ++;
 		setTimeout(function ()
 						{
-							canclick1 = true;
+							button1.setEnabled(true);
 							button1.setText("Play step 2 / 3");
 						}, 2000);
 	}
 	// switch
-	else if (click1 == 1 && canclick1)
+	else if (click1 == 1)
 	{
-		canclick1 = false;
+		button1.setEnabled(false);
 		sketch1_3.reflect(null, .8, 500, 0);
 		click1 ++;
 		setTimeout(function ()
 						{
-							canclick1 = true;
+							button1.setEnabled(true);
 							button1.setText("Play step 3 / 3");
 						}, 1000);
 	}
 	// superimpose second sketch on top of the first and display the message
-	else if (click1 == 2 && canclick1)
+	else if (click1 == 2)
 	{
-		canclick1 = false;
+		button1.setEnabled(false);
 		sketch1_2.move(-.7, -.07, 1000, 0);
 		sketch1_3.move(-.7, -.07, 1000, 0);
 		sketch1_4.setOpacity(1, 500, 1000);
 		click1 ++;
 		setTimeout(function ()
 						{
-							canclick1 = true;
+							button1.setEnabled(true);
 							button1.setText("Restart");
 						}, 2000);
 	}
 	// reset
-	else if (click1 == 3 && canclick1)
+	else if (click1 == 3)
 	{
-		canclick1 = false;
+		button1.setEnabled(false);
 		sketch1_2.setColor("grey", 10, 0);
 		sketch1_3.setColor("grey", 10, 0);
 		sketch1_2.move(0, .07, 0, 10);
@@ -492,7 +491,7 @@ function handleClick1 ()
 		click1 = 0;
 		setTimeout(function ()
 						{
-							canclick1 = true;
+							button1.setEnabled(true);
 							button1.setText("Play step 1 / 3");
 						}, 15);
 	}
@@ -805,13 +804,12 @@ eventManager.subscribe(button4.pressedEventId, handleClick4);
 
 // animation is advanced by clicking the button
 var click4 = 0;
-var canclick4 = true;
 function handleClick4 ()
 {
 	// move duplicate sketch to the side
-	if (click4 == 0 && canclick4)
+	if (click4 == 0)
 	{
-		canclick4 = false;
+		button4.setEnabled(false);
 		sketch4_2.setColor("red", 500, 0);
 		sketch4_3.setColor("red", 500, 0);
 		sketch4_4.setColor("red", 500, 0);
@@ -821,52 +819,52 @@ function handleClick4 ()
 		click4 ++;
 		setTimeout(function ()
 						{
-							canclick4 = true;
+							button4.setEnabled(true);
 							button4.setText("Play step 2 / 5");
 						}, 2000);
 	}
 	// flip the right side
-	else if (click4 == 1 && canclick4)
+	else if (click4 == 1)
 	{
-		canclick4 = false;
+		button4.setEnabled(false);
 		sketch4_4.reflect(null, .8, 500, 0);
 		click4 ++;
 		setTimeout(function ()
 						{
-							canclick4 = true;
+							button4.setEnabled(true);
 							button4.setText("Play step 3 / 5");
 						}, 1000);
 	}
 	// flip the left side
-	else if (click4 == 2 && canclick4)
+	else if (click4 == 2)
 	{
-		canclick4 = false;
+		button4.setEnabled(false);
 		sketch4_3.reflect(null, .8, 500, 0);
 		click4 ++;
 		setTimeout(function ()
 						{
-							canclick4 = true;
+							button4.setEnabled(true);
 							button4.setText("Play step 4 / 5");
 						}, 1000);
 	}
 	// flip the entire molecule
-	else if (click4 == 3 && canclick4)
+	else if (click4 == 3)
 	{
-		canclick4 = false;
+		button4.setEnabled(false);
 		sketch4_2.reflect(null, .8, 500, 0);
 		sketch4_4.reflect(null, .8, 500, 0);
 		sketch4_3.reflect(null, .8, 500, 0);
 		click4 ++;
 		setTimeout(function ()
 						{
-							canclick4 = true;
+							button4.setEnabled(true);
 							button4.setText("Play step 5 / 5");
 						}, 1000);
 	}
 	// superimpose second sketch on top of the first and display the message
-	else if (click4 == 4 && canclick4)
+	else if (click4 == 4)
 	{
-		canclick4 = false;
+		button4.setEnabled(false);
 		sketch4_2.move(-.7, -.07, 1000, 0);
 		sketch4_3.move(-.7, -.07, 1000, 0);
 		sketch4_4.move(-.7, -.07, 1000, 0);
@@ -874,13 +872,14 @@ function handleClick4 ()
 		click4 ++;
 		setTimeout(function ()
 						{
-							canclick4 = true;
+							button4.setEnabled(true);
 							button4.setText("Restart");
 						}, 2000);
 	}
 	// reset
 	else if (click4 == 5)
 	{
+		button4.setEnabled(false);
 		sketch4_2.setColor("grey", 10, 0);
 		sketch4_3.setColor("grey", 10, 0);
 		sketch4_4.setColor("grey", 10, 0);
@@ -892,7 +891,7 @@ function handleClick4 ()
 		click4 = 0;
 		setTimeout(function ()
 						{
-							canclick4 = true;
+							button4.setEnabled(true);
 							button4.setText("Play step 1 / 5");
 						}, 15);
 	}
@@ -1169,13 +1168,12 @@ eventManager.subscribe(button6.pressedEventId, handleClick6);
 
 // animation can be played once and reset using the button
 var click6 = 0;
-var canclick6 = true;
 function handleClick6 ()
 {
 	// play the animation
-	if (click6 == 0 && canclick6)
+	if (click6 == 0)
 	{
-		canclick6 = false;
+		button6.setEnabled(false);
 		sketch6_2.setColor("blue", 500, 0);
 		sketch6_3.setColor("red", 500, 0);
 		sketch6_2.reflect(null, .7, 800, 500);
@@ -1184,14 +1182,14 @@ function handleClick6 ()
 		click6 ++;
 		setTimeout(function ()
 						{
-							canclick6 = true;
+							button6.setEnabled(true);
 							button6.setText("Restart");
 						}, 2000);
 	}
 	// reset
-	else if (click6 == 1 && canclick6)
+	else if (click6 == 1)
 	{
-		canclick6 = false;
+		button6.setEnabled(false);
 		sketch6_2.reflect(null, .7, 0, 0);
 		sketch6_3.reflect(null, .7, 0, 0);
 		sketch6_2.setColor("grey", 0, 20);
@@ -1200,7 +1198,7 @@ function handleClick6 ()
 		click6 = 0;
 		setTimeout(function ()
 						{
-							canclick6 = true;
+							button6.setEnabled(true);
 							button6.setText("Play animation");
 						}, 25);
 	}
